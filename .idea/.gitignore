@@ -1,0 +1,17 @@
+# Default ignored files
+/workspace.xml
+.classpath
+.DS_Store
+.sfdx
+.project
+.salesforce
+.tern-project
+.settings/
+IlluminatedCloud/
+out
+.idea
+*.iml
+apex-scripts/log
+.metadata
+build.properties
+config
