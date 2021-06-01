@@ -1,0 +1,172 @@
+<apex:page cache="false" id="MH_DoctorsTestSite" controller="MH_RandomDoctorsController" lightningStylesheets="true" sideBar="false" showHeader="false" title="Random Doctors Site">
+    <apex:slds />
+    <head>
+        <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8"/>
+    </head>
+    <apex:includeScript value="{!URLFOR($Resource.jQueryUI, 'jquery-ui-1.12.1/external/jquery/jquery.js')}"/>
+    <script>
+        var j$ = jQuery.noConflict();
+    </script>
+    <style>
+        #tab-default-1 {
+        background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0.9), rgba(117, 19, 93, 0)), url("{!URLFOR($Resource.furnibackground)}");
+        height: 100vh;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        }
+    </style>
+
+
+
+
+    <div class="slds-tabs--default">
+        <ul class="slds-tabs--default__nav" role="tablist">
+            <li class="slds-tabs--default__item slds-text-heading--label slds-active" title="Furni Future" role="presentation">
+                <a class="slds-tabs--default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item">{!$Label.FF_Furni_Future_caps}</a></li>
+            <li class="slds-tabs--default__item slds-text-heading--label" title="Doctors" role="presentation">
+                <a class="slds-tabs--default__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id="tab-default-2__item">{!$Label.MH_Doctors}</a></li>
+        </ul>
+        <div id="tab-default-1"  class="slds-tabs--default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+
+            <apex:outputPanel rendered="{!messageSent}">
+                <div class="demo-only slds-is-absolute" style="height: 4rem;" id='ToastMessage'>
+                    <div class="slds-notify_container slds-is-fixed">
+                        <div class="slds-notify slds-notify_toast slds-theme_success " role="alert">
+                            <span class="slds-assistive-text">success</span>
+                            <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#success')}" />
+                </svg>
+            </span>
+                            <div class="slds-notify__content">
+                                <h2 class="slds-text-heading_small ">{!$Label.FF_Message_sent}</h2>
+                            </div>
+                            <button style="padding-top: 10px;" class="slds-button slds-button_icon slds-notify__close slds-button_icon-inverse" title="Close" onclick='toastLaunch()'>
+                                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}" />
+                                </svg>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </apex:outputPanel>
+
+            <h1 style="font-size: 60px; font-weight: bold; margin-top: 10vh; color: rgb(107, 109, 112);" class="slds-text-align_center">{!$Label.FF_Furni_Future_caps}</h1>
+
+            <div style="display:flex; justify-content:center; margin-top: 5vh;">
+                <div class="slds-card" style="margin 0 auto;">
+                    <div style="padding: 10px 30px;">
+
+                        <p class="slds-text-heading_medium slds-text-align_center">{!$Label.FF_Contact_us}</p>
+
+                        <form id="myform" class="slds-form" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" onsubmit="toastLaunch();">
+                            <input type="hidden" name="oid" value="00D09000007VTcI"/>
+                            <input type="hidden" name="retURL" value="https://doctors-test-developer-edition.eu40.force.com/?message=sent"/>
+
+                            <fieldset class="slds-form-element slds-form-element_compound slds-form-element_address slds-align_absolute-center slds-p-around_small">
+
+                                <div class="slds-form-element__control">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-size_1-of-2 slds-m-around_xx-small">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="first_name">{!$Label.FF_First_name}</label>
+                                            <input class="slds-input" id="first_name" maxlength="40" name="first_name" size="20" type="text" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-2 slds-m-around_xx-small">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="last_name">{!$Label.FF_Last_name}</label>
+                                            <input class="slds-input" id="last_name" maxlength="80" name="last_name" size="20" type="text" required="required"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="slds-form-element__row">
+                                    <div class="slds-size_2-of-2 slds-m-around_xx-small">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="company">{!$Label.FF_Company}</label>
+                                            <input class="slds-input" id="company" maxlength="40" name="company" size="20" type="text"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="slds-form-element__row">
+                                    <div class="slds-size_1-of-2 slds-m-around_xx-small">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="email">{!$Label.FF_Email}</label>
+                                            <input class="slds-input" id="email" maxlength="80" name="email" size="20" type="text" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-2 slds-m-around_xx-small">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="phone">{!$Label.FF_Phone}</label>
+                                            <input class="slds-input" id="phone" maxlength="40" name="phone" size="20" type="text" required="required"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                    <div class="slds-form-element__row">
+                                        <div class="slds-size_2-of-2 slds-m-around_xx-small">
+                                            <div class="slds-form-element">
+                                                <label class="slds-form-element__label" for="00N0900000BW5G0">{!$Label.FF_Your_message}:</label><br/>
+                                                <textarea style="width: 100%" id="00N0900000BW5G0" name="00N0900000BW5G0" rows="3" type="text" wrap="soft" required="required"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <input type="hidden" id="LeadSource" name="lead_source" value="Web"/>
+
+                            <div style="text-align: center; margin-top:5px;">
+                                <button class="slds-button slds-button_brand" type="submit">{!$Label.FF_Submit}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-default-2" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-2__item">
+                <apex:sectionHeader subTitle="Doctors Test Site" title="Med Hire"/>
+                <apex:pageBlock title="Search random doctors">
+                    <apex:pageBlockSection columns="1" id="table">
+                        <apex:pageBlockTable value="{!doctors}" var="doctor">
+                            <apex:column value="{!doctor.MH_First_name__c}"/>
+                            <apex:column value="{!doctor.MH_Last_name__c}"/>
+                            <apex:column value="{!doctor.MH_Date_of_birth__c}"/>
+                            <apex:column value="{!doctor.MH_Specialization__c}"/>
+                        </apex:pageBlockTable>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection >
+                        <apex:form >
+                            <apex:commandButton value="Random" action="{!random}" reRender="table"/>
+                        </apex:form>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+        </div>
+    </div>
+
+    <script>
+//        function showToast() {
+//            alert('Sent');
+//        }
+
+        function toastLaunch(){
+            var element = document.getElementById("ToastMessage");
+            element.classList.toggle("slds-hidden");
+        }
+
+        j$('.slds-tabs--default__link,.slds-tabs--scoped__link').click(function(){
+          j$(this).parent().parent().find('.slds-tabs--default__link,.slds-tabs--scoped__link').attr('aria-selected','false');
+          j$(this).attr('aria-selected','true');
+          j$(this).parent().parent().find('.slds-tabs--default__link,.slds-tabs--scoped__link').attr('tabindex','-1');
+          j$(this).attr('tabindex','0');
+          j$(this).parent().addClass('slds-active').siblings().removeClass('slds-active');
+          j$(this).parent().parent().parent().find('.'+j$(this).parent().parent().parent().find('.slds-tabs--default__content,.slds-tabs--scoped__content')[0].classList[0]).removeClass('slds-show').addClass('slds-hide');
+          j$(this).parent().parent().parent().find('#'+j$(this).attr('aria-controls')).removeClass('slds-hide').addClass('slds-show');
+        });
+    </script>
+</apex:page>

@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>MH_Action</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action</shortDescription>
+        <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>MH_Active_users</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Active users</shortDescription>
+        <value>Active users</value>
+    </labels>
+    <labels>
+        <fullName>MH_Add_contract</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Add contract</shortDescription>
+        <value>Add contract</value>
+    </labels>
+    <labels>
+        <fullName>MH_Address</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Address</shortDescription>
+        <value>Address</value>
+    </labels>
+    <labels>
+        <fullName>MH_All</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>All</shortDescription>
+        <value>All</value>
+    </labels>
+    <labels>
+        <fullName>MH_Ambulances</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Ambulances</shortDescription>
+        <value>Ambulances</value>
+    </labels>
+    <labels>
+        <fullName>MH_Apex_classes</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Apex classes:</shortDescription>
+        <value>Apex classes:</value>
+    </labels>
+    <labels>
+        <fullName>MH_Api_call_limit_used</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>API call limit used:</shortDescription>
+        <value>API call limit used:</value>
+    </labels>
+    <labels>
+        <fullName>MH_Back</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Back</shortDescription>
+        <value>Back</value>
+    </labels>
+    <labels>
+        <fullName>MH_Birthdate</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Birthdate</shortDescription>
+        <value>Birthdate</value>
+    </labels>
+    <labels>
+        <fullName>MH_CSV_file_must_contain_less_than_1000_rows</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CSV file must contain less than 1000 rows</shortDescription>
+        <value>CSV file must contain less than 1000 rows</value>
+    </labels>
+    <labels>
+        <fullName>MH_Cancel</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>MH_Choose_doctor</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Choose doctor</shortDescription>
+        <value>Choose doctor</value>
+    </labels>
+    <labels>
+        <fullName>MH_City</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>City</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>MH_Clear</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Clear</shortDescription>
+        <value>Clear</value>
+    </labels>
+    <labels>
+        <fullName>MH_Clone</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Clone</shortDescription>
+        <value>Clone</value>
+    </labels>
+    <labels>
+        <fullName>MH_Close</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Close</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
+        <fullName>MH_Contact_details</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Contact Details</shortDescription>
+        <value>Contact Details</value>
+    </labels>
+    <labels>
+        <fullName>MH_Contract_details</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Contract details</shortDescription>
+        <value>Contract details</value>
+    </labels>
+    <labels>
+        <fullName>MH_Country</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>MH_Country_error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country error</shortDescription>
+        <value>Provide a country name</value>
+    </labels>
+    <labels>
+        <fullName>MH_Create_new</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Create new</shortDescription>
+        <value>Create new</value>
+    </labels>
+    <labels>
+        <fullName>MH_Date_of_birth</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Date of birth</shortDescription>
+        <value>Date of birth</value>
+    </labels>
+    <labels>
+        <fullName>MH_Delete</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Delete</shortDescription>
+        <value>Delete</value>
+    </labels>
+    <labels>
+        <fullName>MH_Delete_image</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Delete image</shortDescription>
+        <value>Delete image</value>
+    </labels>
+    <labels>
+        <fullName>MH_Doctor</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Doctor</shortDescription>
+        <value>Doctor</value>
+    </labels>
+    <labels>
+        <fullName>MH_Doctor_Edit</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Doctor Edit</shortDescription>
+        <value>Doctor Edit</value>
+    </labels>
+    <labels>
+        <fullName>MH_Doctor_added</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Doctor added</shortDescription>
+        <value>Doctor added</value>
+    </labels>
+    <labels>
+        <fullName>MH_Doctor_deleted</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Doctor deleted</shortDescription>
+        <value>Doctor deleted</value>
+    </labels>
+    <labels>
+        <fullName>MH_Doctor_detail</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Doctor detail</shortDescription>
+        <value>Doctor detail</value>
+    </labels>
+    <labels>
+        <fullName>MH_Doctor_edited</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Doctor edited</shortDescription>
+        <value>Doctor edited</value>
+    </labels>
+    <labels>
+        <fullName>MH_Doctors_not_added_due_to_an_error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Doctors not added due to an error</shortDescription>
+        <value>Doctors not added due to an error</value>
+    </labels>
+    <labels>
+        <fullName>MH_Doctors_search</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Doctors search</shortDescription>
+        <value>Doctors search</value>
+    </labels>
+    <labels>
+        <fullName>MH_Edit</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Edit</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>MH_Edit_hospital</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Edit hospital</shortDescription>
+        <value>Edit hospital</value>
+    </labels>
+    <labels>
+        <fullName>MH_Email</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>MH_Email_sent</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email sent</shortDescription>
+        <value>Email sent</value>
+    </labels>
+    <labels>
+        <fullName>MH_Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>MH_Export_to_CSV</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Export to CSV</shortDescription>
+        <value>Export to CSV</value>
+    </labels>
+    <labels>
+        <fullName>MH_Export_to_XLS</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Export to XLS</shortDescription>
+        <value>Export to XLS</value>
+    </labels>
+    <labels>
+        <fullName>MH_External_doctors_search</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>External doctors search</shortDescription>
+        <value>External doctors search</value>
+    </labels>
+    <labels>
+        <fullName>MH_External_hospitals_search</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>External hospitals search</shortDescription>
+        <value>External hospitals search</value>
+    </labels>
+    <labels>
+        <fullName>MH_Fax</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Fax</shortDescription>
+        <value>Fax</value>
+    </labels>
+    <labels>
+        <fullName>MH_Fill_in_body</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Fill in body</shortDescription>
+        <value>Fill in body</value>
+    </labels>
+    <labels>
+        <fullName>MH_Fill_in_search_form_first</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Fill in search form first</shortDescription>
+        <value>Fill in search form first</value>
+    </labels>
+    <labels>
+        <fullName>MH_Fill_in_subject</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Fill in subject</shortDescription>
+        <value>Fill in subject</value>
+    </labels>
+    <labels>
+        <fullName>MH_First</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>First</shortDescription>
+        <value>First</value>
+    </labels>
+    <labels>
+        <fullName>MH_First_name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>First name</shortDescription>
+        <value>First name</value>
+    </labels>
+    <labels>
+        <fullName>MH_Following_records_could_not_be_processed_please_review_the_data_provided</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Following records could not be processed, please review the data provided</shortDescription>
+        <value>Following records could not be processed, please review the data provided</value>
+    </labels>
+    <labels>
+        <fullName>MH_Full_name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Full name</shortDescription>
+        <value>Full name</value>
+    </labels>
+    <labels>
+        <fullName>MH_General</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>General</shortDescription>
+        <value>General</value>
+    </labels>
+    <labels>
+        <fullName>MH_Helicopter_access</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Helicopter access</shortDescription>
+        <value>Helicopter access</value>
+    </labels>
+    <labels>
+        <fullName>MH_Hire_doctor</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Hire doctor</shortDescription>
+        <value>Hire doctor</value>
+    </labels>
+    <labels>
+        <fullName>MH_Hospital</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Hospital</shortDescription>
+        <value>Hospital</value>
+    </labels>
+    <labels>
+        <fullName>MH_Hospital_Detail</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Hospital Detail</shortDescription>
+        <value>Hospital Detail</value>
+    </labels>
+    <labels>
+        <fullName>MH_Hospital_Edit</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Hospital Edit</shortDescription>
+        <value>Hospital Edit</value>
+    </labels>
+    <labels>
+        <fullName>MH_Hospital_added</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Hospital added</shortDescription>
+        <value>Hospital added</value>
+    </labels>
+    <labels>
+        <fullName>MH_Hospital_deleted</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Hospital deleted</shortDescription>
+        <value>Hospital deleted</value>
+    </labels>
+    <labels>
+        <fullName>MH_Hospital_edited</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Hospital edited</shortDescription>
+        <value>Hospital edited</value>
+    </labels>
+    <labels>
+        <fullName>MH_Image_format_error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Please upload image in one of the following formats: jpg, jpeg, png</shortDescription>
+        <value>Please upload image in one of the following formats: jpg, jpeg, png</value>
+    </labels>
+    <labels>
+        <fullName>MH_Image_size_error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Please upload an image which size doesn&apos;t extend 1MB</shortDescription>
+        <value>Please upload an image which size doesn&apos;t extend 1MB</value>
+    </labels>
+    <labels>
+        <fullName>MH_Import</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Import</shortDescription>
+        <value>Import</value>
+    </labels>
+    <labels>
+        <fullName>MH_Import_doctors</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Import doctors</shortDescription>
+        <value>Import doctors</value>
+    </labels>
+    <labels>
+        <fullName>MH_Indefinite</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Indefinite</shortDescription>
+        <value>Indefinite</value>
+    </labels>
+    <labels>
+        <fullName>MH_Last</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Last</shortDescription>
+        <value>Last</value>
+    </labels>
+    <labels>
+        <fullName>MH_Last_login_date</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Last login date</shortDescription>
+        <value>Last login date</value>
+    </labels>
+    <labels>
+        <fullName>MH_Last_login_device</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Last login device</shortDescription>
+        <value>Last login device</value>
+    </labels>
+    <labels>
+        <fullName>MH_Last_name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Last name</shortDescription>
+        <value>Last name</value>
+    </labels>
+    <labels>
+        <fullName>MH_License</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>License</shortDescription>
+        <value>License</value>
+    </labels>
+    <labels>
+        <fullName>MH_Loading</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Loading</shortDescription>
+        <value>Loading</value>
+    </labels>
+    <labels>
+        <fullName>MH_Medical_practice_start</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Medical practice start</shortDescription>
+        <value>Medical practice start</value>
+    </labels>
+    <labels>
+        <fullName>MH_Name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>MH_Nationality</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Nationality</shortDescription>
+        <value>Nationality</value>
+    </labels>
+    <labels>
+        <fullName>MH_New_Doctor</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New Doctor</shortDescription>
+        <value>New Doctor</value>
+    </labels>
+    <labels>
+        <fullName>MH_New_hospital</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New hospital</shortDescription>
+        <value>New hospital</value>
+    </labels>
+    <labels>
+        <fullName>MH_Next</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Next</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>MH_No_records_alert</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No records alert</shortDescription>
+        <value>No records to show</value>
+    </labels>
+    <labels>
+        <fullName>MH_None</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>None</shortDescription>
+        <value>None</value>
+    </labels>
+    <labels>
+        <fullName>MH_ORG_INFORMATION</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ORG INFORMATION</shortDescription>
+        <value>ORG INFORMATION</value>
+    </labels>
+    <labels>
+        <fullName>MH_Of</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Of</shortDescription>
+        <value>of</value>
+    </labels>
+    <labels>
+        <fullName>MH_Overlapping_error_both_contracts_end_date_not_null</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Overlapping error both contracts end date not null</shortDescription>
+        <value>New contract must start after existing contract end date and end before existing contract start date</value>
+    </labels>
+    <labels>
+        <fullName>MH_Overlapping_error_both_contracts_end_dates_null</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Overlapping error both end dates null</shortDescription>
+        <value>New contract must not start while the existing contract is already lasting at the same time</value>
+    </labels>
+    <labels>
+        <fullName>MH_Overlapping_error_both_end_dates_null</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Overlapping error both end dates null</shortDescription>
+        <value>New contract must not start while the existing contract is already lasting at the same time</value>
+    </labels>
+    <labels>
+        <fullName>MH_Overlapping_error_existing_contract_end_date_null</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Overlapping error existing contract end date null</shortDescription>
+        <value>New contract must end before existing contract start date</value>
+    </labels>
+    <labels>
+        <fullName>MH_Overlapping_error_new_contract_end_date_null</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Overlapping error new contract end date null</shortDescription>
+        <value>New contract must start after existing contract end date</value>
+    </labels>
+    <labels>
+        <fullName>MH_Page</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Page</shortDescription>
+        <value>Page</value>
+    </labels>
+    <labels>
+        <fullName>MH_Phone</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Phone</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>MH_Please_choose_a_file_to_process_first</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Please choose a file to process first</shortDescription>
+        <value>Please choose a file to process first</value>
+    </labels>
+    <labels>
+        <fullName>MH_Please_wait</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Please wait</shortDescription>
+        <value>Please wait</value>
+    </labels>
+    <labels>
+        <fullName>MH_Postal_code</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Postal code</shortDescription>
+        <value>Postal code</value>
+    </labels>
+    <labels>
+        <fullName>MH_Previous</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Previous</shortDescription>
+        <value>Previous</value>
+    </labels>
+    <labels>
+        <fullName>MH_Process</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Process</shortDescription>
+        <value>Process</value>
+    </labels>
+    <labels>
+        <fullName>MH_Processing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Processing...</shortDescription>
+        <value>Processing...</value>
+    </labels>
+    <labels>
+        <fullName>MH_Processing_with_dots</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Processing...</shortDescription>
+        <value>Processing...</value>
+    </labels>
+    <labels>
+        <fullName>MH_Profile</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Profile</shortDescription>
+        <value>Profile</value>
+    </labels>
+    <labels>
+        <fullName>MH_Results</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Results</shortDescription>
+        <value>Results</value>
+    </labels>
+    <labels>
+        <fullName>MH_Reverse</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Reverse</shortDescription>
+        <value>Reverse</value>
+    </labels>
+    <labels>
+        <fullName>MH_Salesforce_licences_used</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Salesforce licences used:</shortDescription>
+        <value>Salesforce licences used:</value>
+    </labels>
+    <labels>
+        <fullName>MH_Save</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>MH_Save_image</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save image</shortDescription>
+        <value>Save image</value>
+    </labels>
+    <labels>
+        <fullName>MH_Search</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>MH_Search_doctor</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search doctor</shortDescription>
+        <value>Search doctor</value>
+    </labels>
+    <labels>
+        <fullName>MH_Search_for_doctors</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search for doctors</shortDescription>
+        <value>Search for doctors</value>
+    </labels>
+    <labels>
+        <fullName>MH_Search_for_hospitals</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search for hospitals</shortDescription>
+        <value>Search for hospitals</value>
+    </labels>
+    <labels>
+        <fullName>MH_Searching</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Searching...</shortDescription>
+        <value>Searching...</value>
+    </labels>
+    <labels>
+        <fullName>MH_Select</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select</shortDescription>
+        <value>Select</value>
+    </labels>
+    <labels>
+        <fullName>MH_Select_doctors_to_import</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select doctors to import</shortDescription>
+        <value>Select doctors to import</value>
+    </labels>
+    <labels>
+        <fullName>MH_Send</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Send</shortDescription>
+        <value>Send</value>
+    </labels>
+    <labels>
+        <fullName>MH_Send_email</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Send email</shortDescription>
+        <value>Send email</value>
+    </labels>
+    <labels>
+        <fullName>MH_Sending</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sending</shortDescription>
+        <value>Sending</value>
+    </labels>
+    <labels>
+        <fullName>MH_Session_ID</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Session ID</shortDescription>
+        <value>Session ID</value>
+    </labels>
+    <labels>
+        <fullName>MH_Show_session_ID</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Show Session ID</shortDescription>
+        <value>Show Session ID</value>
+    </labels>
+    <labels>
+        <fullName>MH_Spec</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Specialization</shortDescription>
+        <value>Spec</value>
+    </labels>
+    <labels>
+        <fullName>MH_Specialization</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Specialization</shortDescription>
+        <value>Spec</value>
+    </labels>
+    <labels>
+        <fullName>MH_Spinner_searching</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Searching...</shortDescription>
+        <value>Searching...</value>
+    </labels>
+    <labels>
+        <fullName>MH_Street</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Street</shortDescription>
+        <value>Street</value>
+    </labels>
+    <labels>
+        <fullName>MH_Successfully_added_doctors</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Successfully added doctors</shortDescription>
+        <value>Successfully added doctors</value>
+    </labels>
+    <labels>
+        <fullName>MH_Time_zone</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Time zone</shortDescription>
+        <value>Time zone</value>
+    </labels>
+    <labels>
+        <fullName>MH_Upload_image</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Upload image</shortDescription>
+        <value>Upload image</value>
+    </labels>
+    <labels>
+        <fullName>MH_VisualForce_pages</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>VisualForce pages:</shortDescription>
+        <value>VisualForce pages:</value>
+    </labels>
+    <labels>
+        <fullName>MH_Wrong_file_format_please_upload_a_csv_file</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Wrong file format, please upload a csv file</shortDescription>
+        <value>Wrong file format, please upload a csv file</value>
+    </labels>
+    <labels>
+        <fullName>FF_Furni_Future_caps</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Furni Future</shortDescription>
+        <value>FURNI FUTURE</value>
+    </labels>
+    <labels>
+        <fullName>FF_Contact_us</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Contact us</shortDescription>
+        <value>Contact us</value>
+    </labels>
+    <labels>
+        <fullName>FF_First_name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>First name</shortDescription>
+        <value>First name</value>
+    </labels>
+    <labels>
+        <fullName>FF_Last_name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Last name</shortDescription>
+        <value>Last name</value>
+    </labels>
+    <labels>
+        <fullName>FF_Company</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company</shortDescription>
+        <value>Company</value>
+    </labels>
+    <labels>
+        <fullName>FF_Phone</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Phone</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>FF_Email</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>FF_Your_message</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Your message</shortDescription>
+        <value>Your message</value>
+    </labels>
+    <labels>
+        <fullName>FF_Submit</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Submit</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>MH_Doctors</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Doctors</shortDescription>
+        <value>Doctors</value>
+    </labels>
+    <labels>
+        <fullName>FF_Message_sent</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message sent</shortDescription>
+        <value>Message sent</value>
+    </labels>
+</CustomLabels>
