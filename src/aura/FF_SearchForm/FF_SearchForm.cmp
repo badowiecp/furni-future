@@ -1,0 +1,14 @@
+<aura:component description="FF_SearchForm">
+    <aura:attribute name="query" type="String"/>
+    <aura:attribute name="searchFor" type="String"/>
+    <aura:registerEvent name="Search" type="c:Search"/>
+
+    <form style="margin-bottom: 10px;">
+        <lightning:layout horizontalAlign="center">
+            <lightning:input class="label-hidden" label="Search" type="search" value="{!v.query}" placeholder="{!'Search for ' + v.searchFor}"/>
+            <lightning:button class="slds-m-horizontal_xxx-small" variant="brand" label="Search" onclick="{!c.search}"/>
+        </lightning:layout>
+    </form>
+
+
+</aura:component>

@@ -1,0 +1,72 @@
+<aura:component implements="force:lightningQuickAction,flexipage:availableForAllPageTypes" description="FF_ProductsTable" controller="FF_ProductController">
+    <ltng:require styles="{!$Resource.NoPageHeader}"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <aura:attribute name="products" type="Product2[]"/>
+    <aura:attribute name="currentPage" type="Integer" default="1"/>
+    <aura:attribute name="totalPages" type="Integer" description="Display Page Number"/>
+    <aura:attribute name="totalRecords" type="Integer" description="Total Number of Records"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="sortDirection" type="String" default="asc" />
+    <aura:attribute name="defaultSortDirection" type="String" default="asc" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+    <div class="slds-card">
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-product">
+                                <lightning:icon iconName="standard:product"/>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <span class="slds-page-header__title slds-truncate">Products</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-page-header__col-actions">
+                    <div class="slds-page-header__controls">
+                        <div class="slds-page-header__control">
+                            <lightning:button label="New" onclick="{!c.handleShowModal}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="height: 470px">
+            <lightning:datatable
+                    keyField="id"
+                    data="{!v.products}"
+                    columns="{!v.columns}"
+                    hideCheckboxColumn="true"/>
+        </div>
+
+        <div class="slds-p-around_small" style="display: flex; justify-content: space-between;">
+            <div style="display: inline-block;">
+                <ui:inputSelect aura:id="recordSize" label="Records per page:" change="{!c.onSelectChange}">
+                    <ui:inputSelectOption text="3" label="3"/>
+                    <ui:inputSelectOption text="15" label="15" value="true"/>
+                    <ui:inputSelectOption text="20" label="20"/>
+                </ui:inputSelect>
+            </div>
+
+            <div style="display: inline-block;">
+                <lightning:buttonGroup class="slds-p-top_small">
+                    <lightning:button variant="brand" disabled="{!v.currentPage == 1}" label="First Page" onclick="{!c.navigateToFirst}"/>
+                    <lightning:button variant="brand" disabled="{!v.currentPage == 1}" label="Previous Page" onclick="{!c.navigate}"/>
+                    <lightning:button label="{!'Showing ' + v.currentPage + ' of ' + v.totalPages}"/>
+                    <lightning:button variant="brand" disabled="{!v.currentPage == v.totalPages}" label="Next Page" onclick="{!c.navigate}"/>
+                    <lightning:button variant="brand" disabled="{!v.currentPage == v.totalPages}" label="Last Page" onclick="{!c.navigateToLast}"/>
+                </lightning:buttonGroup>
+            </div>
+
+        </div>
+    </div>
+
+</aura:component>

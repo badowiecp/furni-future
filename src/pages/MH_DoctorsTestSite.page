@@ -17,9 +17,6 @@
         }
     </style>
 
-
-
-
     <div class="slds-tabs--default">
         <ul class="slds-tabs--default__nav" role="tablist">
             <li class="slds-tabs--default__item slds-text-heading--label slds-active" title="Furni Future" role="presentation">
@@ -46,7 +43,7 @@
                                 <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}" />
                                 </svg>
-                                <span class="slds-assistive-text">Close</span>
+                                <span class="slds-assistive-text">{!$Label.MH_Close}</span>
                             </button>
                         </div>
                     </div>
@@ -150,10 +147,6 @@
     </div>
 
     <script>
-//        function showToast() {
-//            alert('Sent');
-//        }
-
         function toastLaunch(){
             var element = document.getElementById("ToastMessage");
             element.classList.toggle("slds-hidden");
