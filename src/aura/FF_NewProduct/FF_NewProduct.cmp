@@ -1,0 +1,107 @@
+<aura:component controller="FF_ProductController" implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,force:hasRecordId,lightning:actionOverride" access="global" description="FF_NewProduct">
+    <aura:attribute name="picklistValues" type="Object"/>
+    <aura:attribute name="recordTypes" type="List"/>
+    <aura:attribute name="productFields" type="Product2"/>
+    <aura:attribute name="newProduct" type="Product2"/>
+    <aura:attribute name="newProductError" type="String"/>
+    <aura:attribute name="fileWrappers" type="Object[]"/>
+    <aura:attribute name="selectedMainWrapper" type="Object"/>
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="recordTypeSelect" type="String"/>
+    <aura:attribute name="recordTypeId" type="String"/>
+    <aura:attribute name="productFamilyPicklist" type="Object"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <force:recordData aura:id="newProductData"
+                      fields="Id,Name,IsActive,ProductCode,Description,Dimensions__c,Materials__c,Color__c,Family"
+                      recordId="{!v.recordId}"
+                      targetRecord="{!v.newProduct}"
+                      targetFields="{!v.productFields}"
+                      targetError="{!v.newProductError}"
+    />
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large"/>
+    </aura:if>
+
+    <c:FF_PicklistValues aura:id="familyPicklist" sObjectName="Product2" fieldName="Family" picklistValues="{!v.productFamilyPicklist}"/>
+
+    <div style="display: flex; justify-content: center">
+        <div style="margin: 0 auto;">
+            <div aura:id="editDialog" role="dialog" tabindex="-1" aria-labelledby="header43">
+                <aura:if isTrue="{!v.recordTypeSelect==null}">
+                    <div aura:id="recordTypePick">
+                        <ui:inputSelect aura:id="selectid">
+                            <aura:iteration items="{!v.recordTypes}" var="recordType">
+                                <ui:inputSelectOption text="{!recordType}" label="{!recordType}"/>
+                            </aura:iteration>
+                        </ui:inputSelect>
+                    </div>
+                    <aura:set attribute="else">
+                        <div aura:id="newRecordForm">
+                            <div class="slds-section__title slds-p-around_xx-small">
+                                Product Information
+                            </div>
+                            <div class="slds-p-around--xx-small slds-grid slds-wrap ">
+                                <lightning:input value="{!v.productFields.Name}" label="Product Name" required="true"
+                                                 class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
+                                <lightning:input value="{!v.productFields.IsActive}" type="checkbox"
+                                                 variant="label-stacked" label="Active"
+                                                 class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
+                                <lightning:input value="{!v.productFields.ProductCode}" label="Product Code"
+                                                 class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
+                                <lightning:select value="{!v.productFields.Family}" label="Product Family"
+                                                  class="slds-size--1-of-2 slds-p-horizontal_xx-small">
+                                    <aura:iteration items="{!v.productFamilyPicklist}" var="item">
+                                        <option value="{!item}">{!item}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                                <lightning:input value="{!v.productFields.Description}" label="Product Description"
+                                                 class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
+                                <lightning:input value="{!v.productFields.Color__c}" label="Color"
+                                                 class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
+                                <lightning:input value="{!v.productFields.Dimensions__c}" label="Dimensions"
+                                                 class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
+                                <lightning:input value="{!v.productFields.Materials__c}" label="Materials"
+                                                 class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
+
+                                <div class="slds-size--1-of-1 slds-align_absolute-center slds-p-horizontal_xx-small">
+                                    <lightning:input type="file" name="file" label="Add photos"
+                                                     accept="image/png, image/jpg, image/jpeg" multiple="true"
+                                                     onchange="{!c.handleUpload}"/>
+                                </div>
+                                <div class="slds-size--1-of-1 slds-align_absolute-center slds-p-horizontal_xx-small">
+                                    <aura:iteration items="{!v.fileWrappers}" var="fileWrapper" indexVar="index">
+                                        <div class="preview slds-box_border" style="margin: 10px; width: 200px;">
+                                            <img class="preview slds-box_border" src="{!fileWrapper.filePreview}"/>
+                                            <div style="margin: 5px 0; display: flex; flex-wrap: wrap; justify-content: space-around;">
+                                            <ui:inputCheckbox aura:id="checkbox" value="{!fileWrapper.isMain}" label="Select main" name="{!index}" change="{!c.handleSetMain}" />
+                                                <!--                                            <lightning:button value="{!fileWrapper}" label="Delete" onclick="{!c.handleDeleteNew}"/>-->
+                                            </div>
+                                        </div>
+                                    </aura:iteration>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:set>
+                </aura:if>
+                <div class="slds-card__footer">
+                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.handleCancel}"/>
+                    <aura:if isTrue="{!v.recordTypeSelect==null}">
+                            <lightning:button variant="brand" label="Next" onclick="{!c.handleNext}"/>
+                        <aura:set attribute="else">
+                                <lightning:button variant="brand" label="Save" onclick="{!c.handleSave}"/>
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <aura:if isTrue="{!not(empty(v.newProductError))}">
+        <div class="recordError">
+                {!v.newProductError}</div>
+    </aura:if>
+
+</aura:component>

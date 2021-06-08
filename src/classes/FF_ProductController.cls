@@ -1,0 +1,148 @@
+public with sharing class FF_ProductController {
+
+    @AuraEnabled
+    public static ProductWrapper getProduct(Integer pageNumber ,Integer recordToDisplay) {
+        ProductWrapper productWrapper = new ProductWrapper();
+        productWrapper.recordToDisplay = recordToDisplay;
+        productWrapper.pageNumber = pageNumber;
+        AggregateResult[] groupedResults  = [SELECT count(Id)cnt FROM Product2];
+        productWrapper.totalRecords = Integer.valueof(groupedResults[0].get('cnt'));
+        productWrapper.ProductListToDisplay = [SELECT Id,Name,ProductCode,Description,Family,Product_Name_Link__c FROM Product2 ORDER BY Name LIMIT :recordToDisplay OFFSET :(pageNumber - 1) * recordToDisplay];
+        return productWrapper;
+    }
+
+    @AuraEnabled
+    public static List<String> fetchRecordTypeValues(){
+        List<Schema.RecordTypeInfo> recordtypes = Product2.SObjectType.getDescribe().getRecordTypeInfos();
+        Map<Id,String> recordtypemap = new Map<Id, String>();
+        for(RecordTypeInfo recordTypeInfo : recordtypes){
+            if(recordTypeInfo.getName() != 'Master')
+                recordtypemap.put(recordTypeInfo.getRecordTypeId(), recordTypeInfo.getName());
+        }
+        return recordtypemap.values();
+    }
+
+    @AuraEnabled
+    public static Id getRecTypeId(String recordTypeLabel){
+        Id recid = Schema.SObjectType.Product2.getRecordTypeInfosByName().get(recordTypeLabel).getRecordTypeId();
+        return recid;
+    }
+
+    @AuraEnabled
+    public static void saveDocuments(List<FileWrapper> files, String productId){
+        System.debug(files);
+        System.debug(productId);
+        for(FileWrapper file : files){
+            saveDocument(productId,file);
+        }
+    }
+
+    @AuraEnabled
+    public static void saveDocument(String productId,FileWrapper fileWrapper){
+        ContentVersion contentVers = new ContentVersion();
+        contentVers.ContentLocation = 'S'; // S specify this document is in SF, use E for external files
+        contentVers.PathOnClient = fileWrapper.fileName;
+        if(fileWrapper.isMain==true){
+            contentVers.Title = 'main';
+        }else{
+            contentVers.Title = 'detail';
+        }
+        contentVers.VersionData = EncodingUtil.base64Decode(fileWrapper.fileBody); // contentVersting your binary string to Blog
+        insert contentVers;
+
+        // First get the content document Id from ContentVersion
+        Id contentDocId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =:contentVers.Id].ContentDocumentId;
+
+        //Create ContentDocumentLink
+        ContentDocumentLink contentLink = new ContentDocumentLink();
+        contentLink.ContentDocumentId = contentDocId;
+        contentLink.LinkedEntityId = productId;
+        contentLink.ShareType = 'I'; // Inferred permission
+        contentLink.Visibility = 'AllUsers';
+        insert contentLink;
+    }
+
+    @AuraEnabled
+    public static void deletePhoto(String documentId){
+        ContentDocument photo = [SELECT Id,Title FROM ContentDocument WHERE Id = :documentId];
+        delete photo;
+    }
+
+    @AuraEnabled
+    public static void setPhotoTitle(String documentId, String title){
+        ContentDocument photo = [SELECT Id,Title FROM ContentDocument WHERE Id = :documentId];
+        photo.Title = title;
+        update photo;
+    }
+
+    @AuraEnabled
+    public static String getMainPicture(String productId){
+        return [SELECT Id,ContentDocument.Id FROM ContentDocumentLink WHERE LinkedEntityId = :productId AND ContentDocument.Title LIKE 'main%' LIMIT 1].ContentDocument.Id;
+    }
+
+    @AuraEnabled
+    public static List<ContentVersion> getDetailPictures(String productId){
+        Set<Id> documentIds = new Set<Id>();
+        for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId AND ContentDocument.Title LIKE 'detail%']){
+            documentIds.add(link.ContentDocumentId);
+        }
+        return [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE ContentDocumentId IN :documentIds];
+    }
+
+    @AuraEnabled
+    public static List<FileWrapper> getCurrentFileWrappers(String productId){
+        List<FileWrapper> fileWrappers = new List<FileWrapper>();
+        Set<Id> documentIds = new Set<Id>();
+        for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId]){
+            documentIds.add(link.ContentDocumentId);
+        }
+        for(ContentVersion contentVersion : [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE ContentDocumentId IN :documentIds]){
+            fileWrappers.add(new FileWrapper(contentVersion.Title,contentVersion.Id));
+        }
+        return fileWrappers;
+    }
+
+    @AuraEnabled
+    public static void updateMain(String contentVersionId){
+
+    }
+
+    @AuraEnabled
+    public static void deleteDocuments(List<String> contentVersionIds){
+        Set<Id> documentIds = new Set<Id>();
+        for(ContentVersion contentVersion : [SELECT ContentDocumentId FROM ContentVersion WHERE Id IN :contentVersionIds]){
+            documentIds.add(contentVersion.ContentDocumentId);
+        }
+        delete [SELECT Id FROM ContentDocument WHERE Id IN: documentIds];
+    }
+
+    public class ProductWrapper {
+        @AuraEnabled public Integer recordToDisplay {get;set;}
+        @AuraEnabled public Integer pageNumber {get;set;}
+        @AuraEnabled public Integer totalRecords {get;set;}
+        @AuraEnabled public List<Product2> ProductListToDisplay {get;set;}
+    }
+
+    public class FileWrapper {
+        @AuraEnabled public String fileName {get;set;}
+        @AuraEnabled public String fileBody {get;set;}
+        @AuraEnabled public String filePreview {get;set;}
+        @AuraEnabled public String title {get;set;}
+        @AuraEnabled public String contentVersionId {get;set;}
+        @AuraEnabled public Boolean isMain {get;set;}
+
+        public FileWrapper(){
+        }
+
+        public FileWrapper(String title, String contentVersionId){
+            this.title = title;
+            this.contentVersionId = contentVersionId;
+            if(title=='main'){
+                isMain = true;
+            }else{
+                isMain = false;
+            }
+        }
+
+    }
+}
