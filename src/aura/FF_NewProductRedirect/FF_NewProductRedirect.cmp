@@ -1,0 +1,3 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" description="FF_NewProductRedirect">
+    <aura:handler name="init" action="{!c.navigateToNewProduct}" value="{!this}" />
+</aura:component>

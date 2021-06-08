@@ -65,7 +65,6 @@
                     <lightning:button variant="brand" disabled="{!v.currentPage == v.totalPages}" label="Last Page" onclick="{!c.navigateToLast}"/>
                 </lightning:buttonGroup>
             </div>
-
         </div>
     </div>
 
