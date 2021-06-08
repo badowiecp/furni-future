@@ -1,6 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>FF_Company</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company</shortDescription>
+        <value>Company</value>
+    </labels>
+    <labels>
+        <fullName>FF_Contact_us</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Contact us</shortDescription>
+        <value>Contact us</value>
+    </labels>
+    <labels>
+        <fullName>FF_Email</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>FF_First_name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>First name</shortDescription>
+        <value>First name</value>
+    </labels>
+    <labels>
+        <fullName>FF_Furni_Future</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Furni Future</shortDescription>
+        <value>FURNI FUTURE</value>
+    </labels>
+    <labels>
+        <fullName>FF_Furni_Future_caps</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Furni Future</shortDescription>
+        <value>FURNI FUTURE</value>
+    </labels>
+    <labels>
+        <fullName>FF_Last_name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Last name</shortDescription>
+        <value>Last name</value>
+    </labels>
+    <labels>
+        <fullName>FF_Message_sent</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message sent</shortDescription>
+        <value>Message sent</value>
+    </labels>
+    <labels>
+        <fullName>FF_Phone</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Phone</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>FF_Submit</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Submit</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>FF_Your_message</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Your message</shortDescription>
+        <value>Your message</value>
+    </labels>
+    <labels>
         <fullName>MH_Action</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -216,6 +293,13 @@
         <protected>true</protected>
         <shortDescription>Doctor edited</shortDescription>
         <value>Doctor edited</value>
+    </labels>
+    <labels>
+        <fullName>MH_Doctors</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Doctors</shortDescription>
+        <value>Doctors</value>
     </labels>
     <labels>
         <fullName>MH_Doctors_not_added_due_to_an_error</fullName>
@@ -846,82 +930,5 @@
         <protected>true</protected>
         <shortDescription>Wrong file format, please upload a csv file</shortDescription>
         <value>Wrong file format, please upload a csv file</value>
-    </labels>
-    <labels>
-        <fullName>FF_Furni_Future_caps</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Furni Future</shortDescription>
-        <value>FURNI FUTURE</value>
-    </labels>
-    <labels>
-        <fullName>FF_Contact_us</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Contact us</shortDescription>
-        <value>Contact us</value>
-    </labels>
-    <labels>
-        <fullName>FF_First_name</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>First name</shortDescription>
-        <value>First name</value>
-    </labels>
-    <labels>
-        <fullName>FF_Last_name</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Last name</shortDescription>
-        <value>Last name</value>
-    </labels>
-    <labels>
-        <fullName>FF_Company</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Company</shortDescription>
-        <value>Company</value>
-    </labels>
-    <labels>
-        <fullName>FF_Phone</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Phone</shortDescription>
-        <value>Phone</value>
-    </labels>
-    <labels>
-        <fullName>FF_Email</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Email</shortDescription>
-        <value>Email</value>
-    </labels>
-    <labels>
-        <fullName>FF_Your_message</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Your message</shortDescription>
-        <value>Your message</value>
-    </labels>
-    <labels>
-        <fullName>FF_Submit</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Submit</shortDescription>
-        <value>Submit</value>
-    </labels>
-    <labels>
-        <fullName>MH_Doctors</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Doctors</shortDescription>
-        <value>Doctors</value>
-    </labels>
-    <labels>
-        <fullName>FF_Message_sent</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Message sent</shortDescription>
-        <value>Message sent</value>
     </labels>
 </CustomLabels>

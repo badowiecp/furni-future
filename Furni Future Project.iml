@@ -74,6 +74,18 @@
                             <option name="name" value="faultPartnerSoapSforceCom" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="FF_PicklistController" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="FF_ProductController" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="FF_WebToLeadHandler" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="ForgotPasswordController" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -247,18 +259,6 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="TestPropertyController" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="FF_WebToLeadHandler" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="FF_ProductController" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="FF_PicklistController" />
-                            <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
                       </option>
@@ -434,6 +434,10 @@
                       <option name="entries">
                         <list>
                           <MetadataEntry>
+                            <option name="name" value="FF_LeadTrigger" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="MFY_MovieReviewTrigger" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -441,10 +445,6 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="MH_ContractTrigger" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="FF_LeadTrigger" />
-                            <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
                       </option>
@@ -538,6 +538,38 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="EvtInitLookup" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="FF_EditProduct" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="FF_NewProduct" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="FF_NewProductFooter" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="FF_PicklistValues" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="FF_ProductDetailPictures" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="FF_ProductMainPicture" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="FF_ProductsTable" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="FF_SearchForm" />
+                            <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="flowStages_field" />
@@ -643,38 +675,6 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="SearchMovie" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="FF_NewProduct" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="FF_ProductsTable" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="FF_NewProductFooter" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="FF_ProductMainPicture" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="FF_ProductDetailPictures" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="FF_EditProduct" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="FF_PicklistValues" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="FF_SearchForm" />
-                            <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
                       </option>

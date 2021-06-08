@@ -1,0 +1,16 @@
+.THIS {
+}
+
+.THIS.preview {
+    max-height: 200px;
+    object-fit: contain;
+}
+
+.THIS.preview img{
+    border: 2px solid black;
+}
+
+.THIS .checkbox {
+    float: left;
+    display: inline-block;
+}
