@@ -45,7 +45,13 @@
         action.setCallback(this, function(response) {
             let state = response.getState();
             if (state === "SUCCESS"){
-                console.log('Successfully saved images')
+                let navEvt = $A.get("e.force:navigateToSObject");
+                navEvt.setParams({
+                  "recordId": component.get("v.recordId"),
+                  "slideDevName": "related"
+                });
+                navEvt.fire();
+                console.log('Successfully saved images');
             }else{
                 let error = response.getError();
                 console.log("Failed with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);

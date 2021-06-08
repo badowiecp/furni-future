@@ -103,6 +103,19 @@ public with sharing class FF_ProductController {
     }
 
     @AuraEnabled
+    public static List<String> getFileLinks(String productId){
+        List<String> links = new List<String>();
+        Set<Id> documentIds = new Set<Id>();
+        for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId]){
+            documentIds.add(link.ContentDocumentId);
+        }
+        for(ContentVersion contentVersion : [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE ContentDocumentId IN :documentIds]){
+            links.add('/sfc/servlet.shepherd/version/download/' + contentVersion.Id);
+        }
+        return links;
+    }
+
+    @AuraEnabled
     public static void updateMain(String contentVersionId){
 
     }
