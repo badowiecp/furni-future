@@ -3,7 +3,7 @@
     <aura:attribute name="maxPosition" type="Integer" default="1"/>
     <aura:attribute name="totalWidth" type="Integer" default="1000"/>
     <aura:attribute name="maxWidth" type="Integer" default="0"/>
-    <aura:attribute name="images" type="String[]"/>
+    <aura:attribute name="images" type="String[]" default="null"/>
     <aura:attribute name="contentVersions" type="List"/>
     <aura:attribute name="selectedImage" type="String" default=""/>
     <aura:attribute name="isOpen" type="Boolean" default="false"/>
@@ -11,64 +11,65 @@
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
     <aura:handler event="aura:doneRendering" action="{!c.handleResize}"/>
 
-    <div class="slds-card" aura:id="card-x">
-        <p style="display:none;">{!v.position}</p>
-        <p style="display:none;">{!v.maxPosition}</p>
-        <lightning:layout multipleRows="true" verticalAlign="center" horizontalAlign="center">
-            <lightning:layoutItem size="12" padding="around-medium">
-                <lightning:layout horizontalAlign="center" verticalAlign="center" class="outer_container">
-                    <lightning:layoutItem size="1">
-                        <div class="sideButtons">
-                            <lightning:buttonIcon iconName="utility:chevronleft" onclick="{!c.goLeft}"
-                                                  alternativeText=""/>
-                        </div>
-                    </lightning:layoutItem>
-                    <lightning:layoutItem size="10" padding="around-small" flexibility="auto">
-                        <div aura:id="wrapper">
-                            <ui:scrollerWrapper class="scroll_wrapper" aura:id="scroll_wrapper">
-                                <div class="inner_container" aura:id="inner"
-                                     style="{! 'width:'+v.images.length * 150 +'px;'}">
-                                    <lightning:layout class="inner_container" horizontalAlign="center"
-                                                      verticalAlign="center">
-                                        <aura:iteration var="image" items="{!v.images}" indexVar="index">
-                                            <lightning:layoutItem>
-                                                <img class="img_element" alt="" data-index="{!index}"
-                                                     src="{!image}" onclick="{!c.openImage}"/>
-                                            </lightning:layoutItem>
-                                        </aura:iteration>
-                                    </lightning:layout>
-                                </div>
-                            </ui:scrollerWrapper>
-                        </div>
-                    </lightning:layoutItem>
-                    <lightning:layoutItem size="1">
-                        <div class="sideButtons">
-                            <lightning:buttonIcon iconName="utility:chevronright" onclick="{!c.goRight}"
-                                                  alternativeText=""/>
-                        </div>
-                    </lightning:layoutItem>
-                </lightning:layout>
-            </lightning:layoutItem>
-        </lightning:layout>
-    </div>
-    <aura:if isTrue="{!v.isOpen}">
-        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-            <div class="slds-modal__container">
-                <header class="slds-modal__header">
-                    <lightning:buttonIcon iconName="utility:close"
-                                          onclick="{!c.closeModel}"
-                                          alternativeText=""
-                                          variant="bare-inverse"
-                                          class="slds-modal__close"/>
-                    <div>
+        <div class="slds-card" style="{!if(or(v.images==null,v.images.length==0),'display:none;','')}" aura:id="card-x">
+            <p style="display:none;">{!v.position}</p>
+            <p style="display:none;">{!v.maxPosition}</p>
+            <lightning:layout multipleRows="true" verticalAlign="center" horizontalAlign="center">
+                <lightning:layoutItem size="12" padding="around-medium">
+                    <lightning:layout horizontalAlign="center" verticalAlign="center" class="outer_container">
+                        <lightning:layoutItem size="1">
+                            <div class="sideButtons">
+                                <lightning:buttonIcon iconName="utility:chevronleft" onclick="{!c.goLeft}"
+                                                      alternativeText=""/>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="10" padding="around-small" flexibility="auto">
+                            <div aura:id="wrapper">
+                                <ui:scrollerWrapper class="scroll_wrapper" aura:id="scroll_wrapper">
+                                    <div class="inner_container" aura:id="inner"
+                                         style="{! 'width:'+v.images.length * 150 +'px;'}">
+                                        <lightning:layout class="inner_container" horizontalAlign="center"
+                                                          verticalAlign="center">
+                                            <aura:iteration var="image" items="{!v.images}" indexVar="index">
+                                                <lightning:layoutItem>
+                                                    <img class="img_element" alt="" data-index="{!index}"
+                                                         src="{!image}" onclick="{!c.openImage}"/>
+                                                </lightning:layoutItem>
+                                            </aura:iteration>
+                                        </lightning:layout>
+                                    </div>
+                                </ui:scrollerWrapper>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="1">
+                            <div class="sideButtons">
+                                <lightning:buttonIcon iconName="utility:chevronright" onclick="{!c.goRight}"
+                                                      alternativeText=""/>
+                            </div>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+        <aura:if isTrue="{!v.isOpen}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{!c.closeModel}"
+                                              alternativeText=""
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
                         <div>
-                            <img src="{!v.selectedImage}" width="1000" class="image"/>
+                            <div>
+                                <img src="{!v.selectedImage}" width="1000" class="image"/>
+                            </div>
                         </div>
-                    </div>
-                </header>
-            </div>
-        </section>
-        <div class="slds-backdrop slds-backdrop_open"></div>
-    </aura:if>
+                    </header>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+
 </aura:component>
