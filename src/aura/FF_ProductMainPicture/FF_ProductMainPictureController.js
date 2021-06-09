@@ -13,8 +13,11 @@
        action.setCallback(this, function(response) {
            let state = response.getState();
            if(state === 'SUCCESS') {
-               component.set("v.pictureId", response.getReturnValue());
-               console.log('Picture Id: ' + component.get("v.pictureId"));
+               component.set("v.contentVersionId", response.getReturnValue());
+               console.log('Picture Id: ' + component.get("v.contentVersionId"));
+           }else{
+               let error = response.getError();
+               console.log("Failed with state: " + state + ' Error: ' + error[0].message);
            }
        });
         $A.enqueueAction(action);
