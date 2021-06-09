@@ -1,0 +1,17 @@
+<aura:component controller="FF_SearchController" description="FF_Tile">
+    <aura:attribute name="product" type="Product2"/>
+    <aura:attribute name="contentVersionId" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <lightning:button class="tile" onclick="{!c.onClick}">
+        <div style="{!'background-image:url(\'/sfc/servlet.shepherd/version/download/' + v.contentVersionId + '\')'}" class="innertile">
+            <aura:if isTrue="{!v.contentVersionId==null}">
+                <img style="max-height: 200px; object-fit: contain;" src="{!$Resource.no_image_square}"/>
+            </aura:if>
+            <div class="lower-third">
+                <h1 class="slds-truncate">{!v.product.Name}</h1>
+            </div>
+        </div>
+    </lightning:button>
+
+</aura:component>

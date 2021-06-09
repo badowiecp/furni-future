@@ -1,11 +1,10 @@
 ({
 
     getProductTemplate : function(component, event, recordTypeId){
-        // Prepare a new record from template
         component.find("newProductData").getNewRecord(
-            "Product2", // sObject type (objectApiName)
-            recordTypeId,      // recordTypeId
-            false,     // skip cache?
+            "Product2",
+            recordTypeId,
+            false,
             $A.getCallback(function() {
                 var rec = component.get("v.newProduct");
                 var error = component.get("v.newProductError");

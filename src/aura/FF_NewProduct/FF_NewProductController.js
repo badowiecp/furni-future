@@ -8,7 +8,6 @@
         component.set("v.showSpinner",true);
         component.find("newProductData").saveRecord(function(saveResult) {
             if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
-                // record is saved successfully
                 let resultsToast = $A.get("e.force:showToast");
                 resultsToast.setParams({
                     "title": "Saved",
@@ -22,7 +21,7 @@
             } else if (saveResult.state === "INCOMPLETE") {
                 console.log("User is offline, device doesn't support drafts.");
             } else if (saveResult.state === "ERROR") {
-                console.log('Problem saving contact, error: ' + JSON.stringify(saveResult.error));
+                console.log('Problem saving product, error: ' + JSON.stringify(saveResult.error));
             } else {
                 console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
             }
@@ -67,7 +66,7 @@
     handleUpload : function(component,event,helper){
         let files = event.getSource().get("v.files");
         console.log(files);
-        let fileWrappers = component.get("v.fileWrappers");
+        let fileWrappers = [];
         console.log('Empty fileWrappers array: ' + fileWrappers);
         for(let i = 0; i < files.length; i++){
             let fileReader = new FileReader();
@@ -92,19 +91,15 @@
     },
 
     handleSetMain : function(component,event,helper){
-        //Gets the checkbox group based on the checkbox id
         let availableCheckboxes = component.find('checkbox');
         let resetCheckboxValue  = false;
         if (Array.isArray(availableCheckboxes)) {
-            //If more than one checkbox available then individually resets each checkbox
             availableCheckboxes.forEach(function(checkbox) {
                 checkbox.set('v.value', resetCheckboxValue);
             });
         } else {
-            //if only one checkbox available then it will be unchecked
             availableCheckboxes.set('v.value', resetCheckboxValue);
         }
-        //mark the current checkbox selection as checked
         event.getSource().set("v.value",true);
     },
 

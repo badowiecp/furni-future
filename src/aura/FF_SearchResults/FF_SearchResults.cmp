@@ -1,0 +1,59 @@
+<aura:component controller="FF_SearchController" description="FF_SearchResults">
+    <aura:attribute name="products" type="Product2[]"/>
+    <aura:attribute name="content" type="String" required="true"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1"/>
+    <aura:attribute name="totalPages" type="Integer" default="1"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="recordsPerPage" type="Integer"/>
+    <aura:attribute name="query" type="String"/>
+    <aura:attribute name="productFamily" type="String"/>
+    <aura:attribute name="recordType" type="String"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:method name="search" action="{!c.doSearch}">
+        <aura:attribute name="query" type="String"/>
+        <aura:attribute name="recordType" type="String"/>
+        <aura:attribute name="productFamily" type="String"/>
+    </aura:method>
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading"/>
+    </aura:if>
+
+            <aura:if isTrue="{!v.totalRecords>0}">
+                <aura:if isTrue="{!v.content=='products'}">
+                    <div class="container">
+                        <aura:iteration items="{!v.products}" var="product">
+                            <div class="item">
+                                <c:FF_Tile product="{!product}"/>
+                            </div>
+                        </aura:iteration>
+                    </div>
+                </aura:if>
+            </aura:if>
+            <aura:if isTrue="{!v.totalRecords==0}">
+                <p class="slds-align_absolute-center">{!'No ' + v.content + ' found'}</p>
+            </aura:if>
+
+    <div class="slds-p-around_small" style="display: flex; justify-content: space-between;">
+        <div style="display: inline-block;">
+            <ui:inputSelect aura:id="recordsPerPage" value="{!v.recordsPerPage}" label="Records per page:" change="{!c.onSelectChange}">
+                <ui:inputSelectOption text="7" label="7"/>
+                <ui:inputSelectOption text="14" label="14" value="true"/>
+                <ui:inputSelectOption text="21" label="21"/>
+            </ui:inputSelect>
+
+        </div>
+
+        <div style="display: inline-block;">
+            <lightning:buttonGroup class="slds-p-top_small">
+                <lightning:button variant="brand" disabled="{!v.pageNumber == 1}" label="First" onclick="{!c.navigateToFirst}"/>
+                <lightning:button variant="brand" disabled="{!v.pageNumber == 1}" label="Previous" onclick="{!c.navigate}"/>
+                <lightning:button label="{!'Showing page ' + v.pageNumber + ' of ' + v.totalPages}"/>
+                <lightning:button variant="brand" disabled="{!v.pageNumber == v.totalPages}" label="Next" onclick="{!c.navigate}"/>
+                <lightning:button variant="brand" disabled="{!v.pageNumber == v.totalPages}" label="Last" onclick="{!c.navigateToLast}"/>
+            </lightning:buttonGroup>
+        </div>
+    </div>
+
+</aura:component>

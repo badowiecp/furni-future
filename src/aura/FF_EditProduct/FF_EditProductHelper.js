@@ -48,7 +48,7 @@
                 console.log('Successfully saved images')
             }else{
                 let error = response.getError();
-                console.log("Failed with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);
+                console.log("Failed image save with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);
             }
         });
         $A.enqueueAction(action);
@@ -77,6 +77,32 @@
           images.splice(index, 1);
         }
         component.set("v.fileWrappers",images);
+    },
+
+    setMain : function(component,event){
+        let action = component.get("c.setMainContentVersion");
+        action.setParams({
+            "productId": component.get("v.recordId"),
+            "files": component.get("v.currentFileWrappers")
+        });
+        console.log('ProductId: ' + component.get("v.recordId"));
+        console.log('Params set');
+        action.setCallback(this, function(response) {
+            let state = response.getState();
+            if (state === "SUCCESS"){
+                let navEvt = $A.get("e.force:navigateToSObject");
+                navEvt.setParams({
+                  "recordId": component.get("v.recordId"),
+                  "slideDevName": "related"
+                });
+                navEvt.fire();
+                console.log('Successfully set main')
+            }else{
+                let error = response.getError();
+                console.log("Failed set main with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);
+            }
+        });
+        $A.enqueueAction(action);
     }
 
 })

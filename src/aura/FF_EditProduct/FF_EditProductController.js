@@ -18,7 +18,7 @@
                     helper.deleteImages(component,event);
                 }
                 helper.saveImages(component,component.get("v.fileWrappers"));
-
+                helper.setMain(component);
                 console.log("Save completed successfully.");
                 let resultsToast = $A.get("e.force:showToast");
                 resultsToast.setParams({
@@ -56,19 +56,15 @@
     },
 
     handleSetMain : function(component,event,helper){
-        //Gets the checkbox group based on the checkbox id
         let availableCheckboxes = component.find('checkbox');
         let resetCheckboxValue  = false;
         if (Array.isArray(availableCheckboxes)) {
-            //If more than one checkbox available then individually resets each checkbox
             availableCheckboxes.forEach(function(checkbox) {
                 checkbox.set('v.value', resetCheckboxValue);
             });
         } else {
-            //if only one checkbox available then it will be unchecked
             availableCheckboxes.set('v.value', resetCheckboxValue);
         }
-        //mark the current checkbox selection as checked
         event.getSource().set("v.value",true);
     },
 
@@ -81,7 +77,7 @@
             let fileReader = new FileReader();
             fileReader.readAsDataURL(files[i]);
             let isMain = false;
-            if(component.get("v.currentFileWrappers").length==0){
+            if(component.get("v.currentFileWrappers").length==0 && i == 0){
                 isMain = true;
             }
             fileReader.onload = function () {

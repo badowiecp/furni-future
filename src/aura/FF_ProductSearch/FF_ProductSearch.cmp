@@ -1,0 +1,11 @@
+<aura:component implements="flexipage:availableForAllPageTypes" description="FF_ProductSearch">
+    <ltng:require styles="{!$Resource.Global_Search_Hide}"/>
+    <ltng:require styles="{!$Resource.NoPageHeader}"/>
+    <aura:handler name="Search" event="c:FF_SearchEvent" action="{!c.onProductSearch}"/>
+
+    <lightning:card class="slds-p-horizontal_xx-small" variant="narrow">
+        <c:FF_SearchForm searchFor="products"/>
+        <c:FF_SearchResults content="products" aura:id="productSearchResults"/>
+    </lightning:card>
+
+</aura:component>

@@ -29,6 +29,7 @@
                     <lightning:input value="{!v.productFields.IsActive}" type="checkbox" variant="label-stacked" label="Active" class="slds-size--1-of-2 slds-p-horizontal_small" />
                     <lightning:input value="{!v.productFields.ProductCode}" label="Product Code" class="slds-size--1-of-2 slds-p-horizontal_small" />
                     <lightning:select value="{!v.productFields.Family}" label="Product Family" class="slds-size--1-of-2 slds-p-horizontal_small">
+                        <option value="">Select</option>
                         <aura:iteration items="{!v.productFamilyPicklist}" var="item">
                             <aura:if isTrue="{!v.productFields.Family == item }">
                                 <option value="{!item}" selected="selected">{!item}</option>
@@ -43,39 +44,33 @@
                     <lightning:input value="{!v.productFields.Dimensions__c}" label="Dimensions" class="slds-size--1-of-2 slds-p-horizontal_small"/>
                     <lightning:input value="{!v.productFields.Materials__c}" label="Materials" class="slds-size--1-of-2 slds-p-horizontal_small"/>
 
-<!--                    <img class="preview" src="{!'/sfc/servlet.shepherd/version/download/' + v.detailImage1.Id}"/>-->
-
                     <div class="slds-size--1-of-1 slds-align_absolute-center slds-p-horizontal_small">
                         <lightning:input type="file" name="file" label="Add photos"
                                          accept="image/png, image/jpg, image/jpeg" multiple="true"
                                          onchange="{!c.handleUpload}"/>
                     </div>
 
-                    <div class="slds-size--1-of-1 slds-p-horizontal_small">
-                        <div class="slds-align_absolute-center">
+                    <div class="slds-size--1-of-1 slds-p-horizontal_small slds-align_absolute-center">
+                        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; align-items: baseline; padding: 0 5px;">
                             <aura:iteration items="{!v.currentFileWrappers}" var="wrapper">
-                                <div class="preview slds-box_border" style="margin: 10px; width: 200px;">
+                                <div class="slds-box_border" style="margin: 10px; width: 200px;">
                                     <img class="preview slds-box_border" src="{!'/sfc/servlet.shepherd/version/download/' + wrapper.contentVersionId}"/>
-                                    <div style="margin: 5px 0; display: flex; flex-wrap: wrap; justify-content: space-around;">
-                                        <ui:inputCheckbox aura:id="checkbox"  value="{!wrapper.isMain}" label="Select main" name="{!index}" change="{!c.handleSetMain}" />
+                                    <div style="margin: 5px 0; display: flex; flex-wrap: wrap; justify-content: space-around; align-items: baseline;">
+                                        <ui:inputCheckbox class="checkbox" aura:id="checkbox"  value="{!wrapper.isMain}" label="Select main" name="{!index}" change="{!c.handleSetMain}" />
                                         <lightning:button value="{!wrapper}" label="Delete" onclick="{!c.handleDeleteCurrent}"/>
                                     </div>
                                 </div>
                             </aura:iteration>
                             <aura:iteration items="{!v.fileWrappers}" var="fileWrapper" indexVar="index">
                                 <div class="preview slds-box_border" style="margin: 10px; width: 200px;">
-                                    <img class="preview" src="{!fileWrapper.filePreview}"/>
-                                    <div style="margin: 5px 0; display: flex; flex-wrap: wrap; justify-content: space-around;">
-                                        <ui:inputCheckbox aura:id="checkbox" value="{!fileWrapper.isMain}" label="Select main" name="{!index}" change="{!c.handleSetMain}"/>
+                                    <img class="preview slds-box_border" src="{!fileWrapper.filePreview}"/>
+                                    <div style="margin: 5px 0; display: flex; flex-wrap: wrap; justify-content: space-around; align-items: baseline;">
+                                        <ui:inputCheckbox class="checkbox" aura:id="checkbox" value="{!fileWrapper.isMain}" label="Select main" name="{!index}" change="{!c.handleSetMain}"/>
                                         <lightning:button value="{!fileWrapper}" label="Delete" onclick="{!c.handleDeleteNew}"/>
                                     </div>
                                 </div>
                             </aura:iteration>
                         </div>
-
-<!--                        <div class="preview slds-align_absolute-center" style="width: 200px;">-->
-<!--                            -->
-<!--                        </div>-->
                     </div>
 
                 </div>

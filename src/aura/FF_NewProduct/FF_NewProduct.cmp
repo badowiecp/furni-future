@@ -33,6 +33,7 @@
                 <aura:if isTrue="{!v.recordTypeSelect==null}">
                     <div aura:id="recordTypePick">
                         <ui:inputSelect aura:id="selectid">
+                            <ui:inputSelectOption text="" label="Select type"/>
                             <aura:iteration items="{!v.recordTypes}" var="recordType">
                                 <ui:inputSelectOption text="{!recordType}" label="{!recordType}"/>
                             </aura:iteration>
@@ -53,6 +54,7 @@
                                                  class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
                                 <lightning:select value="{!v.productFields.Family}" label="Product Family"
                                                   class="slds-size--1-of-2 slds-p-horizontal_xx-small">
+                                    <option value="">Select</option>
                                     <aura:iteration items="{!v.productFamilyPicklist}" var="item">
                                         <option value="{!item}">{!item}</option>
                                     </aura:iteration>
@@ -71,16 +73,17 @@
                                                      accept="image/png, image/jpg, image/jpeg" multiple="true"
                                                      onchange="{!c.handleUpload}"/>
                                 </div>
-                                <div class="slds-size--1-of-1 slds-align_absolute-center slds-p-horizontal_xx-small">
-                                    <aura:iteration items="{!v.fileWrappers}" var="fileWrapper" indexVar="index">
-                                        <div class="preview slds-box_border" style="margin: 10px; width: 200px;">
-                                            <img class="preview slds-box_border" src="{!fileWrapper.filePreview}"/>
-                                            <div style="margin: 5px 0; display: flex; flex-wrap: wrap; justify-content: space-around;">
-                                            <ui:inputCheckbox aura:id="checkbox" value="{!fileWrapper.isMain}" label="Select main" name="{!index}" change="{!c.handleSetMain}" />
-                                                <!--                                            <lightning:button value="{!fileWrapper}" label="Delete" onclick="{!c.handleDeleteNew}"/>-->
+                                <div class="slds-size--1-of-1 slds-p-horizontal_xx-small">
+                                    <div class="slds-align_absolute-center" style="display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; align-items: baseline; padding: 0 5px;">
+                                        <aura:iteration items="{!v.fileWrappers}" var="fileWrapper" indexVar="index">
+                                            <div class="preview slds-box_border" style="margin: 10px; width: 200px;">
+                                                <img class="preview slds-box_border" src="{!fileWrapper.filePreview}"/>
+                                                <div style="margin: 5px 0; display: flex; flex-wrap: wrap; justify-content: space-around;">
+                                                    <ui:inputCheckbox class="checkbox" aura:id="checkbox" value="{!fileWrapper.isMain}" label="Select main" name="{!index}" change="{!c.handleSetMain}" />
+                                                </div>
                                             </div>
-                                        </div>
-                                    </aura:iteration>
+                                        </aura:iteration>
+                                    </div>
                                 </div>
                             </div>
                         </div>
