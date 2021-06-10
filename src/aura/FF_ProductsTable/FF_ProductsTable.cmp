@@ -3,8 +3,8 @@
     <lightning:overlayLibrary aura:id="overlayLib"/>
     <aura:attribute name="products" type="Product2[]"/>
     <aura:attribute name="currentPage" type="Integer" default="1"/>
-    <aura:attribute name="totalPages" type="Integer" description="Display Page Number"/>
-    <aura:attribute name="totalRecords" type="Integer" description="Total Number of Records"/>
+    <aura:attribute name="totalPages" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
     <aura:attribute name="pagination" type="Integer"/>
     <aura:attribute name="columns" type="List"/>
     <aura:attribute name="sortDirection" type="String" default="asc" />
@@ -52,8 +52,8 @@
             <div style="display: inline-block;">
                 <ui:inputSelect aura:id="recordSize" value="{!v.pagination}" label="{!$Label.c.FF_Records_per_page + ':'}" change="{!c.onSelectChange}">
                     <ui:inputSelectOption text="5" label="5"/>
-                    <ui:inputSelectOption text="10" label="10" value="true"/>
-                    <ui:inputSelectOption text="15" label="15"/>
+                    <ui:inputSelectOption text="10" label="10"/>
+                    <ui:inputSelectOption text="15" label="15" value="true"/>
                 </ui:inputSelect>
             </div>
 
