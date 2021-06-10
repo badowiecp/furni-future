@@ -20,13 +20,13 @@
                 </aura:iteration>
             </ui:inputSelect>
 
-            <ui:inputSelect class="slds-show_inline-block slds-m-horizontal_medium dropdown" aura:id="productFamilySelect" change="{!c.handleProductFamilySelect}">
+            <ui:inputSelect class="slds-show_inline-block dropdown" aura:id="productFamilySelect" change="{!c.handleProductFamilySelect}">
                 <ui:inputSelectOption text="" label="Select product type"/>
                 <aura:iteration items="{!v.productFamilyPicklist}" var="item">
                     <ui:inputSelectOption text="{!item}" label="{!item}"/>
                 </aura:iteration>
             </ui:inputSelect>
-            <lightning:button class="slds-m-horizontal_xxx-small" variant="brand" label="Search" onclick="{!c.onSearch}"/>
+            <lightning:button class="slds-m-horizontal_medium" variant="brand" label="Search" onclick="{!c.onSearch}"/>
         </lightning:layout>
     </form>
 

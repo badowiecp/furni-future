@@ -20,22 +20,22 @@
         <lightning:spinner alternativeText="Loading"/>
     </aura:if>
 
-            <aura:if isTrue="{!v.totalRecords>0}">
-                <aura:if isTrue="{!v.content=='products'}">
-                    <div class="container">
-                        <aura:iteration items="{!v.products}" var="product">
-                            <div class="item">
-                                <c:FF_Tile product="{!product}"/>
-                            </div>
-                        </aura:iteration>
+    <aura:if isTrue="{!v.totalRecords>0}">
+        <aura:if isTrue="{!v.content=='products'}">
+            <div class="container">
+                <aura:iteration items="{!v.products}" var="product">
+                    <div class="item">
+                        <c:FF_Tile product="{!product}"/>
                     </div>
-                </aura:if>
-            </aura:if>
-            <aura:if isTrue="{!v.totalRecords==0}">
-                <p class="slds-align_absolute-center">{!'No ' + v.content + ' found'}</p>
-            </aura:if>
+                </aura:iteration>
+            </div>
+        </aura:if>
+    </aura:if>
+    <aura:if isTrue="{!v.totalRecords==0}">
+        <p class="slds-align_absolute-center">{!'No ' + v.content + ' found'}</p>
+    </aura:if>
 
-    <div class="slds-p-around_small" style="display: flex; justify-content: space-between;">
+    <div class="slds-p-around_small" style="{!if(v.totalRecords==0,'display: none;','display: flex; justify-content: space-between;')}">
         <div style="display: inline-block;">
             <ui:inputSelect aura:id="recordsPerPage" value="{!v.recordsPerPage}" label="Records per page:" change="{!c.onSelectChange}">
                 <ui:inputSelectOption text="7" label="7"/>
@@ -55,5 +55,4 @@
             </lightning:buttonGroup>
         </div>
     </div>
-
 </aura:component>
