@@ -1,0 +1,59 @@
+<aura:component controller="FF_RatingController" description="FF_RatingFeed" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="productId" type="String"/>
+    <aura:attribute name="ratings" type="FF_Product_Rating__c[]"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:method access="public" name="refresh" action="{!c.doInit}"/>
+
+
+    <div class="slds-box slds-box_border" style="margin-bottom: 10px;">
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <span class="slds-page-header__title slds-truncate">Opinions</span>
+                </div>
+            </div>
+        </div>
+        <ui:scrollerWrapper class="slds-feed scrollerSize">
+            <ul class="slds-feed__list">
+                <aura:iteration items="{!v.ratings}" var="rating">
+                    <li class="slds-feed__item">
+                        <article class="slds-post slds-border_bottom">
+                            <header class="slds-post__header slds-media">
+                                <div class="slds-media__figure slds-avatar slds-avatar_circle">
+                                    <img src="{!rating.CreatedBy.SmallPhotoUrl}"/>
+                                </div>
+                                <div class="slds-media__body">
+                                    <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                        <p>{!rating.CreatedBy.Name}</p>
+                                    </div>
+                                    <p class="slds-text-body_small">
+                                        <lightning:formattedDateTime value="{!rating.CreatedDate}"/>
+                                    </p>
+                                </div>
+                            </header>
+                            <aura:if isTrue="{!rating.FF_Score__c!=null}">
+                                <div class="slds-post__content">
+                                    <h3 class="slds-text-heading_small">Score: </h3>
+                                    <c:FF_RatingStars value="{!rating.FF_Score__c}" readonly="true"/>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!rating.FF_Comment__c!=null}">
+                                <div class="slds-post__content">
+                                    <h3 class="slds-text-heading_small">Comment: </h3>
+                                    <lightning:formattedRichText value="{!rating.FF_Comment__c}"/>
+                                </div>
+                            </aura:if>
+                        </article>
+                    </li>
+                </aura:iteration>
+            </ul>
+
+            <aura:if isTrue="{!v.ratings.length==0}">
+                <div class="scrollerSize" style="display: flex; justify-content: center; align-items: center;">
+                    <span style="text-align: center; width:70%;">Nobody has rated nor gave opinion yet, be the first, give your thoughts below!</span>
+                </div>
+            </aura:if>
+        </ui:scrollerWrapper>
+    </div>
+
+</aura:component>
