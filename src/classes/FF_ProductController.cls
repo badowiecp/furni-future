@@ -87,7 +87,11 @@ public with sharing class FF_ProductController {
         for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId]){
             documentIds.add(link.ContentDocumentId);
         }
-        String contentVersionId = [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE Title = 'main' AND ContentDocumentId IN :documentIds LIMIT 1].Id;
+        String contentVersionId = null;
+        List<ContentVersion> contentVersions = [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE Title = 'main' AND ContentDocumentId IN :documentIds LIMIT 1];
+        if(!contentVersions.isEmpty()){
+            contentVersionId = contentVersions[0].Id;
+        }
         System.debug(contentVersionId);
         return contentVersionId;
     }

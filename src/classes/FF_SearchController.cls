@@ -10,8 +10,6 @@ public with sharing class FF_SearchController {
         queryString += ' LIMIT ' + recordsPerPage + ' OFFSET ' + ((pageNumber - 1) * recordsPerPage);
         productSearchResponse.records = Database.query(queryString);
         productSearchResponse.totalPages = Integer.valueOf(Math.ceil((Decimal)productSearchResponse.totalRecords/(Decimal)recordsPerPage));
-        System.debug('Total pages: ' + productSearchResponse.totalPages);
-        System.debug('Records: ' + productSearchResponse.records);
         return productSearchResponse;
     }
 
