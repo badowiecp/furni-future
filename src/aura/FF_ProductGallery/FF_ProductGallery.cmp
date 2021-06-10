@@ -1,4 +1,4 @@
-<aura:component description="FF_ProductGallery" controller="FF_ProductController" implements="flexipage:availableForAllPageTypes,force:hasRecordId">
+<aura:component description="FF_ProductGallery" controller="FF_ProductController" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
     <aura:attribute name="position" type="Integer" default="1"/>
     <aura:attribute name="maxPosition" type="Integer" default="1"/>
     <aura:attribute name="totalWidth" type="Integer" default="1000"/>

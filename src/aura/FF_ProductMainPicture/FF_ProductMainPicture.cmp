@@ -1,4 +1,4 @@
-<aura:component controller="FF_ProductController" implements="flexipage:availableForAllPageTypes,force:hasRecordId" description="FF_ProductMainPicture">
+<aura:component controller="FF_ProductController" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes" description="FF_ProductMainPicture">
     <aura:attribute name="contentVersionId" type="String"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
