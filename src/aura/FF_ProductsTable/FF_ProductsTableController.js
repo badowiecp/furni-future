@@ -2,10 +2,10 @@
 
     init: function (component, event, helper) {
         component.set('v.columns', [
-            {label: 'Product Name', fieldName: 'Product_Name_Link__c', type: 'url', typeAttributes: {label: { fieldName: 'Name' }, target: '_blank'}},
-            {label: 'Space Type', fieldName: 'Record_Type_Name__c', type: 'text'},
-            {label: 'Product Type', fieldName: 'Family', type: 'text'},
-            {label: 'Description', fieldName: 'Description', type: 'text'},
+            {label: $A.get("$Label.c.FF_Product_Name"), fieldName: 'Product_Name_Link__c', type: 'url', typeAttributes: {label: { fieldName: 'Name' }, target: '_blank'}},
+            {label: $A.get("$Label.c.FF_Space_Type"), fieldName: 'Record_Type_Name__c', type: 'text'},
+            {label: $A.get("$Label.c.FF_Product_Type"), fieldName: 'Family', type: 'text'},
+            {label: $A.get("$Label.c.FF_Description"), fieldName: 'Description', type: 'text'},
         ]);
 
         let page = component.get("v.currentPage");
@@ -17,7 +17,7 @@
         let page = component.get("v.currentPage") || 1;
         let direction = event.getSource().get("v.label");
         let recordToDisplay = component.find("recordSize").get("v.value");
-        page = direction === "Previous Page" ? (page - 1) : (page + 1);
+        page = direction === $A.get("$Label.c.FF_Previous_Page") ? (page - 1) : (page + 1);
         helper.getProducts(component, page, recordToDisplay);
     },
 
@@ -48,7 +48,7 @@
                 modalBody = components[0];
                 modalFooter = components[1];
                 component.find('overlayLib').showCustomModal({
-                   header: "New Product",
+                   header: $A.get("$Label.c.FF_New_product"),
                    body: modalBody,
                    footer: modalFooter,
                    showCloseButton: true,

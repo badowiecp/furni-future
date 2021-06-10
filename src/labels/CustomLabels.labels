@@ -931,4 +931,102 @@
         <shortDescription>Wrong file format, please upload a csv file</shortDescription>
         <value>Wrong file format, please upload a csv file</value>
     </labels>
+    <labels>
+        <fullName>FF_New_Product</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New Product</shortDescription>
+        <value>New Product</value>
+    </labels>
+    <labels>
+        <fullName>FF_Products</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Products</shortDescription>
+        <value>Products</value>
+    </labels>
+    <labels>
+        <fullName>FF_New</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New</shortDescription>
+        <value>New</value>
+    </labels>
+    <labels>
+        <fullName>FF_Product_Name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Product Name</shortDescription>
+        <value>Product Name</value>
+    </labels>
+    <labels>
+        <fullName>FF_Space_Type</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Space Type</shortDescription>
+        <value>Space Type</value>
+    </labels>
+    <labels>
+        <fullName>FF_Product_Type</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Product Type</shortDescription>
+        <value>Product Type</value>
+    </labels>
+    <labels>
+        <fullName>FF_Description</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Description</shortDescription>
+        <value>Description</value>
+    </labels>
+    <labels>
+        <fullName>FF_First_Page</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>First Page</shortDescription>
+        <value>First Page</value>
+    </labels>
+    <labels>
+        <fullName>FF_Previous_Page</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Previous Page</shortDescription>
+        <value>Previous Page</value>
+    </labels>
+    <labels>
+        <fullName>FF_Next_Page</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Next Page</shortDescription>
+        <value>Next Page</value>
+    </labels>
+    <labels>
+        <fullName>FF_Last_Page</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Last Page</shortDescription>
+        <value>Last Page</value>
+    </labels>
+    <labels>
+        <fullName>FF_Showing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Showing</shortDescription>
+        <value>Showing</value>
+    </labels>
+    <labels>
+        <fullName>FF_of</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>of</shortDescription>
+        <value>of</value>
+    </labels>
+    <labels>
+        <fullName>FF_Records_per_page</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Records per page</shortDescription>
+        <value>Records per page</value>
+    </labels>
 </CustomLabels>
