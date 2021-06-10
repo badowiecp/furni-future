@@ -11,22 +11,22 @@
     <c:FF_PicklistValues aura:id="familyPicklist" sObjectName="Product2" fieldName="Family" picklistValues="{!v.productFamilyPicklist}"/>
     <form style="margin-bottom: 10px;">
         <lightning:layout horizontalAlign="center">
-            <lightning:input class="label-hidden" label="Search" type="search" value="{!v.query}" placeholder="{!'Search for ' + v.searchFor}"/>
+            <lightning:input class="label-hidden" label="Search" type="search" value="{!v.query}" placeholder="{!$Label.c.FF_Search_for + ' ' + v.searchFor}"/>
 
             <ui:inputSelect class="slds-show_inline-block slds-m-horizontal_medium dropdown" aura:id="recordTypeSelect" change="{!c.handleRecordTypeSelect}">
-                <ui:inputSelectOption text="" label="Select space type"/>
+                <ui:inputSelectOption text="" label="{!$Label.c.FF_Select_space_type}"/>
                 <aura:iteration items="{!v.recordTypes}" var="item">
                     <ui:inputSelectOption text="{!item}" label="{!item}"/>
                 </aura:iteration>
             </ui:inputSelect>
 
             <ui:inputSelect class="slds-show_inline-block dropdown" aura:id="productFamilySelect" change="{!c.handleProductFamilySelect}">
-                <ui:inputSelectOption text="" label="Select product type"/>
+                <ui:inputSelectOption text="" label="{!$Label.c.FF_Select_product_type}"/>
                 <aura:iteration items="{!v.productFamilyPicklist}" var="item">
                     <ui:inputSelectOption text="{!item}" label="{!item}"/>
                 </aura:iteration>
             </ui:inputSelect>
-            <lightning:button class="slds-m-horizontal_medium" variant="brand" label="Search" onclick="{!c.onSearch}"/>
+            <lightning:button class="slds-m-horizontal_medium" variant="brand" label="{!$Label.c.FF_Search}" onclick="{!c.onSearch}"/>
         </lightning:layout>
     </form>
 

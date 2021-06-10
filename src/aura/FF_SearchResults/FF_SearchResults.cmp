@@ -17,7 +17,7 @@
     </aura:method>
 
     <aura:if isTrue="{!v.showSpinner}">
-        <lightning:spinner alternativeText="Loading"/>
+        <lightning:spinner alternativeText="{!$Label.c.FF_Loading}"/>
     </aura:if>
 
     <aura:if isTrue="{!v.totalRecords>0}">
@@ -32,26 +32,25 @@
         </aura:if>
     </aura:if>
     <aura:if isTrue="{!v.totalRecords==0}">
-        <p class="slds-align_absolute-center">{!'No ' + v.content + ' found'}</p>
+        <p class="slds-align_absolute-center">{!$Label.c.FF_No_products_found}</p>
     </aura:if>
 
     <div class="slds-p-around_small" style="{!if(v.totalRecords==0,'display: none;','display: flex; justify-content: space-between;')}">
         <div style="display: inline-block;">
-            <ui:inputSelect aura:id="recordsPerPage" value="{!v.recordsPerPage}" label="Records per page:" change="{!c.onSelectChange}">
+            <ui:inputSelect aura:id="recordsPerPage" value="{!v.recordsPerPage}" label="{!$Label.c.FF_Records_per_page}" change="{!c.onSelectChange}">
                 <ui:inputSelectOption text="7" label="7"/>
-                <ui:inputSelectOption text="14" label="14" value="true"/>
-                <ui:inputSelectOption text="21" label="21"/>
+                <ui:inputSelectOption text="14" label="14"/>
+                <ui:inputSelectOption text="21" label="21" value="true"/>
             </ui:inputSelect>
-
         </div>
 
         <div style="display: inline-block;">
             <lightning:buttonGroup class="slds-p-top_small">
-                <lightning:button variant="brand" disabled="{!v.pageNumber == 1}" label="First" onclick="{!c.navigateToFirst}"/>
-                <lightning:button variant="brand" disabled="{!v.pageNumber == 1}" label="Previous" onclick="{!c.navigate}"/>
-                <lightning:button label="{!'Showing page ' + v.pageNumber + ' of ' + v.totalPages}"/>
-                <lightning:button variant="brand" disabled="{!v.pageNumber == v.totalPages}" label="Next" onclick="{!c.navigate}"/>
-                <lightning:button variant="brand" disabled="{!v.pageNumber == v.totalPages}" label="Last" onclick="{!c.navigateToLast}"/>
+                <lightning:button variant="brand" disabled="{!v.pageNumber == 1}" label="{!$Label.c.FF_First}" onclick="{!c.navigateToFirst}"/>
+                <lightning:button variant="brand" disabled="{!v.pageNumber == 1}" label="{!$Label.c.FF_Previous}" onclick="{!c.navigate}"/>
+                <lightning:button label="{!$Label.c.FF_Showing + ' ' + v.pageNumber + ' ' + $Label.c.FF_of + ' ' + v.totalPages}"/>
+                <lightning:button variant="brand" disabled="{!v.pageNumber == v.totalPages}" label="{!$Label.c.FF_Next}" onclick="{!c.navigate}"/>
+                <lightning:button variant="brand" disabled="{!v.pageNumber == v.totalPages}" label="{!$Label.c.FF_Last}" onclick="{!c.navigateToLast}"/>
             </lightning:buttonGroup>
         </div>
     </div>

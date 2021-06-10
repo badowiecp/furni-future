@@ -19,14 +19,16 @@
                 component.set("v.pageNumber",productsResponse.pageNumber);
                 component.set("v.totalPages",Math.ceil(productsResponse.totalRecords / recordsPerPage));
                 component.set("v.totalRecords",productsResponse.totalRecords);
-                console.log('Products list: ' + productsResponse.records);
-                console.log('Total pages: ' + component.get("v.totalPages"));
-                console.log('Total records: ' + component.get("v.totalRecords"));
-                console.log('Records per page: ' + recordsPerPage);
                 component.set("v.showSpinner", false);
             }else{
                 let error = response.getError();
-                console.log("Failed with state: " + state + ' Error: ' + error[0].message);
+                let resultsToast = $A.get("e.force:showToast");
+                resultsToast.setParams({
+                    "title": $A.get("$Label.FF_Error"),
+                    "message": error[0].message,
+                    "type": "error"
+                });
+                resultsToast.fire();
             }
         });
         $A.enqueueAction(action);

@@ -1029,4 +1029,242 @@
         <shortDescription>Records per page</shortDescription>
         <value>Records per page</value>
     </labels>
+    <labels>
+        <fullName>FF_Cancel</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>FF_Next</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Next</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>FF_Save</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>FF_Product_Information</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Product Information</shortDescription>
+        <value>Product Information</value>
+    </labels>
+    <labels>
+        <fullName>FF_Active</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>FF_Product_Code</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Product Code</shortDescription>
+        <value>Product Code</value>
+    </labels>
+    <labels>
+        <fullName>FF_Product_Family</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Product Family</shortDescription>
+        <value>Product Family</value>
+    </labels>
+    <labels>
+        <fullName>FF_Product_Description</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PProduct Description</shortDescription>
+        <value>Product Description</value>
+    </labels>
+    <labels>
+        <fullName>FF_Color</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Color</shortDescription>
+        <value>Color</value>
+    </labels>
+    <labels>
+        <fullName>FF_Dimensions</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dimensions</shortDescription>
+        <value>Dimensions</value>
+    </labels>
+    <labels>
+        <fullName>FF_Materials</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Materials</shortDescription>
+        <value>Materials</value>
+    </labels>
+    <labels>
+        <fullName>FF_Add_photos</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Add photos</shortDescription>
+        <value>Add photos</value>
+    </labels>
+    <labels>
+        <fullName>FF_Select_main</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select main</shortDescription>
+        <value>Select main</value>
+    </labels>
+    <labels>
+        <fullName>FF_Saved</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Saved</shortDescription>
+        <value>Saved</value>
+    </labels>
+    <labels>
+        <fullName>FF_The_record_was_saved</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>The record was saved</shortDescription>
+        <value>The record was saved</value>
+    </labels>
+    <labels>
+        <fullName>FF_Delete</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Delete</shortDescription>
+        <value>Delete</value>
+    </labels>
+    <labels>
+        <fullName>FF_Search_for</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search for</shortDescription>
+        <value>Search for</value>
+    </labels>
+    <labels>
+        <fullName>FF_Select_space_type</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select space type</shortDescription>
+        <value>Select space type</value>
+    </labels>
+    <labels>
+        <fullName>FF_Select_product_type</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select product type</shortDescription>
+        <value>Select product type</value>
+    </labels>
+    <labels>
+        <fullName>FF_Search</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>FF_First</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>First</shortDescription>
+        <value>First</value>
+    </labels>
+    <labels>
+        <fullName>FF_Previous</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Previous</shortDescription>
+        <value>Previous</value>
+    </labels>
+    <labels>
+        <fullName>FF_Last</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Last</shortDescription>
+        <value>Last</value>
+    </labels>
+    <labels>
+        <fullName>FF_Loading</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Loading</shortDescription>
+        <value>Loading</value>
+    </labels>
+    <labels>
+        <fullName>FF_Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>FF_Could_not_delete_image</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Could not delete image</shortDescription>
+        <value>Could not delete image</value>
+    </labels>
+    <labels>
+        <fullName>FF_Could_not_save_uploaded_images</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Could not save uploaded images</shortDescription>
+        <value>Could not save uploaded images</value>
+    </labels>
+    <labels>
+        <fullName>FF_Error_saving_product</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error saving product</shortDescription>
+        <value>Error saving product</value>
+    </labels>
+    <labels>
+        <fullName>FF_Select</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select</shortDescription>
+        <value>Select</value>
+    </labels>
+    <labels>
+        <fullName>FF_Could_not_save_product</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Could not save product</shortDescription>
+        <value>Could not save product</value>
+    </labels>
+    <labels>
+        <fullName>FF_Warning</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Warning</shortDescription>
+        <value>Warning</value>
+    </labels>
+    <labels>
+        <fullName>FF_Please_select_space_type_first</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Please select space type first</shortDescription>
+        <value>Please select space type first</value>
+    </labels>
+    <labels>
+        <fullName>FF_Could_not_process_file</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Could not process file</shortDescription>
+        <value>Could not process file</value>
+    </labels>
+    <labels>
+        <fullName>FF_No_products_found</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No products found</shortDescription>
+        <value>No products found</value>
+    </labels>
 </CustomLabels>

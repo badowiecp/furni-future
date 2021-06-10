@@ -10,84 +10,90 @@
             if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
                 let resultsToast = $A.get("e.force:showToast");
                 resultsToast.setParams({
-                    "title": "Saved",
-                    "message": "The record was saved."
+                    "title": $A.get("$Label.c.FF_Saved"),
+                    "message": $A.get("$Label.c.FF_The_record_was_saved")
                 });
-
                 let productId = saveResult.recordId;
                 helper.saveImages(component,productId,component.get("v.fileWrappers"));
                 resultsToast.fire();
-
-            } else if (saveResult.state === "INCOMPLETE") {
-                console.log("User is offline, device doesn't support drafts.");
-            } else if (saveResult.state === "ERROR") {
-                console.log('Problem saving product, error: ' + JSON.stringify(saveResult.error));
             } else {
-                console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
+                let resultsToast = $A.get("e.force:showToast");
+                resultsToast.setParams({
+                    "title": $A.get("$Label.c.FF_Error"),
+                    "message": $A.get("$Label.c.FF_Could_not_save_product")
+                });
+                resultsToast.fire();
             }
         });
     },
 
     handleCancel : function (component, event, helper){
         component.find("overlayLib").notifyClose();
-        console.log('Modal closed');
     },
 
     handleNext : function (component, event, helper){
         let recordTypeLabel = component.find("selectid").get("v.value");
-        component.set("v.recordTypeSelect",recordTypeLabel);
+        if(recordTypeLabel!=null && recordTypeLabel!=''){
+            component.set("v.recordTypeSelect",recordTypeLabel);
 
-        let action = component.get("c.getRecTypeId");
-        action.setParams({
-            "recordTypeLabel" : component.get("v.recordTypeSelect")
-        });
-        console.log('Params set: ' + component.get("v.recordTypeSelect"));
-        action.setCallback(this, function(response) {
+            let action = component.get("c.getRecTypeId");
+            action.setParams({
+                "recordTypeLabel" : component.get("v.recordTypeSelect")
+            });
+            action.setCallback(this, function(response) {
 
-            let state = response.getState();
+                let state = response.getState();
 
-            if (state === "SUCCESS"){
-                let recordTypeId = response.getReturnValue();
-                let familyPicklistComponent = component.find("familyPicklist");
-                helper.getProductTemplate(component,event,recordTypeId);
-                try{
+                if (state === "SUCCESS"){
+                    let recordTypeId = response.getReturnValue();
+                    let familyPicklistComponent = component.find("familyPicklist");
+                    helper.getProductTemplate(component,event,recordTypeId);
                     familyPicklistComponent.getPicklistValues(recordTypeId);
-                }catch(error){
-                    console.log(error);
                 }
-                console.log('familyPicklistComponent: ' +  recordTypeId);
-            }else{
-                console.log("Failed with state: " + state);
-            }
-        });
-        $A.enqueueAction(action);
+            });
+            $A.enqueueAction(action);
+        }else{
+            let resultsToast = $A.get("e.force:showToast");
+            resultsToast.setParams({
+                "title": $A.get("$Label.c.FF_Error"),
+                "message": $A.get("$Label.c.FF_Please_select_space_type_first"),
+                "type": "warning"
+            });
+            resultsToast.fire();
+        }
     },
 
     handleUpload : function(component,event,helper){
         let files = event.getSource().get("v.files");
-        console.log(files);
         let fileWrappers = [];
-        console.log('Empty fileWrappers array: ' + fileWrappers);
         for(let i = 0; i < files.length; i++){
             let fileReader = new FileReader();
-            fileReader.readAsDataURL(files[i]);
-            let isMain = false;
-            if(i==0){
-                isMain = true;
-            }
-            fileReader.onload = function () {
-                let fileContentBase64 = fileReader.result.split('base64,')[1];
-                fileWrappers.push({
-                    "fileName" : files[i].name,
-                    "fileBody" : fileContentBase64,
-                    "filePreview" : URL.createObjectURL(files[i]),
-                    "isMain" : isMain
+            try{
+                fileReader.readAsDataURL(files[i]);
+                let isMain = false;
+                if(i==0){
+                    isMain = true;
+                }
+                fileReader.onload = function () {
+                    let fileContentBase64 = fileReader.result.split('base64,')[1];
+                    fileWrappers.push({
+                        "fileName" : files[i].name,
+                        "fileBody" : fileContentBase64,
+                        "filePreview" : URL.createObjectURL(files[i]),
+                        "isMain" : isMain
+                    });
+                    component.set("v.fileWrappers",fileWrappers);
+                }
+            }catch(error){
+                let resultsToast = $A.get("e.force:showToast");
+                resultsToast.setParams({
+                    "title": $A.get("$Label.c.FF_Error"),
+                    "message": $A.get("$Label.c.FF_Could_not_process_file") + " " + files[i].name,
+                    "type": "error"
                 });
-                console.log(JSON.parse(JSON.stringify(fileWrappers)))
-                component.set("v.fileWrappers",fileWrappers);
+                resultsToast.fire();
             }
         }
-        console.log('Files loaded: ' + component.get("v.fileWrappers"));
     },
 
     handleSetMain : function(component,event,helper){
