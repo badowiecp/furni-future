@@ -10,7 +10,6 @@
            let state = response.getState();
            if(component.isValid() && state === 'SUCCESS') {
                component.set("v.images", response.getReturnValue());
-               console.log('Images' + component.get("v.images"));
            }
        });
         $A.enqueueAction(action);
