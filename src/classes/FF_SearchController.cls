@@ -13,7 +13,7 @@ public with sharing class FF_SearchController {
             productSearchResponse.totalPages = Integer.valueOf(Math.ceil((Decimal)productSearchResponse.totalRecords/(Decimal)recordsPerPage));
             return productSearchResponse;
         }catch (Exception exc){
-            throw new AuraHandledException('Cannot search products. Error: ' + exc.getMessage());
+            throw new AuraHandledException(System.Label.FF_Cannot_search_products + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
     }
 
@@ -26,7 +26,7 @@ public with sharing class FF_SearchController {
             }
             return [SELECT Id,Title,ContentDocumentId,PathOnClient FROM ContentVersion WHERE Title = 'main' AND ContentDocumentId IN :linkIds LIMIT 1].Id;
         }catch (Exception exc){
-            throw new AuraHandledException('Cannot get product image info. Error: ' + exc.getMessage());
+            throw new AuraHandledException(System.Label.FF_Cannot_get_product_image_info + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
     }
 

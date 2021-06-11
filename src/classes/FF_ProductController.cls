@@ -11,13 +11,8 @@ public with sharing class FF_ProductController {
             productWrapper.ProductListToDisplay = [SELECT Id,Name,ProductCode,Description,Family,Product_Name_Link__c,RecordType.Name FROM Product2 ORDER BY Name LIMIT :recordToDisplay OFFSET :(pageNumber - 1) * recordToDisplay];
             return productWrapper;
         }catch (Exception exc){
-            throw new AuraHandledException('Cannot retrieve product list. Error: ' + exc.getMessage());
+            throw new AuraHandledException(System.Label.FF_Cannot_retrieve_product_list + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
-    }
-
-    @AuraEnabled
-    public static String queryImageLinkSuffix(){
-        return [SELECT DeveloperName,ContentVersion_preview_url__c FROM Product_Setting__mdt].ContentVersion_preview_url__c;
     }
 
     @AuraEnabled
@@ -47,15 +42,18 @@ public with sharing class FF_ProductController {
 
     @AuraEnabled
     public static void saveDocument(String productId,FileWrapper fileWrapper){
+        ContentVersion contentVers = new ContentVersion();
+        contentVers.ContentLocation = 'S';
+        contentVers.PathOnClient = fileWrapper.fileName;
+        if(fileWrapper.isMain==true){
+            contentVers.Title = 'main';
+        }else{
+            contentVers.Title = 'detail';
+        }
+        ContentDocumentLink contentLink = new ContentDocumentLink();
+        contentLink.ShareType = 'I';
+        contentLink.Visibility = 'AllUsers';
         try{
-            ContentVersion contentVers = new ContentVersion();
-            contentVers.ContentLocation = 'S';
-            contentVers.PathOnClient = fileWrapper.fileName;
-            if(fileWrapper.isMain==true){
-                contentVers.Title = 'main';
-            }else{
-                contentVers.Title = 'detail';
-            }
             contentVers.VersionData = EncodingUtil.base64Decode(fileWrapper.fileBody);
             String existingMain = getMainPicture(productId);
             if(contentVers.Title=='main' && existingMain!=null){
@@ -67,14 +65,12 @@ public with sharing class FF_ProductController {
 
             Id contentDocId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =:contentVers.Id].ContentDocumentId;
 
-            ContentDocumentLink contentLink = new ContentDocumentLink();
             contentLink.ContentDocumentId = contentDocId;
             contentLink.LinkedEntityId = productId;
-            contentLink.ShareType = 'I';
-            contentLink.Visibility = 'AllUsers';
+
             insert contentLink;
         }catch (Exception exc){
-            throw new AuraHandledException('Cannot save file. Error: ' + exc.getMessage());
+            throw new AuraHandledException(System.Label.FF_Cannot_save_file + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
     }
 
@@ -84,7 +80,7 @@ public with sharing class FF_ProductController {
             ContentDocument photo = [SELECT Id,Title FROM ContentDocument WHERE Id = :documentId];
             delete photo;
         }catch (Exception exc){
-            throw new AuraHandledException('Problem deleting image. Error: ' + exc.getMessage());
+            throw new AuraHandledException(System.Label.FF_Problem_deleting_image + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
     }
 
@@ -102,7 +98,7 @@ public with sharing class FF_ProductController {
             }
             return contentVersionId;
         }catch (Exception exc){
-            throw new AuraHandledException('Cannot get main image info. Error: ' + exc.getMessage());
+            throw new AuraHandledException(System.Label.FF_Cannot_get_main_image_info + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
     }
 
@@ -115,7 +111,7 @@ public with sharing class FF_ProductController {
             }
             return [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE ContentDocumentId IN :documentIds];
         }catch (Exception exc){
-            throw new AuraHandledException('Cannot get detail images info. Error: ' + exc.getMessage());
+            throw new AuraHandledException(System.Label.FF_Cannot_get_detail_images_info + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
     }
 
@@ -132,7 +128,7 @@ public with sharing class FF_ProductController {
             }
             return fileWrappers;
         }catch (Exception exc){
-            throw new AuraHandledException('Cannot fetch current images. Error: ' + exc.getMessage());
+            throw new AuraHandledException(System.Label.FF_Cannot_fetch_current_images + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
     }
 
@@ -140,16 +136,17 @@ public with sharing class FF_ProductController {
     public static List<String> getFileLinks(String productId){
         List<String> links = new List<String>();
         Set<Id> documentIds = new Set<Id>();
+        String suffix = [SELECT DeveloperName,ContentVersion_preview_url__c FROM Product_Setting__mdt].ContentVersion_preview_url__c;
         try{
             for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId]){
                 documentIds.add(link.ContentDocumentId);
             }
             for(ContentVersion contentVersion : [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE Title = 'detail' AND ContentDocumentId IN :documentIds]){
-                links.add('/sfc/servlet.shepherd/version/download/' + contentVersion.Id);
+                links.add(suffix + contentVersion.Id);
             }
             return links;
         }catch (Exception exc){
-            throw new AuraHandledException('Error receiving file urls: ' + exc.getMessage());
+            throw new AuraHandledException(System.Label.FF_Error_receiving_file_urls + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
     }
 
@@ -175,7 +172,7 @@ public with sharing class FF_ProductController {
                 }
             }
         }catch (Exception exc){
-            throw new AuraHandledException('Problem setting main image: ' + exc.getMessage());
+            throw new AuraHandledException(System.Label.FF_Problem_setting_main_image + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
     }
 
@@ -188,8 +185,13 @@ public with sharing class FF_ProductController {
             }
             delete [SELECT Id FROM ContentDocument WHERE Id IN: documentIds];
         }catch (Exception exc){
-            throw new AuraHandledException('Cannot delete files. Error: ' + exc.getMessage());
+            throw new AuraHandledException(System.Label.FF_Cannot_delete_files + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
+    }
+
+    @AuraEnabled
+    public static String queryImageLinkSuffix(){
+        return [SELECT DeveloperName,ContentVersion_preview_url__c FROM Product_Setting__mdt].ContentVersion_preview_url__c;
     }
 
     public class ProductWrapper {

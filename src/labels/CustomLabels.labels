@@ -1267,4 +1267,88 @@
         <shortDescription>No products found</shortDescription>
         <value>No products found</value>
     </labels>
+    <labels>
+        <fullName>FF_Cannot_retrieve_product_list</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cannot retrieve product list</shortDescription>
+        <value>Cannot retrieve product list</value>
+    </labels>
+    <labels>
+        <fullName>FF_Cannot_save_file</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cannot save file</shortDescription>
+        <value>Cannot save file</value>
+    </labels>
+    <labels>
+        <fullName>FF_Problem_deleting_image</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Problem deleting image</shortDescription>
+        <value>Problem deleting image</value>
+    </labels>
+    <labels>
+        <fullName>FF_Cannot_get_main_image_info</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cannot get main image info</shortDescription>
+        <value>Cannot get main image info</value>
+    </labels>
+    <labels>
+        <fullName>FF_Cannot_get_detail_images_info</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cannot get detail images info</shortDescription>
+        <value>Cannot get detail images info</value>
+    </labels>
+    <labels>
+        <fullName>FF_Cannot_fetch_current_images</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cannot fetch current images</shortDescription>
+        <value>Cannot fetch current images</value>
+    </labels>
+    <labels>
+        <fullName>FF_Error_receiving_file_urls</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error receiving file urls</shortDescription>
+        <value>Error receiving file urls</value>
+    </labels>
+    <labels>
+        <fullName>FF_Problem_setting_main_image</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Problem setting main image</shortDescription>
+        <value>Problem setting main image</value>
+    </labels>
+    <labels>
+        <fullName>FF_Cannot_delete_files</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cannot delete files</shortDescription>
+        <value>Cannot delete files</value>
+    </labels>
+    <labels>
+        <fullName>FF_Cannot_get_picklist</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cannot get picklist</shortDescription>
+        <value>Cannot get picklist</value>
+    </labels>
+    <labels>
+        <fullName>FF_Cannot_search_products</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cannot search products</shortDescription>
+        <value>Cannot search products</value>
+    </labels>
+    <labels>
+        <fullName>FF_Cannot_get_product_image_info</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cannot get product image info</shortDescription>
+        <value>Cannot get product image infos</value>
+    </labels>
 </CustomLabels>

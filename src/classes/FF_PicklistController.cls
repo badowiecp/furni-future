@@ -10,27 +10,24 @@ public with sharing class FF_PicklistController {
     @AuraEnabled
     public static List<String> getPickListValuesAsList(String objectType, String selectedField){
         List<String> pickListValuesList = new List<String>();
-        try{
-            Schema.SObjectType convertToObj = Schema.getGlobalDescribe().get(objectType);
-            Schema.DescribeSObjectResult res = convertToObj.getDescribe();
-            Schema.DescribeFieldResult fieldResult = res.fields.getMap().get(selectedField).getDescribe();
-            List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
-            for( Schema.PicklistEntry pickListVal : ple){
-                pickListValuesList.add(pickListVal.getLabel());
-            }
-            return pickListValuesList;
-        }catch (Exception exc){
-            throw new AuraHandledException('Cannot get picklist. Error: ' + exc.getMessage());
+        Schema.SObjectType convertToObj = Schema.getGlobalDescribe().get(objectType);
+        Schema.DescribeSObjectResult res = convertToObj.getDescribe();
+        Schema.DescribeFieldResult fieldResult = res.fields.getMap().get(selectedField).getDescribe();
+        List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+        for( Schema.PicklistEntry pickListVal : ple){
+            pickListValuesList.add(pickListVal.getLabel());
         }
+        return pickListValuesList;
     }
 
     @AuraEnabled
     public static List<String> getPicklistForRecordType(String recordTypeId){
+        List<String> values = new List<String>();
+        String picklistLink = [SELECT Product_picklist_url__c FROM Product_Setting__mdt].Product_picklist_url__c;
         try{
-            List<String> values = new List<String>();
             String accessToken = returnAccessToken();
             if(accessToken!=null){
-                String endpoint = 'https://britenet13-dev-ed.my.salesforce.com/services/data/v51.0/ui-api/object-info/Product2/picklist-values/' + recordTypeId + '/Family';
+                String endpoint = picklistLink + recordTypeId + '/Family';
                 HttpResponse httpResponse = sendRequest(endpoint,'GET',null,accessToken);
                 RecordTypePicklistResponse picklistResponse = (RecordTypePicklistResponse) JSON.deserialize(httpResponse.getBody(),RecordTypePicklistResponse.class);
                 if(picklistResponse.values!=null){
@@ -41,18 +38,19 @@ public with sharing class FF_PicklistController {
             }
             return values;
         }catch (Exception exc){
-            throw new AuraHandledException('Cannot get picklist. Error: ' + exc.getMessage());
+            throw new AuraHandledException(System.Label.FF_Cannot_get_picklist + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
     }
 
     @AuraEnabled
     public static List<String> getPicklistForRecordTypeForEdit(String recordId){
         List<String> values = new List<String>();
+        String picklistLink = [SELECT Product_picklist_url__c FROM Product_Setting__mdt].Product_picklist_url__c;
         try{
             String recordTypeId = [SELECT Id,RecordTypeId FROM Product2 WHERE Id = :recordId].RecordTypeId;
             String accessToken = returnAccessToken();
             if(accessToken!=null){
-                String endpoint = 'https://britenet13-dev-ed.my.salesforce.com/services/data/v51.0/ui-api/object-info/Product2/picklist-values/' + recordTypeId + '/Family';
+                String endpoint = picklistLink + recordTypeId + '/Family';
                 HttpResponse httpResponse = sendRequest(endpoint,'GET',null,accessToken);
                 RecordTypePicklistResponse picklistResponse = (RecordTypePicklistResponse) JSON.deserialize(httpResponse.getBody(),RecordTypePicklistResponse.class);
                 if(picklistResponse.values!=null){
@@ -63,7 +61,7 @@ public with sharing class FF_PicklistController {
             }
             return values;
         }catch (Exception exc){
-            throw new AuraHandledException('Cannot get picklist. Error: ' + exc.getMessage());
+            throw new AuraHandledException(System.Label.FF_Cannot_get_picklist + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
     }
 
