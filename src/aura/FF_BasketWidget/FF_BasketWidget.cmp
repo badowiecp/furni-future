@@ -1,0 +1,18 @@
+<aura:component controller="FF_CacheController" description="FF_BasketWidget" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="products" type="Object[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:handler event="c:FF_ProductAddedToBasket" action="{!c.onInit}"/>
+<!--    <ltng:require styles="{!$Resource.transparentFooter}" />-->
+
+    <lightning:card class="footer">
+            <lightning:buttonGroup>
+                <lightning:buttonIcon iconName="utility:cart"  size="large"  variant="bare" alternativeText="Basket" title="Basket" />
+                <lightning:button variant="base" label="{!'Products: ' + v.products.length}"/>
+            </lightning:buttonGroup>
+<!--        <aura:iteration items="{!v.products}" var="product">-->
+<!--            <lightning:formattedUrl label="{!product.name}" value="{!product.productUrl}" target="_blank"/>-->
+<!--            <p>Quantity: <lightning:formattedNumber value="{!product.quantity}"/></p>-->
+<!--        </aura:iteration>-->
+    </lightning:card>
+
+</aura:component>

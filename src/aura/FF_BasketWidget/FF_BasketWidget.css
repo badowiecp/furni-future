@@ -1,0 +1,10 @@
+.THIS {
+}
+
+.THIS.footer {
+    background: transparent;
+    border: 0;
+    position: fixed;
+    left: 2vw;
+    bottom: 3vh;
+}

@@ -1,0 +1,20 @@
+<aura:component controller="FF_CacheController" description="FF_AddToBasket" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="price" type="Decimal"/>
+    <aura:attribute name="quantity" type="Decimal"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:registerEvent name="productAddedToBasketEvent" type="c:FF_ProductAddedToBasket"/>
+
+        <lightning:layout horizontalAlign="space">
+            <lightning:layoutItem padding="5">
+                <span>Price: </span>
+                <lightning:formattedNumber value="{!v.price}" style="currency"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="5">
+                <lightning:input variant="label-hidden" placeholder="Quantity" class="slds-show_inline-block" label="Quantity" type="number" value="{!v.quantity}"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="5">
+                <lightning:button label="Add to basket" onclick="{!c.handleAddToBasket}"/>
+            </lightning:layoutItem>
+        </lightning:layout>
+
+</aura:component>
