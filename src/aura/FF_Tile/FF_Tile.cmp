@@ -1,6 +1,7 @@
 <aura:component controller="FF_SearchController" description="FF_Tile">
     <aura:attribute name="product" type="Product2"/>
     <aura:attribute name="contentVersionId" type="String"/>
+    <aura:attribute name="price" type="Decimal"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
     <lightning:button class="tile" onclick="{!c.onClick}">
@@ -10,6 +11,7 @@
             </aura:if>
             <div class="lower-third">
                 <h1 class="slds-truncate">{!v.product.Name}</h1>
+                <lightning:formattedNumber value="{!v.price}" style="currency"/>
             </div>
         </div>
     </lightning:button>

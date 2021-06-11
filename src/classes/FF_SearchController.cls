@@ -30,6 +30,11 @@ public with sharing class FF_SearchController {
         }
     }
 
+    @AuraEnabled(cacheable = true)
+    public static Decimal getPriceBookEntry(String productId){
+        return [SELECT UnitPrice FROM PricebookEntry WHERE Product2Id = :productId].UnitPrice;
+    }
+
     private static String prepareQueryString(String name,String recordType,String productFamily, Integer pageNumber, Integer recordsPerPage){
         String queryString = 'SELECT Id,Name,ProductCode,Description,Family,RecordTypeId FROM Product2 ';
         List<String> params = new List<String>();

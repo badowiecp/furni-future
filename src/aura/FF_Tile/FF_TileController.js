@@ -2,6 +2,7 @@
 
     doInit : function(component,event,helper){
         helper.getPhotoId(component,event);
+        helper.getProductPrice(component,event);
     },
 
     onClick : function(component, event, helper) {
