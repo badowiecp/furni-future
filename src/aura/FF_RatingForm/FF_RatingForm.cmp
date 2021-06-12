@@ -1,15 +1,18 @@
 <aura:component description="FF_RatingForm" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
     <aura:attribute name="productId" type="String"/>
+    <aura:attribute name="ratingId" type="String"/>
     <aura:attribute name="ratingFields" type="FF_Product_Rating__c"/>
     <aura:attribute name="ratingRecord" type="FF_Product_Rating__c"/>
     <aura:attribute access="private" name="ratingError" type="String"/>
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
     <aura:registerEvent name="ratingAdded" type="c:FF_RatingAdded"/>
     <force:recordData aura:id="service"
-                      fields="FF_Product__c,FF_Score__c,FF_Comment__c"
+                      fields="Id,FF_Product__c,FF_Score__c,FF_Comment__c"
                       targetRecord="{!v.ratingRecord}"
                       targetFields="{!v.ratingFields}"
-                      targetError="{!v.ratingError}"/>
+                      targetError="{!v.ratingError}"
+                      recordId="{!v.ratingId}"
+                      mode="EDIT"/>
 
     <div class="slds-box slds-box_border">
         <div class="slds-page-header">

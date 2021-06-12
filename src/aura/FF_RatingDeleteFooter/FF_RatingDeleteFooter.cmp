@@ -1,0 +1,9 @@
+<aura:component controller="FF_RatingController" description="FF_RatingDeleteFooter">
+    <aura:attribute name="ratingId" type="String"/>
+    <aura:registerEvent name="ratingAdded" type="c:FF_RatingAdded"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <lightning:button label="Cancel" variant="neutral" onclick="{!c.handleCancel}"/>
+    <lightning:button label="Delete" variant="destructive" onclick="{!c.handleDelete}"/>
+
+</aura:component>

@@ -1,15 +1,23 @@
 <aura:component controller="FF_RatingController" description="FF_RatingFeed" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
     <aura:attribute name="productId" type="String"/>
+    <aura:attribute name="userId" type="String"/>
     <aura:attribute name="ratings" type="FF_Product_Rating__c[]"/>
+    <aura:attribute name="averageRating" type="Decimal" default="0"/>
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
-    <aura:method access="public" name="refresh" action="{!c.doInit}"/>
-
+    <aura:handler event="c:FF_RatingAdded" action="{!c.doInit}"/>
+<!--    <aura:method access="public" name="refresh" action="{!c.doInit}"/>-->
+    <lightning:overlayLibrary aura:id="overlayLib"/>
 
     <div class="slds-box slds-box_border" style="margin-bottom: 10px;">
         <div class="slds-page-header">
             <div class="slds-page-header__row">
                 <div class="slds-page-header__col-title">
                     <span class="slds-page-header__title slds-truncate">Opinions</span>
+                    <aura:if isTrue="{!v.averageRating>0}">
+                        <span>Average product rating:
+                                {!v.averageRating}
+                        </span>
+                    </aura:if>
                 </div>
             </div>
         </div>
@@ -24,16 +32,25 @@
                                 </div>
                                 <div class="slds-media__body">
                                     <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
-                                        <p>{!rating.CreatedBy.Name}</p>
+                                        <div>
+                                            <p>{!rating.CreatedBy.Name}</p>
+                                            <p class="slds-text-body_small">
+                                                <lightning:formattedDateTime value="{!rating.CreatedDate}"/>
+                                            </p>
+                                        </div>
+                                        <aura:if isTrue="{!rating.CreatedById==v.userId}">
+                                            <lightning:button label="Delete" variant="neutral" value="{!rating.Id}" onclick="{!c.handleDelete}"/>
+<!--                                            <lightning:buttonGroup>-->
+<!--                                                <lightning:button label="Edit" variant="neutral" value="{!rating.Id}" onclick="{!c.handleEdit}"/>-->
+<!--                                            </lightning:buttonGroup>-->
+                                        </aura:if>
                                     </div>
-                                    <p class="slds-text-body_small">
-                                        <lightning:formattedDateTime value="{!rating.CreatedDate}"/>
-                                    </p>
+
                                 </div>
                             </header>
                             <aura:if isTrue="{!rating.FF_Score__c!=null}">
                                 <div class="slds-post__content">
-                                    <h3 class="slds-text-heading_small">Score: </h3>
+                                    <h3 class="slds-text-heading_small">Rating: </h3>
                                     <c:FF_RatingStars value="{!rating.FF_Score__c}" readonly="true"/>
                                 </div>
                             </aura:if>
@@ -50,7 +67,7 @@
 
             <aura:if isTrue="{!v.ratings.length==0}">
                 <div class="scrollerSize" style="display: flex; justify-content: center; align-items: center;">
-                    <span style="text-align: center; width:70%;">Nobody has rated nor gave opinion yet, be the first, give your thoughts below!</span>
+                    <span style="text-align: center; width:70%; padding: 20px 0;">Nobody has rated this product yet, be the first, give your thoughts below!</span>
                 </div>
             </aura:if>
         </ui:scrollerWrapper>

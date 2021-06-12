@@ -1,2 +1,2 @@
-<aura:event type="COMPONENT" description="FF_RatingAdded">
+<aura:event type="APPLICATION" description="FF_RatingAdded">
 </aura:event>

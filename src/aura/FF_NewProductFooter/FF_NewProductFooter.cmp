@@ -1,7 +1,0 @@
-<aura:component implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,force:hasRecordId,lightning:actionOverride" description="FF_NewProductFooter">
-
-    <lightning:overlayLibrary aura:id="overlayLib"/>
-    <lightning:button name="cancel" label="Cancel" onclick="{!c.handleCancel}"/>
-    <lightning:button name="save" label="Save" variant="brand" onclick="{!c.handleSave}"/>
-
-</aura:component>

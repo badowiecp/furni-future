@@ -13,14 +13,16 @@
                 if(resultsToast!=undefined){
                     resultsToast.setParams({
                         "title": "Success",
-                        "message": "Rating saved"
+                        "message": "Rating added",
+                        "type": "success"
                     });
                     resultsToast.fire();
                     console.log(component.get("v.ratingFields.Id"));
-                    component.getEvent("ratingAdded").fire();
+                    $A.get("e.c:FF_RatingAdded").fire();
+//                    component.getEvent("ratingAdded").fire();
                     helper.onInit(component, event, helper);
                 }else{
-                    alert('Rating saved');
+                    alert('Rating added');
                 }
 
             } else if (saveResult.state === "INCOMPLETE") {
@@ -33,7 +35,8 @@
                     if(resultsToast!=undefined){
                         resultsToast.setParams({
                             "title": "Error",
-                            "message": "Comment must have up to 1000 characters"
+                            "message": "Comment must have up to 1000 characters",
+                            "type": "error"
                         });
                         resultsToast.fire();
                         console.log('Toast fired');
@@ -43,7 +46,8 @@
                     if(resultsToast!=undefined){
                         resultsToast.setParams({
                             "title": "Error",
-                            "message": JSON.stringify(saveResult.error[0].pageErrors[0].message)
+                            "message": JSON.stringify(saveResult.error[0].pageErrors[0].message),
+                            "type": "error"
                         });
                         resultsToast.fire();
                     }
