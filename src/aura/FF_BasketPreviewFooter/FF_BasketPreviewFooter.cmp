@@ -1,0 +1,8 @@
+<aura:component description="FF_BasketPreviewFooter">
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <lightning:navigation aura:id="navService"/>
+    <lightning:button label="Close" onclick="{!c.handleClose}"/>
+    <lightning:button label="Confirm basket" variant="brand" onclick="{!c.handleConfirm}"/>
+
+</aura:component>

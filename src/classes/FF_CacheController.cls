@@ -8,7 +8,7 @@ public with sharing class FF_CacheController {
         Product2 newProduct = [SELECT Name,Product_Name_Link__c FROM Product2 WHERE Id = :productId];
         ProductWrapper productWrapper = new ProductWrapper();
         productWrapper.productId = productId;
-        productWrapper.price = price;
+        productWrapper.unitPrice = price;
         productWrapper.quantity = quantity;
         productWrapper.productUrl = newProduct.Product_Name_Link__c;
         productWrapper.name = newProduct.Name;
@@ -16,6 +16,7 @@ public with sharing class FF_CacheController {
             Basket newBasket = new Basket();
             newBasket.productWrappers.add(productWrapper);
             System.debug(newBasket);
+            newBasket = calculateBasket(newBasket);
             basketJson = JSON.serialize(newBasket);
             System.debug('New basket: ' + basketJson);
         }else{
@@ -30,27 +31,22 @@ public with sharing class FF_CacheController {
             if(!isAlreadyInBasket){
                 currentBasket.productWrappers.add(productWrapper);
             }
+            currentBasket = calculateBasket(currentBasket);
             basketJson = JSON.serialize(currentBasket);
             System.debug('Updated basket: ' + basketJson);
         }
         shoppingCartCache.put('basket',basketJson);
-        String basket = (String)shoppingCartCache.get('basket');
-        System.debug(basket);
     }
 
     @AuraEnabled
-    public static List<ProductWrapper> getBasketCache(String productId){
+    public static Basket getBasketCache(String productId){
         Cache.SessionPartition  shoppingCartCache = Cache.Session.getPartition('ShoppingCartCache');
         String basketJson = (String)shoppingCartCache.get('basket');
         Basket currentBasket = new Basket();
         if(basketJson!=null){
             currentBasket = (Basket)JSON.deserialize(basketJson,Basket.class);
         }
-        List<ProductWrapper> products = new List<ProductWrapper>();
-        if(currentBasket!=null){
-            products = currentBasket.productWrappers;
-        }
-        return products;
+        return currentBasket;
     }
 
     @AuraEnabled
@@ -58,8 +54,22 @@ public with sharing class FF_CacheController {
         return [SELECT UnitPrice FROM PricebookEntry WHERE Product2Id = :productId].UnitPrice;
     }
 
+    public static Basket calculateBasket(Basket basket){
+        basket.totalQuantity=0;
+        basket.totalPrice=0;
+        for(ProductWrapper productWrapper : basket.productWrappers){
+            if(productWrapper.quantity>0){
+                basket.totalQuantity += productWrapper.quantity;
+                basket.totalPrice += productWrapper.price;
+            }
+        }
+        return basket;
+    }
+
     public class Basket {
         @AuraEnabled public List<ProductWrapper> productWrappers {get;set;}
+        @AuraEnabled public Integer totalQuantity {get;set;}
+        @AuraEnabled public Decimal totalPrice {get;set;}
 
         public Basket(){
             productWrappers = new List<ProductWrapper>();
@@ -68,7 +78,10 @@ public with sharing class FF_CacheController {
 
     public class ProductWrapper {
         @AuraEnabled public String productId {get;set;}
-        @AuraEnabled public Decimal price {get;set;}
+        @AuraEnabled public Decimal unitPrice {get;set;}
+        @AuraEnabled public Decimal price {get{
+            return unitPrice * quantity;
+        }set;}
         @AuraEnabled public Integer quantity {get;set;}
         @AuraEnabled public String productUrl {get;set;}
         @AuraEnabled public String name {get;set;}

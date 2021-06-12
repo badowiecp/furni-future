@@ -1,0 +1,30 @@
+<aura:component description="FF_BasketPreview">
+    <aura:attribute name="basket" type="Object"/>
+
+    <lightning:layout multipleRows="true">
+        <aura:iteration items="{!v.basket.productWrappers}" var="product">
+            <lightning:layoutItem class="slds-align-bottom" size="3">
+                <lightning:formattedUrl label="{!product.name}" value="{!product.productUrl}" target="_blank"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="slds-text-align_right" size="3">
+                <p>Quantity: <lightning:formattedNumber value="{!product.quantity}"/></p>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="slds-text-align_right" size="3">
+                <p>Unit price: <lightning:formattedNumber style="currency" value="{!product.unitPrice}"/></p>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="slds-text-align_right" size="3">
+                <p>Price: <lightning:formattedNumber style="currency" value="{!product.price}"/></p>
+            </lightning:layoutItem>
+        </aura:iteration>
+    </lightning:layout>
+    <lightning:layout horizontalAlign="end">
+        <lightning:layoutItem class="slds-text-align_right" size="3">
+            <span>Total price: <lightning:formattedNumber style="currency" value="{!v.basket.totalPrice}"/></span>
+        </lightning:layoutItem>
+    </lightning:layout>
+
+
+
+
+
+</aura:component>
