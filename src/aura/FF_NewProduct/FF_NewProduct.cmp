@@ -33,6 +33,7 @@
                 <aura:if isTrue="{!v.recordTypeSelect==null}">
                     <div aura:id="recordTypePick">
                         <ui:inputSelect aura:id="selectid">
+                            <ui:inputSelectOption text="" label="Select type"/>
                             <aura:iteration items="{!v.recordTypes}" var="recordType">
                                 <ui:inputSelectOption text="{!recordType}" label="{!recordType}"/>
                             </aura:iteration>
@@ -41,57 +42,59 @@
                     <aura:set attribute="else">
                         <div aura:id="newRecordForm">
                             <div class="slds-section__title slds-p-around_xx-small">
-                                Product Information
+                                {!$Label.c.FF_Product_Information}
                             </div>
                             <div class="slds-p-around--xx-small slds-grid slds-wrap ">
-                                <lightning:input value="{!v.productFields.Name}" label="Product Name" required="true"
+                                <lightning:input value="{!v.productFields.Name}" label="{!$Label.c.FF_Product_Name}" required="true"
                                                  class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
                                 <lightning:input value="{!v.productFields.IsActive}" type="checkbox"
-                                                 variant="label-stacked" label="Active"
+                                                 variant="label-stacked" label="{!$Label.c.FF_Active}"
                                                  class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
-                                <lightning:input value="{!v.productFields.ProductCode}" label="Product Code"
+                                <lightning:input value="{!v.productFields.ProductCode}" label="{!$Label.c.FF_Product_Code}"
                                                  class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
-                                <lightning:select value="{!v.productFields.Family}" label="Product Family"
+                                <lightning:select value="{!v.productFields.Family}" label="{!$Label.c.FF_Product_Family}"
                                                   class="slds-size--1-of-2 slds-p-horizontal_xx-small">
+                                    <option value="">Select</option>
                                     <aura:iteration items="{!v.productFamilyPicklist}" var="item">
                                         <option value="{!item}">{!item}</option>
                                     </aura:iteration>
                                 </lightning:select>
-                                <lightning:input value="{!v.productFields.Description}" label="Product Description"
+                                <lightning:input value="{!v.productFields.Description}" label="{!$Label.c.FF_Product_Description}"
                                                  class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
-                                <lightning:input value="{!v.productFields.Color__c}" label="Color"
+                                <lightning:input value="{!v.productFields.Color__c}" label="{!$Label.c.FF_Color}"
                                                  class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
-                                <lightning:input value="{!v.productFields.Dimensions__c}" label="Dimensions"
+                                <lightning:input value="{!v.productFields.Dimensions__c}" label="{!$Label.c.FF_Dimensions}"
                                                  class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
-                                <lightning:input value="{!v.productFields.Materials__c}" label="Materials"
+                                <lightning:input value="{!v.productFields.Materials__c}" label="{!$Label.c.FF_Materials}"
                                                  class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
 
-                                <div class="slds-size--1-of-1 slds-align_absolute-center slds-p-horizontal_xx-small">
-                                    <lightning:input type="file" name="file" label="Add photos"
+                                <div class="slds-size--1-of-1 slds-align_absolute-center slds-p-around_xx-small">
+                                    <lightning:input type="file" name="file" label="{!$Label.c.FF_Add_photos}"
                                                      accept="image/png, image/jpg, image/jpeg" multiple="true"
                                                      onchange="{!c.handleUpload}"/>
                                 </div>
-                                <div class="slds-size--1-of-1 slds-align_absolute-center slds-p-horizontal_xx-small">
-                                    <aura:iteration items="{!v.fileWrappers}" var="fileWrapper" indexVar="index">
-                                        <div class="preview slds-box_border" style="margin: 10px; width: 200px;">
-                                            <img class="preview slds-box_border" src="{!fileWrapper.filePreview}"/>
-                                            <div style="margin: 5px 0; display: flex; flex-wrap: wrap; justify-content: space-around;">
-                                            <ui:inputCheckbox aura:id="checkbox" value="{!fileWrapper.isMain}" label="Select main" name="{!index}" change="{!c.handleSetMain}" />
-                                                <!--                                            <lightning:button value="{!fileWrapper}" label="Delete" onclick="{!c.handleDeleteNew}"/>-->
+                                <div class="slds-size--1-of-1 slds-p-horizontal_xx-small">
+                                    <div class="slds-align_absolute-center" style="display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; align-items: baseline; padding: 0 5px;">
+                                        <aura:iteration items="{!v.fileWrappers}" var="fileWrapper" indexVar="index">
+                                            <div class="preview slds-box_border" style="margin: 10px; width: 200px;">
+                                                <img class="preview slds-box_border" src="{!fileWrapper.filePreview}"/>
+                                                <div style="margin: 5px 0; display: flex; flex-wrap: wrap; justify-content: space-around;">
+                                                    <ui:inputCheckbox class="checkbox" aura:id="checkbox" value="{!fileWrapper.isMain}" label="{!$Label.c.FF_Select_main}" name="{!index}" change="{!c.handleSetMain}" />
+                                                </div>
                                             </div>
-                                        </div>
-                                    </aura:iteration>
+                                        </aura:iteration>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </aura:set>
                 </aura:if>
-                <div class="slds-card__footer">
-                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.handleCancel}"/>
+                <div class="slds-align_absolute-center slds-p-around_small">
+                    <lightning:button variant="neutral" label="{!$Label.c.FF_Cancel}" onclick="{!c.handleCancel}"/>
                     <aura:if isTrue="{!v.recordTypeSelect==null}">
-                            <lightning:button variant="brand" label="Next" onclick="{!c.handleNext}"/>
+                            <lightning:button variant="brand" label="{!$Label.c.FF_Next}" onclick="{!c.handleNext}"/>
                         <aura:set attribute="else">
-                                <lightning:button variant="brand" label="Save" onclick="{!c.handleSave}"/>
+                                <lightning:button variant="brand" label="{!$Label.c.FF_Save}" onclick="{!c.handleSave}"/>
                         </aura:set>
                     </aura:if>
                 </div>

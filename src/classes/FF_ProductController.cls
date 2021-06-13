@@ -5,10 +5,14 @@ public with sharing class FF_ProductController {
         ProductWrapper productWrapper = new ProductWrapper();
         productWrapper.recordToDisplay = recordToDisplay;
         productWrapper.pageNumber = pageNumber;
-        AggregateResult[] groupedResults  = [SELECT count(Id)cnt FROM Product2];
-        productWrapper.totalRecords = Integer.valueof(groupedResults[0].get('cnt'));
-        productWrapper.ProductListToDisplay = [SELECT Id,Name,ProductCode,Description,Family,Product_Name_Link__c,RecordType.Name FROM Product2 ORDER BY Name LIMIT :recordToDisplay OFFSET :(pageNumber - 1) * recordToDisplay];
-        return productWrapper;
+        try{
+            AggregateResult[] groupedResults  = [SELECT count(Id)cnt FROM Product2];
+            productWrapper.totalRecords = Integer.valueof(groupedResults[0].get('cnt'));
+            productWrapper.ProductListToDisplay = [SELECT Id,Name,ProductCode,Description,Family,Product_Name_Link__c,RecordType.Name FROM Product2 ORDER BY Name LIMIT :recordToDisplay OFFSET :(pageNumber - 1) * recordToDisplay];
+            return productWrapper;
+        }catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Cannot_retrieve_product_list + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
+        }
     }
 
     @AuraEnabled
@@ -31,8 +35,6 @@ public with sharing class FF_ProductController {
 
     @AuraEnabled
     public static void saveDocuments(List<FileWrapper> files, String productId){
-        System.debug(files);
-        System.debug(productId);
         for(FileWrapper file : files){
             saveDocument(productId,file);
         }
@@ -41,101 +43,154 @@ public with sharing class FF_ProductController {
     @AuraEnabled
     public static void saveDocument(String productId,FileWrapper fileWrapper){
         ContentVersion contentVers = new ContentVersion();
-        contentVers.ContentLocation = 'S'; // S specify this document is in SF, use E for external files
+        contentVers.ContentLocation = 'S';
         contentVers.PathOnClient = fileWrapper.fileName;
         if(fileWrapper.isMain==true){
             contentVers.Title = 'main';
         }else{
             contentVers.Title = 'detail';
         }
-        contentVers.VersionData = EncodingUtil.base64Decode(fileWrapper.fileBody); // contentVersting your binary string to Blog
-        insert contentVers;
-
-        // First get the content document Id from ContentVersion
-        Id contentDocId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =:contentVers.Id].ContentDocumentId;
-
-        //Create ContentDocumentLink
         ContentDocumentLink contentLink = new ContentDocumentLink();
-        contentLink.ContentDocumentId = contentDocId;
-        contentLink.LinkedEntityId = productId;
-        contentLink.ShareType = 'I'; // Inferred permission
+        contentLink.ShareType = 'I';
         contentLink.Visibility = 'AllUsers';
-        insert contentLink;
+        try{
+            contentVers.VersionData = EncodingUtil.base64Decode(fileWrapper.fileBody);
+            String existingMain = getMainPicture(productId);
+            if(contentVers.Title=='main' && existingMain!=null){
+                ContentVersion contentVersion = [SELECT Id,Title FROM ContentVersion WHERE Id = :existingMain];
+                contentVersion.Title = 'detail';
+                update contentVersion;
+            }
+            insert contentVers;
+
+            Id contentDocId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =:contentVers.Id].ContentDocumentId;
+
+            contentLink.ContentDocumentId = contentDocId;
+            contentLink.LinkedEntityId = productId;
+
+            insert contentLink;
+        }catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Cannot_save_file + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
+        }
     }
 
     @AuraEnabled
     public static void deletePhoto(String documentId){
-        ContentDocument photo = [SELECT Id,Title FROM ContentDocument WHERE Id = :documentId];
-        delete photo;
-    }
-
-    @AuraEnabled
-    public static void setPhotoTitle(String documentId, String title){
-        ContentDocument photo = [SELECT Id,Title FROM ContentDocument WHERE Id = :documentId];
-        photo.Title = title;
-        update photo;
+        try{
+            ContentDocument photo = [SELECT Id,Title FROM ContentDocument WHERE Id = :documentId];
+            delete photo;
+        }catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Problem_deleting_image + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
+        }
     }
 
     @AuraEnabled
     public static String getMainPicture(String productId){
-//        return [SELECT Id,ContentDocument.Id FROM ContentDocumentLink WHERE LinkedEntityId = :productId AND ContentDocument.Title LIKE 'main%' LIMIT 1].ContentDocument.Id;
-        System.debug('ProductId: ' + productId);
         Set<Id> documentIds = new Set<Id>();
-        for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId]){
-            documentIds.add(link.ContentDocumentId);
+        try{
+            for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId]){
+                documentIds.add(link.ContentDocumentId);
+            }
+            String contentVersionId = null;
+            List<ContentVersion> contentVersions = [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE Title = 'main' AND ContentDocumentId IN :documentIds LIMIT 1];
+            if(!contentVersions.isEmpty()){
+                contentVersionId = contentVersions[0].Id;
+            }
+            return contentVersionId;
+        }catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Cannot_get_main_image_info + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
-        String contentVersionId = [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE Title = 'main' AND ContentDocumentId IN :documentIds LIMIT 1].Id;
-        System.debug(contentVersionId);
-        return contentVersionId;
     }
 
     @AuraEnabled
     public static List<ContentVersion> getDetailPictures(String productId){
         Set<Id> documentIds = new Set<Id>();
-        for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId AND ContentDocument.Title LIKE 'detail%']){
-            documentIds.add(link.ContentDocumentId);
+        try{
+            for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId AND ContentDocument.Title LIKE 'detail%']){
+                documentIds.add(link.ContentDocumentId);
+            }
+            return [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE ContentDocumentId IN :documentIds];
+        }catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Cannot_get_detail_images_info + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
-        return [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE ContentDocumentId IN :documentIds];
     }
 
     @AuraEnabled
     public static List<FileWrapper> getCurrentFileWrappers(String productId){
         List<FileWrapper> fileWrappers = new List<FileWrapper>();
         Set<Id> documentIds = new Set<Id>();
-        for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId]){
-            documentIds.add(link.ContentDocumentId);
+        try{
+            for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId]){
+                documentIds.add(link.ContentDocumentId);
+            }
+            for(ContentVersion contentVersion : [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE ContentDocumentId IN :documentIds]){
+                fileWrappers.add(new FileWrapper(contentVersion.Title,contentVersion.Id));
+            }
+            return fileWrappers;
+        }catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Cannot_fetch_current_images + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
-        for(ContentVersion contentVersion : [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE ContentDocumentId IN :documentIds]){
-            fileWrappers.add(new FileWrapper(contentVersion.Title,contentVersion.Id));
-        }
-        return fileWrappers;
     }
 
     @AuraEnabled
     public static List<String> getFileLinks(String productId){
         List<String> links = new List<String>();
         Set<Id> documentIds = new Set<Id>();
-        for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId]){
-            documentIds.add(link.ContentDocumentId);
+        String suffix = [SELECT DeveloperName,ContentVersion_preview_url__c FROM Product_Setting__mdt].ContentVersion_preview_url__c;
+        try{
+            for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId]){
+                documentIds.add(link.ContentDocumentId);
+            }
+            for(ContentVersion contentVersion : [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE Title = 'detail' AND ContentDocumentId IN :documentIds]){
+                links.add(suffix + contentVersion.Id);
+            }
+            return links;
+        }catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Error_receiving_file_urls + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
-        for(ContentVersion contentVersion : [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE Title = 'detail' AND ContentDocumentId IN :documentIds]){
-            links.add('/sfc/servlet.shepherd/version/download/' + contentVersion.Id);
-        }
-        return links;
     }
 
     @AuraEnabled
-    public static void updateMain(String contentVersionId){
-
+    public static void setMainContentVersion(String productId, List<FileWrapper> files){
+        Set<Id> documentIds = new Set<Id>();
+        try{
+            for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId]){
+                documentIds.add(link.ContentDocumentId);
+            }
+            List<ContentVersion> currentMain = [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE Title = 'main' AND ContentDocumentId IN :documentIds LIMIT 1];
+            for(FileWrapper fileWrapper : files){
+                List<ContentVersion> newMain = [SELECT Id,Title FROM ContentVersion WHERE Id = :fileWrapper.contentVersionId];
+                if(fileWrapper.isMain && currentMain.isEmpty()){
+                    newMain[0].Title = 'main';
+                    update newMain[0];
+                }else if(fileWrapper.isMain && fileWrapper.contentVersionId!=currentMain[0].Id){
+                    currentMain[0].Title = 'detail';
+                    update currentMain[0];
+                    newMain[0].Title = 'main';
+                    update newMain[0];
+                }
+            }
+        }catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Problem_setting_main_image + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
+        }
     }
 
     @AuraEnabled
     public static void deleteDocuments(List<String> contentVersionIds){
         Set<Id> documentIds = new Set<Id>();
-        for(ContentVersion contentVersion : [SELECT ContentDocumentId FROM ContentVersion WHERE Id IN :contentVersionIds]){
-            documentIds.add(contentVersion.ContentDocumentId);
+        try{
+            for(ContentVersion contentVersion : [SELECT ContentDocumentId FROM ContentVersion WHERE Id IN :contentVersionIds]){
+                documentIds.add(contentVersion.ContentDocumentId);
+            }
+            delete [SELECT Id FROM ContentDocument WHERE Id IN: documentIds];
+        }catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Cannot_delete_files + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
         }
-        delete [SELECT Id FROM ContentDocument WHERE Id IN: documentIds];
+    }
+
+    @AuraEnabled
+    public static String queryImageLinkSuffix(){
+        return [SELECT DeveloperName,ContentVersion_preview_url__c FROM Product_Setting__mdt].ContentVersion_preview_url__c;
     }
 
     public class ProductWrapper {

@@ -2,33 +2,22 @@
 
     init: function (component, event, helper) {
         component.set('v.columns', [
-            {label: 'Product Name', fieldName: 'Product_Name_Link__c', type: 'url', typeAttributes: {label: { fieldName: 'Name' }, target: '_blank'}},
-            {label: 'Product Code', fieldName: 'ProductCode', type: 'text'},
-            {label: 'Description', fieldName: 'Description', type: 'text'},
+            {label: $A.get("$Label.c.FF_Product_Name"), fieldName: 'Product_Name_Link__c', type: 'url', typeAttributes: {label: { fieldName: 'Name' }, target: '_blank'}},
+            {label: $A.get("$Label.c.FF_Space_Type"), fieldName: 'Record_Type_Name__c', type: 'text'},
+            {label: $A.get("$Label.c.FF_Product_Type"), fieldName: 'Family', type: 'text'},
+            {label: $A.get("$Label.c.FF_Description"), fieldName: 'Description', type: 'text'},
         ]);
 
-        //Check if the page is select or not, Default 1
         let page = component.get("v.currentPage");
-        //Get selected the value
         let recordToDisplay = component.find("recordSize").get("v.value");
-        // call the helper function
         helper.getProducts(component, page, recordToDisplay);
     },
 
-    // this function call on click on the previous/Next page button
     navigate: function(component, event, helper) {
-        //Check if the page is select or not, Default 1
         let page = component.get("v.currentPage") || 1;
-        // get the button's label
         let direction = event.getSource().get("v.label");
-
-        // get the select option (drop-down) values.
         let recordToDisplay = component.find("recordSize").get("v.value");
-
-        // set the current page
-        page = direction === "Previous Page" ? (page - 1) : (page + 1);
-
-        // call the helper function
+        page = direction === $A.get("$Label.c.FF_Previous_Page") ? (page - 1) : (page + 1);
         helper.getProducts(component, page, recordToDisplay);
     },
 
@@ -42,12 +31,9 @@
        helper.getProducts(component, component.get("v.totalPages"), recordToDisplay);
     },
 
-    // this function call on the select opetion change,
     onSelectChange: function(component, event, helper) {
         let page = 1
-        // get the select option (drop-down) values.
         let recordToDisplay = component.find("recordSize").get("v.value");
-        // call the helper function
         helper.getProducts(component, page, recordToDisplay);
     },
 
@@ -62,13 +48,12 @@
                 modalBody = components[0];
                 modalFooter = components[1];
                 component.find('overlayLib').showCustomModal({
-                   header: "New Product",
+                   header: $A.get("$Label.c.FF_New_product"),
                    body: modalBody,
                    footer: modalFooter,
                    showCloseButton: true,
                    cssClass: "slds-modal_small",
                    closeCallback: function() {
-
                    }
                 })
             }
