@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="showName" label="Show name"/>
+    <design:attribute name="showPrice" label="Show price"/>
+</design:component>
