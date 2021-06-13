@@ -9,6 +9,8 @@
     <aura:attribute name="productFamily" type="String"/>
     <aura:attribute name="recordType" type="String"/>
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="paginationMultiplier" type="Integer" required="true"/>
+    <aura:attribute name="paginationDefault" type="Integer" required="true"/>
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
     <aura:method name="search" action="{!c.doSearch}">
         <aura:attribute name="query" type="String"/>
@@ -37,11 +39,11 @@
 
     <div class="slds-p-around_small" style="{!if(v.totalRecords==0,'display: none;','display: flex; justify-content: space-between;')}">
         <div style="display: inline-block;">
-            <ui:inputSelect aura:id="recordsPerPage" value="{!v.recordsPerPage}" label="{!$Label.c.FF_Records_per_page}" change="{!c.onSelectChange}">
-                <ui:inputSelectOption text="7" label="7"/>
-                <ui:inputSelectOption text="14" label="14"/>
-                <ui:inputSelectOption text="21" label="21" value="true"/>
-            </ui:inputSelect>
+            <lightning:select aura:id="recordsPerPage" value="{!v.recordsPerPage}" label="{!$Label.c.FF_Records_per_page}" onchange="{!c.onSelectChange}">
+                <option text="{!v.paginationMultiplier}"></option>
+                <option text="{!v.paginationMultiplier * 2}"></option>
+                <option text="{!v.paginationMultiplier * 3}"></option>
+            </lightning:select>
         </div>
 
         <div style="display: inline-block;">

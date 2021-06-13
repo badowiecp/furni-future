@@ -2,6 +2,7 @@
 
     doInit : function(component, event, helper) {
         component.set("v.query",'');
+        component.set("v.recordsPerPage",component.get("v.paginationMultiplier") * component.get("v.paginationDefault"));
         helper.getProducts(component, '', '', '', 1, component.find("recordsPerPage").get("v.value"));
     },
 
