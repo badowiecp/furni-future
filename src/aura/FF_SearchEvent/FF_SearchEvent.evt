@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="FF_SearchEvent">
+    <aura:attribute name="query" type="String"/>
+    <aura:attribute name="recordType" type="String"/>
+    <aura:attribute name="productFamily" type="String"/>
+</aura:event>

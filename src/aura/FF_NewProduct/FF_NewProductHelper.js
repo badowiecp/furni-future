@@ -1,19 +1,16 @@
 ({
 
     getProductTemplate : function(component, event, recordTypeId){
-        // Prepare a new record from template
         component.find("newProductData").getNewRecord(
-            "Product2", // sObject type (objectApiName)
-            recordTypeId,      // recordTypeId
-            false,     // skip cache?
+            "Product2",
+            recordTypeId,
+            false,
             $A.getCallback(function() {
                 var rec = component.get("v.newProduct");
                 var error = component.get("v.newProductError");
                 if(error || (rec === null)) {
-                    console.log("Error initializing record template: " + error);
-                    return;
+                return;
                 }
-                console.log("Record template initialized: " + rec.apiName + ' ' + recordTypeId);
             })
         );
     },
@@ -22,12 +19,8 @@
        var action = component.get("c.fetchRecordTypeValues");
        action.setCallback(this, function(response) {
            let state = response.getState();
-           console.log('Record type fetch state: ' + state);
            if (state === "SUCCESS"){
                component.set("v.recordTypes", response.getReturnValue());
-               console.log(response.getReturnValue());
-           }else{
-               console.log("Failed with state: " + state);
            }
        });
        $A.enqueueAction(action);
@@ -39,11 +32,9 @@
             "productId": productId,
             "files" : files,
         });
-        console.log('Params set');
         action.setCallback(this, function(response) {
             let state = response.getState();
             if (state === "SUCCESS"){
-                console.log('Successfully saved images')
                 let navEvt = $A.get("e.force:navigateToSObject");
                 navEvt.setParams({
                   "recordId": productId,
@@ -52,8 +43,13 @@
                 component.set("v.showSpinner",false);
                 navEvt.fire();
             }else{
-                let error = response.getError();
-                console.log("Failed with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);
+                let resultsToast = $A.get("e.force:showToast");
+                resultsToast.setParams({
+                    "title": $A.get("$Label.FF_Error"),
+                    "message": $A.get("$Label.FF_Could_not_save_uploaded_images"),
+                    "type": "error"
+                });
+                resultsToast.fire();
             }
         });
         $A.enqueueAction(action);
@@ -62,7 +58,6 @@
     deleteImage : function(component,event){
         let images = component.get("v.fileWrappers");
         let index = images.indexOf(event.getSource().get("v.value"));
-        console.log('Index: ' + index);
         if (index > -1) {
           images.splice(index, 1);
         }

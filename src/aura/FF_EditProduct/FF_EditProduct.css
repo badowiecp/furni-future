@@ -10,7 +10,8 @@
     border: 2px solid black;
 }
 
-.THIS .checkbox {
-    float: left;
-    display: inline-block;
+.THIS .checkbox{
+  display: inline-block;
+  float: left;
+  margin: 0 5px;
 }

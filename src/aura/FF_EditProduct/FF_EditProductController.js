@@ -1,41 +1,38 @@
 ({
 
     doInit : function(component,event,helper){
+        helper.getImageLinkSuffix(component,event);
         helper.getPictures(component,event);
         let familyPicklistComponent = component.find("familyPicklist");
-        console.log('Record type method attribute sent: ' + component.get("v.recordId"));
         familyPicklistComponent.getPicklistValuesForEdit(component.get("v.recordId"));
     },
 
     handleSave: function(component, event, helper) {
-        console.log('Enter save edit');
         let productEdit = component.find("productEdit");
         productEdit.saveRecord($A.getCallback(function(saveResult) {
-            console.log(saveResult.state);
             if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
 
                 if(component.get("v.imagesToDelete").length>0){
                     helper.deleteImages(component,event);
                 }
                 helper.saveImages(component,component.get("v.fileWrappers"));
-
-                console.log("Save completed successfully.");
+                helper.setMain(component);
                 let resultsToast = $A.get("e.force:showToast");
                 resultsToast.setParams({
                     "title": "Saved",
                     "message": "The record was saved."
                 });
                 resultsToast.fire();
-            } else if (saveResult.state === "INCOMPLETE") {
-                console.log("User is offline, device doesn't support drafts.");
-            } else if (saveResult.state === "ERROR") {
-                console.log('Problem saving record, error: ' +
-                           JSON.stringify(saveResult.error));
             } else {
-                console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
+                let resultsToast = $A.get("e.force:showToast");
+                resultsToast.setParams({
+                    "title": $A.get("$Label.FF_Error"),
+                    "message": $A.get("$Label.FF_Error_saving_product"),
+                    "type": "error"
+                });
+                resultsToast.fire();
             }
         }));
-        console.log('Exit');
     },
 
     handleCancel : function(component,event,helper){
@@ -56,32 +53,26 @@
     },
 
     handleSetMain : function(component,event,helper){
-        //Gets the checkbox group based on the checkbox id
         let availableCheckboxes = component.find('checkbox');
         let resetCheckboxValue  = false;
         if (Array.isArray(availableCheckboxes)) {
-            //If more than one checkbox available then individually resets each checkbox
             availableCheckboxes.forEach(function(checkbox) {
                 checkbox.set('v.value', resetCheckboxValue);
             });
         } else {
-            //if only one checkbox available then it will be unchecked
             availableCheckboxes.set('v.value', resetCheckboxValue);
         }
-        //mark the current checkbox selection as checked
         event.getSource().set("v.value",true);
     },
 
     handleUpload : function(component,event,helper){
         let files = event.getSource().get("v.files");
-        console.log(files);
         let fileWrappers = component.get("v.fileWrappers");
-        console.log('Empty fileWrappers array: ' + fileWrappers);
         for(let i = 0; i < files.length; i++){
             let fileReader = new FileReader();
             fileReader.readAsDataURL(files[i]);
             let isMain = false;
-            if(component.get("v.currentFileWrappers").length==0){
+            if(component.get("v.currentFileWrappers").length==0 && i == 0){
                 isMain = true;
             }
             fileReader.onload = function () {
@@ -92,11 +83,9 @@
                     "filePreview" : URL.createObjectURL(files[i]),
                     "isMain" : isMain
                 });
-                console.log(JSON.parse(JSON.stringify(fileWrappers)))
                 component.set("v.fileWrappers",fileWrappers);
             }
         }
-        console.log('Files loaded: ' + component.get("v.fileWrappers"));
     }
 
 })
