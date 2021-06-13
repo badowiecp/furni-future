@@ -12,7 +12,7 @@
             <lightning:input variant="label-hidden" placeholder="Quantity" class="slds-show_inline-block" label="Quantity" type="number" value="{!v.quantity}"/>
         </div>
         <div class="slds-p-horizontal_small">
-            <lightning:button label="Add to basket" onclick="{!c.handleAddToBasket}"/>
+            <lightning:button iconName="utility:cart" variant="brand" label="Add to basket" onclick="{!c.handleAddToBasket}"/>
         </div>
     </div>
 

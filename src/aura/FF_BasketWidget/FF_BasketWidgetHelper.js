@@ -11,8 +11,8 @@
             let state = response.getState();
             if (state === "SUCCESS"){
                 component.set("v.basket",response.getReturnValue());
-                component.set("v.productsQuantity",response.getReturnValue().totalQuantity);
-                component.set("v.productsPrice",response.getReturnValue().totalPrice);
+//                component.set("v.productsQuantity",response.getReturnValue().totalQuantity);
+//                component.set("v.productsPrice",response.getReturnValue().totalPrice);
                 console.log('Products fetched');
             }else{
                 let error = response.getError();

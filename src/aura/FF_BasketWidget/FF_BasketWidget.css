@@ -1,10 +1,30 @@
 .THIS {
 }
 
-.THIS.footer {
-    background: transparent;
-    border: 0;
-    position: fixed;
-    left: 2vw;
-    bottom: 3vh;
+@media (min-width: 1451px) {
+    .THIS.footer {
+        background: transparent;
+        border: 0;
+        position: fixed;
+        left: 2vw;
+        bottom: 3vh;
+    }
+}
+
+@media (max-width: 1450px) {
+    .THIS.footer {
+        border-radius: 15px;
+        position: fixed;
+        left: 10px;
+        bottom: 10px;
+        padding: 10px;
+    }
+
+    .THIS.footer .slds-card__header {
+        display: none;
+    }
+
+    .THIS.footer .slds-card__body {
+        margin: 0;
+    }
 }

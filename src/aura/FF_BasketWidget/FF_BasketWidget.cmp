@@ -1,7 +1,7 @@
 <aura:component controller="FF_CacheController" description="FF_BasketWidget" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
     <aura:attribute name="basket" type="Object"/>
-    <aura:attribute name="productsQuantity" type="Integer"/>
-    <aura:attribute name="productsPrice" type="Decimal"/>
+<!--    <aura:attribute name="productsQuantity" type="Integer"/>-->
+<!--    <aura:attribute name="productsPrice" type="Decimal"/>-->
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:handler event="c:FF_ProductAddedToBasket" action="{!c.onInit}"/>
     <lightning:overlayLibrary aura:id="overlayLib"/>
@@ -10,8 +10,8 @@
     <lightning:card class="footer">
         <lightning:button iconName="utility:cart" variant="base" label="Show basket" onclick="{!c.handleShowBasket}"/>
         <aura:if isTrue="{!v.basket!=null}">
-            <p>Products: {!v.productsQuantity}</p>
-            <p>Price: <lightning:formattedNumber value="{!v.productsPrice}" style="currency"/></p>
+            <p>Products: {!v.basket.totalQuantity}</p>
+            <p>Price: <lightning:formattedNumber value="{!v.basket.totalPrice}" style="currency"/></p>
         </aura:if>
     </lightning:card>
 
