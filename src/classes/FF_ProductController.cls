@@ -7,7 +7,7 @@ public with sharing class FF_ProductController {
         productWrapper.pageNumber = pageNumber;
         AggregateResult[] groupedResults  = [SELECT count(Id)cnt FROM Product2];
         productWrapper.totalRecords = Integer.valueof(groupedResults[0].get('cnt'));
-        productWrapper.ProductListToDisplay = [SELECT Id,Name,ProductCode,Description,Family,Product_Name_Link__c FROM Product2 ORDER BY Name LIMIT :recordToDisplay OFFSET :(pageNumber - 1) * recordToDisplay];
+        productWrapper.ProductListToDisplay = [SELECT Id,Name,ProductCode,Description,Family,Product_Name_Link__c,RecordType.Name FROM Product2 ORDER BY Name LIMIT :recordToDisplay OFFSET :(pageNumber - 1) * recordToDisplay];
         return productWrapper;
     }
 
@@ -16,8 +16,9 @@ public with sharing class FF_ProductController {
         List<Schema.RecordTypeInfo> recordtypes = Product2.SObjectType.getDescribe().getRecordTypeInfos();
         Map<Id,String> recordtypemap = new Map<Id, String>();
         for(RecordTypeInfo recordTypeInfo : recordtypes){
-            if(recordTypeInfo.getName() != 'Master')
+            if(recordTypeInfo.getName() != 'Master'){
                 recordtypemap.put(recordTypeInfo.getRecordTypeId(), recordTypeInfo.getName());
+            }
         }
         return recordtypemap.values();
     }
@@ -77,7 +78,15 @@ public with sharing class FF_ProductController {
 
     @AuraEnabled
     public static String getMainPicture(String productId){
-        return [SELECT Id,ContentDocument.Id FROM ContentDocumentLink WHERE LinkedEntityId = :productId AND ContentDocument.Title LIKE 'main%' LIMIT 1].ContentDocument.Id;
+//        return [SELECT Id,ContentDocument.Id FROM ContentDocumentLink WHERE LinkedEntityId = :productId AND ContentDocument.Title LIKE 'main%' LIMIT 1].ContentDocument.Id;
+        System.debug('ProductId: ' + productId);
+        Set<Id> documentIds = new Set<Id>();
+        for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId]){
+            documentIds.add(link.ContentDocumentId);
+        }
+        String contentVersionId = [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE Title = 'main' AND ContentDocumentId IN :documentIds LIMIT 1].Id;
+        System.debug(contentVersionId);
+        return contentVersionId;
     }
 
     @AuraEnabled
@@ -100,6 +109,19 @@ public with sharing class FF_ProductController {
             fileWrappers.add(new FileWrapper(contentVersion.Title,contentVersion.Id));
         }
         return fileWrappers;
+    }
+
+    @AuraEnabled
+    public static List<String> getFileLinks(String productId){
+        List<String> links = new List<String>();
+        Set<Id> documentIds = new Set<Id>();
+        for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId]){
+            documentIds.add(link.ContentDocumentId);
+        }
+        for(ContentVersion contentVersion : [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE Title = 'detail' AND ContentDocumentId IN :documentIds]){
+            links.add('/sfc/servlet.shepherd/version/download/' + contentVersion.Id);
+        }
+        return links;
     }
 
     @AuraEnabled
@@ -143,6 +165,5 @@ public with sharing class FF_ProductController {
                 isMain = false;
             }
         }
-
     }
 }
