@@ -157,7 +157,6 @@ public with sharing class FF_ProductController {
             for(ContentDocumentLink link : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productId]){
                 documentIds.add(link.ContentDocumentId);
             }
-
             List<ContentVersion> currentMain = [SELECT Id,Title,ContentDocumentId FROM ContentVersion WHERE Title = 'main' AND ContentDocumentId IN :documentIds LIMIT 1];
             for(FileWrapper fileWrapper : files){
                 List<ContentVersion> newMain = [SELECT Id,Title FROM ContentVersion WHERE Id = :fileWrapper.contentVersionId];
