@@ -10,33 +10,12 @@
         action.setCallback(this, function(response){
             let state = response.getState();
             if (state === "SUCCESS"){
-                component.set("v.ratings",response.getReturnValue());
-                thisHelper.calculateAverageRating(component,event);
+                component.set("v.ratingsWrapper",response.getReturnValue());
             }else{
                 console.log("Failed with state: " + state);
             }
         });
         $A.enqueueAction(action);
-    },
-
-    calculateAverageRating : function(component,event){
-        let ratings = component.get("v.ratings");
-        console.log('Ratings length: ' + ratings.length);
-        let averageRating = 0;
-        if(ratings.length > 0){
-            let ratingSum = 0;
-            let ratingCount = 0;
-            for(let i = 0; i < ratings.length; i++){
-                if(ratings[i].FF_Score__c!=null && ratings[i].FF_Score__c>0){
-                    ratingSum += ratings[i].FF_Score__c;
-                    ratingCount += 1;
-                }
-            }
-            if(ratingCount > 0){
-                averageRating = ratingSum/ratingCount;
-            }
-        }
-        component.set("v.averageRating",averageRating);
     },
 
     checkUserId : function(component,event){
@@ -76,11 +55,5 @@
             }
         }
        );
-    },
-
-    editRating : function(component,event){
-
     }
-
-
 })

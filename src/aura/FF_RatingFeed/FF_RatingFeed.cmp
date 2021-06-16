@@ -1,11 +1,9 @@
 <aura:component controller="FF_RatingController" description="FF_RatingFeed" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
     <aura:attribute name="productId" type="String"/>
     <aura:attribute name="userId" type="String"/>
-    <aura:attribute name="ratings" type="FF_Product_Rating__c[]"/>
-    <aura:attribute name="averageRating" type="Decimal" default="0"/>
+    <aura:attribute name="ratingsWrapper" type="Object"/>
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
     <aura:handler event="c:FF_RatingAdded" action="{!c.doInit}"/>
-<!--    <aura:method access="public" name="refresh" action="{!c.doInit}"/>-->
     <lightning:overlayLibrary aura:id="overlayLib"/>
 
     <div class="slds-box slds-box_border" style="margin-bottom: 10px;">
@@ -13,9 +11,9 @@
             <div class="slds-page-header__row">
                 <div class="slds-page-header__col-title">
                     <span class="slds-page-header__title slds-truncate">Opinions</span>
-                    <aura:if isTrue="{!v.averageRating>0}">
+                    <aura:if isTrue="{!v.ratingsWrapper.average>0}">
                         <span>Average product rating:
-                                {!v.averageRating}
+                                {!v.ratingsWrapper.average}
                         </span>
                     </aura:if>
                 </div>
@@ -23,7 +21,7 @@
         </div>
         <ui:scrollerWrapper class="slds-feed scrollerSize">
             <ul class="slds-feed__list">
-                <aura:iteration items="{!v.ratings}" var="rating">
+                <aura:iteration items="{!v.ratingsWrapper.ratings}" var="rating">
                     <li class="slds-feed__item">
                         <article class="slds-post slds-border_bottom">
                             <header class="slds-post__header slds-media">
@@ -40,9 +38,6 @@
                                         </div>
                                         <aura:if isTrue="{!rating.CreatedById==v.userId}">
                                             <lightning:button label="Delete" variant="neutral" value="{!rating.Id}" onclick="{!c.handleDelete}"/>
-<!--                                            <lightning:buttonGroup>-->
-<!--                                                <lightning:button label="Edit" variant="neutral" value="{!rating.Id}" onclick="{!c.handleEdit}"/>-->
-<!--                                            </lightning:buttonGroup>-->
                                         </aura:if>
                                     </div>
 
@@ -65,7 +60,7 @@
                 </aura:iteration>
             </ul>
 
-            <aura:if isTrue="{!v.ratings.length==0}">
+            <aura:if isTrue="{!v.ratingsWrapper.ratings.length==0}">
                 <div class="scrollerSize" style="display: flex; justify-content: center; align-items: center;">
                     <span style="text-align: center; width:70%; padding: 20px 0;">Nobody has rated this product yet, be the first, give your thoughts below!</span>
                 </div>
