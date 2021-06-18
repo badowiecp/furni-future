@@ -1,0 +1,11 @@
+<aura:component description="FF_OrderDeliveryAndPaymentFooter">
+    <aura:registerEvent name="navigateFlowEvent" type="c:FF_NavigateFlow"/>
+
+    <div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_medium">
+        <div class="slds-float_right">
+            <lightning:button aura:id="BACK" label="Previous" variant="neutral" onclick="{!c.handleNavigate}"/>
+            <lightning:button aura:id="NEXT" label="Next" variant="brand" onclick="{!c.handleNavigate}"/>
+        </div>
+    </div>
+
+</aura:component>

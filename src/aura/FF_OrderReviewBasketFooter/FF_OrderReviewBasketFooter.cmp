@@ -1,0 +1,10 @@
+<aura:component description="FF_OrderReviewBasketFooter" implements="lightning:availableForFlowScreens">
+    <aura:registerEvent name="navigateFlowEvent" type="c:FF_NavigateFlow"/>
+
+    <div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_medium">
+        <div class="slds-float_right">
+            <lightning:button aura:id="NEXT" label="Next" variant="brand" onclick="{!c.handleNext}"/>
+        </div>
+    </div>
+
+</aura:component>

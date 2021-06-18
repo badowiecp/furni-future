@@ -1,0 +1,16 @@
+.THIS {
+}
+
+.THIS .cFF_Tile.tile {
+    width: 150px;
+    height: 150px;
+}
+
+.THIS .quantity {
+    display: inline-block;
+    width: 100px;
+}
+
+.THIS .change {
+    display: inline-block;
+}

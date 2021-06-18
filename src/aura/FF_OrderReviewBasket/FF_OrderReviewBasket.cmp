@@ -1,0 +1,39 @@
+<aura:component controller="FF_CreateOrderController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens,lightning:availableForFlowActions" description="FF_OrderReviewBasket">
+    <aura:attribute name="basket" type="Object"/>
+    <aura:attribute name="opportunity" type="Opportunity"/>
+    <aura:attribute name="opportunityId" type="String"/>
+    <lightning:navigation aura:id="navService"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+
+    <lightning:layout class="slds-p-horizontal_large" multipleRows="true">
+        <aura:iteration items="{!v.basket.productWrappers}" var="product">
+            <lightning:layoutItem class="slds-border_bottom slds-p-left_xx-large" size="12">
+                <lightning:layout>
+                    <lightning:layoutItem class="slds-p-vertical_small" size="2">
+                        <c:FF_Tile name="{!product.name}" productId="{!product.productId}" showPrice="false"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="5">
+                        <p class="slds-p-horizontal_small">Quantity:
+                            <lightning:input value="{!product.quantity}" aura:id="quantityInput" class="slds-m-around_small quantity" variant="label-hidden" label="quantity" type="number"/>
+                            <lightning:button class="change" name="{!product.quantity}" label="Change" value="{!product.productId}" onclick="{!c.handleChange}"/>
+                        </p>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="3">
+                        <p>Unit price: <lightning:formattedNumber style="currency" value="{!product.unitPrice}"/></p>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="2">
+                        <p>Price: <lightning:formattedNumber style="currency" value="{!product.price}"/></p>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </lightning:layoutItem>
+        </aura:iteration>
+    </lightning:layout>
+    <lightning:layout class="slds-p-top_small slds-p-horizontal_large" horizontalAlign="end">
+        <lightning:layoutItem class="slds-text-align_right slds-text-title_bold" size="3">
+            <span>Total price: <lightning:formattedNumber style="currency" value="{!v.basket.totalPrice}"/></span>
+        </lightning:layoutItem>
+    </lightning:layout>
+
+    <c:FF_OrderReviewBasketFooter navigateFlowEvent="{!c.handleNavigate}"/>
+
+</aura:component>
