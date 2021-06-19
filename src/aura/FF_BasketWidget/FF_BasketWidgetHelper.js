@@ -2,34 +2,16 @@
 
     getBasket : function(component,event){
         let action = component.get("c.checkAndReturnBasket");
-        console.log('ProductId: ' + component.get("v.recordId"));
-        console.log('Params set');
         action.setCallback(this, function(response) {
-            let state = response.getState();
-            if (state === "SUCCESS"){
-                component.set("v.basket",response.getReturnValue());
-                console.log('Products fetched');
-            }else{
-                let error = response.getError();
-                console.log("Failed with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);
-            }
+            component.set("v.basket",response.getReturnValue());
         });
         $A.enqueueAction(action);
     },
 
     updateBasket : function(component,event){
         let action = component.get("c.getBasketCache");
-        console.log('ProductId: ' + component.get("v.recordId"));
-        console.log('Params set');
         action.setCallback(this, function(response) {
-            let state = response.getState();
-            if (state === "SUCCESS"){
-                component.set("v.basket",response.getReturnValue());
-                console.log('Products fetched');
-            }else{
-                let error = response.getError();
-                console.log("Failed with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);
-            }
+            component.set("v.basket",response.getReturnValue());
         });
         $A.enqueueAction(action);
     },
@@ -48,7 +30,6 @@
                 ["c:FF_BasketPreview",{ basket : component.get("v.basket") }],
             ];
         }
-
         $A.createComponents(
             preparedComponents,
             function(components, status){
@@ -56,7 +37,7 @@
                     modalBody = components[0];
                     modalFooter = components[1];
                     component.find('overlayLib').showCustomModal({
-                       header: "Basket",
+                       header: $A.get("$Label.c.FF_Basket"),
                        body: modalBody,
                        footer: modalFooter,
                        showCloseButton: true,
@@ -67,6 +48,16 @@
                 }
             }
         );
+    },
+
+    fireToast : function(title,message,type) {
+        let toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams({
+            title: title,
+            message: message,
+            type: type
+        });
+        toastEvent.fire();
     }
 
 })

@@ -9,12 +9,11 @@
             <lightning:formattedNumber value="{!v.price}" style="currency"/>
         </div>
         <div class="slds-p-horizontal_small">
-            <lightning:input variant="label-hidden" placeholder="Quantity" class="slds-show_inline-block" label="Quantity" type="number" value="{!v.quantity}"/>
+            <lightning:input variant="label-hidden" placeholder="{!$Label.c.FF_Quantity}" class="slds-show_inline-block" label="{!$Label.c.FF_Quantity}" type="number" value="{!v.quantity}"/>
         </div>
         <div class="slds-p-horizontal_small">
-            <lightning:button iconName="utility:cart" variant="brand" label="Add to basket" onclick="{!c.handleAddToBasket}"/>
+            <lightning:button iconName="utility:cart" variant="brand" label="{!$Label.c.FF_Add_to_basket}" onclick="{!c.handleAddToBasket}"/>
         </div>
     </div>
-
 
 </aura:component>

@@ -8,16 +8,15 @@
                     <lightning:layout>
                         <lightning:layoutItem class="slds-p-vertical_small" size="2">
                             <c:FF_Tile productId="{!product.productId}" showPrice="false"/>
-                            <!--                <lightning:formattedUrl label="{!product.name}" value="{!product.productUrl}" target="_blank"/>-->
                         </lightning:layoutItem>
                         <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="3">
-                            <p>Quantity: <lightning:formattedNumber value="{!product.quantity}"/></p>
+                            <p>{!$Label.c.FF_Quantity}: <lightning:formattedNumber value="{!product.quantity}"/></p>
                         </lightning:layoutItem>
                         <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="4">
-                            <p>Unit price: <lightning:formattedNumber style="currency" value="{!product.unitPrice}"/></p>
+                            <p>{!$Label.c.FF_Unit_price}: <lightning:formattedNumber style="currency" value="{!product.unitPrice}"/></p>
                         </lightning:layoutItem>
                         <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="3">
-                            <p>Price: <lightning:formattedNumber style="currency" value="{!product.price}"/></p>
+                            <p>{!$Label.c.FF_Price}: <lightning:formattedNumber style="currency" value="{!product.price}"/></p>
                         </lightning:layoutItem>
                     </lightning:layout>
                 </lightning:layoutItem>
@@ -25,11 +24,11 @@
         </lightning:layout>
         <lightning:layout class="slds-p-top_small slds-p-horizontal_large" horizontalAlign="end">
             <lightning:layoutItem class="slds-text-align_right slds-text-title_bold" size="3">
-                <span>Total price: <lightning:formattedNumber style="currency" value="{!v.basket.totalPrice}"/></span>
+                <span>{!$Label.c.FF_Total_price}: <lightning:formattedNumber style="currency" value="{!v.basket.totalPrice}"/></span>
             </lightning:layoutItem>
         </lightning:layout>
         <aura:set attribute="else">
-        <lightning:formattedText class="slds-align_absolute-center" value="No products"/>
+        <lightning:formattedText class="slds-align_absolute-center" value="{!$Label.c.FF_No_products}"/>
         </aura:set>
     </aura:if>
 

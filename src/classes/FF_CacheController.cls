@@ -1,44 +1,21 @@
 public with sharing class FF_CacheController {
 
     @AuraEnabled
-    public static void saveInCache(String productId, Decimal price, Integer quantity){
-        Cache.SessionPartition  shoppingCartCache = Cache.Session.getPartition('ShoppingCartCache');
+    public static void addProductToBasketCache(String productId, Decimal price, Integer quantity){
+        Cache.SessionPartition shoppingCartCache = Cache.Session.getPartition('ShoppingCartCache');
         String basketJson = (String)shoppingCartCache.get('basket');
-        System.debug(basketJson);
         Product2 newProduct = [SELECT Id,Name,Product_Name_Link__c FROM Product2 WHERE Id = :productId];
-        ProductWrapper productWrapper = new ProductWrapper();
-        productWrapper.productId = productId;
-        productWrapper.unitPrice = price;
-        productWrapper.quantity = quantity;
-        productWrapper.productUrl = newProduct.Product_Name_Link__c;
-        productWrapper.name = newProduct.Name;
-        if(String.isEmpty(basketJson)){
-            Basket newBasket = new Basket();
-            newBasket.productWrappers.add(productWrapper);
-            System.debug(newBasket);
-            newBasket = calculateBasket(newBasket);
-            newBasket.products.add(newProduct);
-            basketJson = JSON.serialize(newBasket);
-            System.debug('New basket: ' + basketJson);
-        }else{
-            Boolean isAlreadyInBasket = false;
-            Basket currentBasket = (Basket)JSON.deserialize(basketJson,Basket.class);
-            for(ProductWrapper currentProduct : currentBasket.productWrappers){
-                if(currentProduct.productId==productId){
-                    currentProduct.quantity = quantity;
-                    isAlreadyInBasket = true;
-                }
+        try{
+            ProductWrapper productWrapper = parseProductToWrapper(newProduct,price,quantity);
+            if(String.isEmpty(basketJson)){
+                basketJson = prepareAndSerializeNewBasket(productWrapper,newProduct);
+            }else{
+                basketJson = recalculateAndSerializeExistingBasket(basketJson,productWrapper,newProduct);
             }
-            if(!isAlreadyInBasket){
-                currentBasket.productWrappers.add(productWrapper);
-                currentBasket.products.add(newProduct);
-            }
-            currentBasket = calculateBasket(currentBasket);
-            currentBasket.products = parseWrapperListToProductList(currentBasket.productWrappers);
-            basketJson = JSON.serialize(currentBasket);
-            System.debug('Updated basket: ' + basketJson);
+            shoppingCartCache.put('basket',basketJson);
+        }catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Cannot_add_product_to_basket);
         }
-        shoppingCartCache.put('basket',basketJson);
     }
 
     @AuraEnabled
@@ -52,27 +29,8 @@ public with sharing class FF_CacheController {
             Cache.SessionPartition shoppingCartCache = Cache.Session.getPartition('ShoppingCartCache');
             String basketJson = JSON.serialize(basket);
             shoppingCartCache.put('basket',basketJson);
-            System.debug('Basket from opportunity: ' + basket);
         }
         return getBasketCache();
-    }
-
-    @AuraEnabled
-    public static Basket getBasketFromOpportunity(String opportunityId){
-        Basket basket = new Basket();
-        basket.opportunityId = opportunityId;
-        List<OpportunityLineItem> lineItems = [SELECT Id,Name,Product2.Name,Product2Id,UnitPrice,Quantity FROM OpportunityLineItem WHERE OpportunityId=:opportunityId];
-        if(!lineItems.isEmpty()){
-            for(OpportunityLineItem lineItem : lineItems){
-                ProductWrapper productWrapper = new ProductWrapper();
-                productWrapper.productId = lineItem.Product2Id;
-                productWrapper.quantity = Integer.valueOf(lineItem.Quantity);
-                productWrapper.unitPrice = lineItem.UnitPrice;
-                productWrapper.name = lineItem.Product2.Name;
-                basket.productWrappers.add(productWrapper);
-            }
-        }
-        return basket;
     }
 
     @AuraEnabled
@@ -103,7 +61,52 @@ public with sharing class FF_CacheController {
         return basket;
     }
 
-    public static List<Product2> parseWrapperListToProductList(List<ProductWrapper> wrappers){
+    private static Basket getBasketFromOpportunity(String opportunityId){
+        Basket basket = new Basket();
+        basket.opportunityId = opportunityId;
+        List<OpportunityLineItem> lineItems = [SELECT Id,Name,Product2.Name,Product2Id,UnitPrice,Quantity FROM OpportunityLineItem WHERE OpportunityId=:opportunityId];
+        if(!lineItems.isEmpty()){
+            for(OpportunityLineItem lineItem : lineItems){
+                ProductWrapper productWrapper = new ProductWrapper();
+                productWrapper.productId = lineItem.Product2Id;
+                productWrapper.quantity = Integer.valueOf(lineItem.Quantity);
+                productWrapper.unitPrice = lineItem.UnitPrice;
+                productWrapper.name = lineItem.Product2.Name;
+                basket.productWrappers.add(productWrapper);
+            }
+        }
+        return basket;
+    }
+
+    private static String prepareAndSerializeNewBasket(ProductWrapper productWrapper, Product2 newProduct){
+        Basket newBasket = new Basket();
+        newBasket.productWrappers.add(productWrapper);
+        newBasket = calculateBasket(newBasket);
+        newBasket.products.add(newProduct);
+        String basketJson = JSON.serialize(newBasket);
+        return basketJson;
+    }
+
+    private static String recalculateAndSerializeExistingBasket(String basketJson, ProductWrapper productWrapper, Product2 newProduct){
+        Boolean isAlreadyInBasket = false;
+        Basket currentBasket = (Basket)JSON.deserialize(basketJson,Basket.class);
+        for(ProductWrapper currentProduct : currentBasket.productWrappers){
+            if(currentProduct.productId==productWrapper.productId){
+                currentProduct.quantity = productWrapper.quantity;
+                isAlreadyInBasket = true;
+            }
+        }
+        if(!isAlreadyInBasket){
+            currentBasket.productWrappers.add(productWrapper);
+            currentBasket.products.add(newProduct);
+        }
+        currentBasket = calculateBasket(currentBasket);
+        currentBasket.products = parseWrapperListToProductList(currentBasket.productWrappers);
+        basketJson = JSON.serialize(currentBasket);
+        return basketJson;
+    }
+
+    private static List<Product2> parseWrapperListToProductList(List<ProductWrapper> wrappers){
         List<Product2> productList = new List<Product2>();
         for(ProductWrapper wrapper : wrappers){
             productList.add(parseWrapperToProduct(wrapper));
@@ -111,11 +114,21 @@ public with sharing class FF_CacheController {
         return productList;
     }
 
-    public static Product2 parseWrapperToProduct(ProductWrapper wrapper){
+    private static Product2 parseWrapperToProduct(ProductWrapper wrapper){
         Product2 newProduct = new Product2();
         newProduct.Id = wrapper.productId;
         newProduct.Name = wrapper.name;
         return newProduct;
+    }
+
+    private static ProductWrapper parseProductToWrapper(Product2 product, Decimal price, Integer quantity){
+        ProductWrapper productWrapper = new ProductWrapper();
+        productWrapper.productId = product.Id;
+        productWrapper.unitPrice = price;
+        productWrapper.quantity = quantity;
+        productWrapper.productUrl = product.Product_Name_Link__c;
+        productWrapper.name = product.Name;
+        return productWrapper;
     }
 
     public class Basket {

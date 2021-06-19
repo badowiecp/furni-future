@@ -5,51 +5,49 @@
         action.setParams({
             "productId": component.get("v.recordId")
         });
-        console.log('ProductId: ' + component.get("v.recordId"));
-        console.log('Params set');
         action.setCallback(this, function(response) {
-            let state = response.getState();
-            if (state === "SUCCESS"){
-                component.set("v.price",response.getReturnValue());
-                console.log('Price fetched');
-            }else{
-                let error = response.getError();
-                console.log("Failed with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);
-            }
+            component.set("v.price",response.getReturnValue());
         });
         $A.enqueueAction(action);
     },
 
+    validateAndAdd : function(component,event){
+        if(component.get("v.quantity")>0){
+            this.addToBasket(component,event);
+        }else{
+            this.fireToast("Warning",$A.get("$Label.c.FF_Specify_quantity_of_products_before_adding_to_cart"),"warning");
+        }
+    },
+
     addToBasket : function(component,event){
-        let action = component.get("c.saveInCache");
+        let action = component.get("c.addProductToBasketCache");
         action.setParams({
             "productId": component.get("v.recordId"),
             "price" : component.get("v.price"),
             "quantity" : component.get("v.quantity")
         });
-        console.log('ProductId: ' + component.get("v.recordId"));
-        console.log('Params set');
         action.setCallback(this, function(response) {
             let state = response.getState();
             if (state === "SUCCESS"){
                 let event = $A.get("e.c:FF_ProductAddedToBasket");
                 event.fire();
-
-                let toastEvent = $A.get("e.force:showToast");
-                toastEvent.setParams({
-                    "title": "Success",
-                    "message": "Product added to basket",
-                    "type" : "success"
-                });
-                toastEvent.fire();
-
-                console.log('Successfully saved to cache')
+                this.fireToast("Success",$A.get("$Label.c.FF_Product_added_to_basket"),"success");
             }else{
-                let error = response.getError();
-                console.log("Failed with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);
+                let errors = response.getError();
+                this.fireToast("Error",errors[0].message,"error");
             }
         });
         $A.enqueueAction(action);
+    },
+
+    fireToast : function(title,message,type) {
+        let toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams({
+            title: title,
+            message: message,
+            type: type
+        });
+        toastEvent.fire();
     }
 
 })
