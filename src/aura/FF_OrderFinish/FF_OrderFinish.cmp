@@ -4,10 +4,10 @@
     <aura:attribute name="displayPaymentButton" type="Boolean"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
 
-    <lightning:formattedText class="slds-align_absolute-center slds-m-around_large" value="Thank you for your purchase!"/>
+    <lightning:formattedText class="slds-align_absolute-center slds-m-around_large" value="{!$Label.c.FF_Thank_you_for_your_purchase}"/>
 
     <aura:if isTrue="{!v.displayPaymentButton}">
-        <lightning:button class="slds-align_absolute-center" label="Go to payment" onclick="{!c.goToPayment}"/>
+        <lightning:button class="slds-align_absolute-center" label="{!$Label.c.FF_Go_to_payment}" onclick="{!c.handleGoToPayment}"/>
     </aura:if>
 
 </aura:component>

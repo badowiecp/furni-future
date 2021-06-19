@@ -4,10 +4,6 @@
         helper.getBasket(component,event);
     },
 
-    handleDelete : function(component,event,helper){
-        helper.addProductToDelete(component,event);
-    },
-
     handleNavigate : function(component,event,helper){
         helper.next(component,event);
     },

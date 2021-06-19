@@ -2,16 +2,13 @@
 
     getProducts : function(component,event){
         let action = component.get("c.checkAndReturnBasket");
-        console.log('ProductId: ' + component.get("v.recordId"));
-        console.log('Params set');
         action.setCallback(this, function(response) {
             let state = response.getState();
             if (state === "SUCCESS"){
                 component.set("v.basket",response.getReturnValue());
-                console.log('Products fetched');
             }else{
-                let error = response.getError();
-                console.log("Failed with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);
+                let errors = response.getError();
+                this.fireToast("Error",errors[0].message,"error");
             }
         });
         $A.enqueueAction(action);
@@ -26,10 +23,9 @@
             let state = response.getState();
             if (state === "SUCCESS"){
                 component.set("v.opportunityFields",response.getReturnValue());
-                console.log('Opportunity fetched with delivery: ' + response.getReturnValue().FF_Delivery__c);
             }else{
-                let error = response.getError();
-                console.log("Failed with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);
+                let errors = response.getError();
+                this.fireToast("Error",errors[0].message,"error");
             }
         });
         $A.enqueueAction(action);
@@ -43,11 +39,9 @@
         });
         action.setCallback(this, function(response) {
             let state = response.getState();
-            if (state === "SUCCESS"){
-                console.log('Order created');
-            }else{
-                let error = response.getError();
-                console.log("Failed with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);
+            if (state === "ERROR"){
+                let errors = response.getError();
+                this.fireToast("Error",errors[0].message,"error");
             }
         });
         $A.enqueueAction(action);
@@ -56,11 +50,20 @@
     navigate : function(component,event){
         var navigate = component.get("v.navigateFlow");
         var action = event.getParam("action");
-        console.log('Enter navigate');
         if(action=='NEXT'){
             this.confirm(component,event);
         }
         navigate(action);
+    },
+
+    fireToast : function(title,message,type) {
+        let toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams({
+            title: title,
+            message: message,
+            type: type
+        });
+        toastEvent.fire();
     }
 
 })

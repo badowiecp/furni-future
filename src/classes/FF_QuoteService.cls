@@ -3,14 +3,15 @@ global without sharing class FF_QuoteService {
     global static void prepareQuoteForOpportunity(String opportunityId) {
         Quote newQuote = createQuote(opportunityId);
         createQuoteLineItems(newQuote, opportunityId);
+        changeOpportunityOwnerToAutomatedProcess(opportunityId);
         generatePdf(newQuote.Id,newQuote.OpportunityId,newQuote.Email,newQuote.ContactId);
     }
 
     private static Quote createQuote(String opportunityId) {
-        Opportunity opportunity = [SELECT Id,Name,CreatedById,OwnerId,Owner.Email FROM Opportunity WHERE Id = :opportunityId];
+        Opportunity opportunity = [SELECT Id,Name,CreatedById,OwnerId,Owner.Email,CreatedBy.Email FROM Opportunity WHERE Id = :opportunityId];
         Quote newQuote = new Quote();
         newQuote.OpportunityId = opportunityId;
-        Contact contact = [SELECT Id,Email FROM Contact WHERE Email = :opportunity.Owner.Email];
+        Contact contact = [SELECT Id,Email FROM Contact WHERE Email = :opportunity.CreatedBy.Email];
         newQuote.ContactId = contact.Id;
         newQuote.Email = contact.Email;
         newQuote.Name = 'Quote for ' + opportunity.Name;
@@ -60,7 +61,7 @@ global without sharing class FF_QuoteService {
             message.setOrgWideEmailAddressId(addresses[0].Id);
         }
         message.setTargetObjectId(contactId);
-        message.setSaveAsActivity(true);
+        message.setSaveAsActivity(false);
 
         Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
         efa.setFileName('Furni Future marketing quote');
@@ -69,17 +70,24 @@ global without sharing class FF_QuoteService {
 
         message.setFileAttachments(new List<Messaging.EmailFileAttachment>{efa});
 
-        EmailTemplate template = [SELECT Id, Subject, HtmlValue FROM EmailTemplate WHERE Id = '00X09000001EfJrEAK'];
+        EmailTemplate template = [SELECT Id, Subject, HtmlValue FROM EmailTemplate WHERE Name = 'Quote notification'];
 
         message.setTemplateId(template.Id);
         message.setSubject(template.Subject);
         message.setHtmlBody(template.HtmlValue);
-        System.debug(message);
+        message.setTreatBodiesAsTemplate(true);
         try {
             Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
         } catch (Exception exc) {
-            System.debug(exc);
-//            throw exc;
+//            System.debug(exc);
+            throw exc;
         }
+    }
+
+    private static void changeOpportunityOwnerToAutomatedProcess(String opportunityId){
+        String automatedProcessUserId = [SELECT Id,Name FROM User WHERE Name = 'Automated process'].Id;
+        Opportunity opportunity = [SELECT Id FROM Opportunity WHERE Id=:opportunityId];
+        opportunity.OwnerId = automatedProcessUserId;
+        upsert opportunity;
     }
 }

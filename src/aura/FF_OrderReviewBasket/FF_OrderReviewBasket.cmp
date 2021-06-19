@@ -2,8 +2,11 @@
     <aura:attribute name="basket" type="Object"/>
     <aura:attribute name="opportunity" type="Opportunity"/>
     <aura:attribute name="opportunityId" type="String"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
     <lightning:navigation aura:id="navService"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+
+    <c:FF_LoadingSpinner show="{!v.showSpinner}"/>
 
     <lightning:layout class="slds-p-horizontal_large" multipleRows="true">
         <aura:iteration items="{!v.basket.productWrappers}" var="product">
@@ -13,16 +16,16 @@
                         <c:FF_Tile name="{!product.name}" productId="{!product.productId}" showPrice="false"/>
                     </lightning:layoutItem>
                     <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="5">
-                        <p class="slds-p-horizontal_small">Quantity:
+                        <p class="slds-p-horizontal_small">{!$Label.c.FF_Quantity}:
                             <lightning:input value="{!product.quantity}" aura:id="quantityInput" class="slds-m-around_small quantity" variant="label-hidden" label="quantity" type="number"/>
-                            <lightning:button class="change" name="{!product.quantity}" label="Change" value="{!product.productId}" onclick="{!c.handleChange}"/>
+                            <lightning:button class="change" name="{!product.quantity}" label="{!$Label.c.FF_Change}" value="{!product.productId}" onclick="{!c.handleChange}"/>
                         </p>
                     </lightning:layoutItem>
                     <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="3">
-                        <p>Unit price: <lightning:formattedNumber style="currency" value="{!product.unitPrice}"/></p>
+                        <p>{!$Label.c.FF_Unit_price}: <lightning:formattedNumber style="currency" value="{!product.unitPrice}"/></p>
                     </lightning:layoutItem>
                     <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="2">
-                        <p>Price: <lightning:formattedNumber style="currency" value="{!product.price}"/></p>
+                        <p>{!$Label.c.FF_Price}: <lightning:formattedNumber style="currency" value="{!product.price}"/></p>
                     </lightning:layoutItem>
                 </lightning:layout>
             </lightning:layoutItem>
@@ -30,7 +33,7 @@
     </lightning:layout>
     <lightning:layout class="slds-p-top_small slds-p-horizontal_large" horizontalAlign="end">
         <lightning:layoutItem class="slds-text-align_right slds-text-title_bold" size="3">
-            <span>Total price: <lightning:formattedNumber style="currency" value="{!v.basket.totalPrice}"/></span>
+            <span>{!$Label.c.FF_Total_price}: <lightning:formattedNumber style="currency" value="{!v.basket.totalPrice}"/></span>
         </lightning:layoutItem>
     </lightning:layout>
 

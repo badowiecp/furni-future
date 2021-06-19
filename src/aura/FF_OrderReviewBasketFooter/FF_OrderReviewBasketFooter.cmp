@@ -3,7 +3,7 @@
 
     <div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_medium">
         <div class="slds-float_right">
-            <lightning:button aura:id="NEXT" label="Next" variant="brand" onclick="{!c.handleNext}"/>
+            <lightning:button aura:id="NEXT" label="{!$Label.c.FF_Next}" variant="brand" onclick="{!c.handleNext}"/>
         </div>
     </div>
 

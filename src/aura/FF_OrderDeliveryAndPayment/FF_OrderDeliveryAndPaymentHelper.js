@@ -1,62 +1,51 @@
 ({
 
     prepareOpportunity : function(component,event){
+        component.set("v.showSpinner",true);
         let action = component.get("c.getOpportunity");
 
-        console.log('Delivery opportunity Id: ' + component.get("v.opportunityId"));
         action.setParams({
             "opportunityId": component.get("v.opportunityId")
         });
 
         action.setCallback(this, function(response) {
             let state = response.getState();
-            if (state === "SUCCESS"){
-                component.set("v.opportunityFields",response.getReturnValue());
-                console.log('Opportunity retrieved');
-            }else{
-                let error = response.getError();
-                console.log("Failed with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);
-            }
+            component.set("v.opportunityFields",response.getReturnValue());
+            component.set("v.showSpinner",false);
         });
         $A.enqueueAction(action);
     },
 
     navigate : function(component,event){
-        console.log('Enter navigate');
         var navigate = component.get("v.navigateFlow");
         var action = event.getParam("action");
 
         if(action=='NEXT'){
             this.validateInputs(component,event);
             if(component.get("v.inputsValid")){
+                component.set("v.showSpinner",true);
                 this.saveShippingAddressToContact(component,event);
                 this.saveDeliveryAndPaymentInfo(component,event);
+                component.set("v.showSpinner",false);
                 navigate(action);
             }
         }else{
             navigate(action);
         }
-
     },
 
     saveDeliveryAndPaymentInfo: function(component, event) {
-        console.log('Enter save opportunity');
         let action = component.get("c.saveOpportunity");
-        console.log('Opportunity to update: ' + console.log(JSON.parse(JSON.stringify(component.get("v.opportunityFields")))));
 
         action.setParams({
             "opportunityToSave": component.get("v.opportunityFields")
         });
-        console.log('Opportunity to update: ' + component.get("v.opportunityFields"));
 
-        console.log('Opportunity param set');
         action.setCallback(this, function(response) {
             let state = response.getState();
-            if (state === "SUCCESS"){
-                console.log('Opportunity updated');
-            }else{
-                let error = response.getError();
-                console.log("Failed with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);
+            if (state === "ERROR"){
+                let errors = response.getError();
+                this.fireToast("Error",errors[0].message,"error");
             }
         });
         $A.enqueueAction(action);
@@ -64,9 +53,7 @@
 
     saveShippingAddressToContact : function(component,event){
         if(component.get("v.opportunityFields.FF_Delivery__c")!='Personally'){
-            console.log('Enter save to contact');
             let action = component.get("c.saveAddressToContact");
-            console.log('Shipping street: ' + component.find("shippingAddress").get("v.street"));
 
             action.setParams({
                 "street": component.find("shippingAddress").get("v.street"),
@@ -76,60 +63,34 @@
                 "state": component.find("shippingAddress").get("v.province")
             });
 
-            console.log('Contact params set');
             action.setCallback(this, function(response) {
                 let state = response.getState();
-                if (state === "SUCCESS"){
-                    console.log('Contact updated with address');
-                }else{
-                    let error = response.getError();
-                    console.log("Failed with state: " + state + ' Error: ' + error[0].message + error[0].stackTrace);
+                if (state === "ERROR"){
+                    let errors = response.getError();
+                    this.fireToast("Error",errors[0].message,"error");
                 }
             });
             $A.enqueueAction(action);
         }
     },
 
+    checkInvoice : function(component,event){
+        component.set("v.invoice",event.getSource().get("v.value"));
+    },
+
     validateInputs : function(component,event){
         if(isEmpty(component.get("v.opportunityFields.FF_Delivery__c"))){
             component.set("v.inputsValid",false);
-            let deliveryToast = $A.get("e.force:showToast");
-            deliveryToast.setParams({
-                "title": "Warning",
-                "message": "Please choose delivery method first",
-                "type": "warning"
-            });
-            deliveryToast.fire();
+            this.fireToast("Warning",$A.get("$Label.c.FF_Please_choose_delivery_method_first"),"warning");
         }else if(isEmpty(component.get("v.opportunityFields.FF_Payment__c"))){
             component.set("v.inputsValid",false);
-            let deliveryToast = $A.get("e.force:showToast");
-            deliveryToast.setParams({
-                "title": "Warning",
-                "message": "Please choose payment method first",
-                "type": "warning"
-            });
-            deliveryToast.fire();
+            this.fireToast("Warning",$A.get("$Label.c.FF_Please_choose_payment_method_first"),"warning");
         }else if(isEmpty(component.find("shippingAddress").get("v.street")) || isEmpty(component.find("shippingAddress").get("v.postalCode")) || isEmpty(component.find("shippingAddress").get("v.city"))){
             component.set("v.inputsValid",false);
-            let deliveryToast = $A.get("e.force:showToast");
-            deliveryToast.setParams({
-                "title": "Warning",
-                "message": "Please provide valid address for shipping",
-                "type": "warning"
-            });
-            deliveryToast.fire();
-        }else if(isEmpty(component.find("billingAddress").get("v.street")) || isEmpty(component.find("billingAddress").get("v.postalCode")) || isEmpty(component.find("billingAddress").get("v.city"))
-            || isEmpty(component.find("companyName").get("v.value")) || isEmpty(component.find("taxNumber").get("v.value"))){
-            if(component.get("v.opportunityFields.FF_Invoice__c")){
-                component.set("v.inputsValid",false);
-                let billingToast = $A.get("e.force:showToast");
-                billingToast.setParams({
-                    "title": "Warning",
-                    "message": "Please provide all valid information for billing",
-                    "type": "warning"
-                });
-                billingToast.fire();
-            }
+            this.fireToast("Warning",$A.get("$Label.c.FF_Please_provide_valid_address_for_shipping"),"warning");
+        }else if(component.get("v.opportunityFields.FF_Invoice__c") && (isEmpty(component.find("billingAddress").get("v.street")) || isEmpty(component.find("billingAddress").get("v.postalCode")) || isEmpty(component.find("billingAddress").get("v.city")) || isEmpty(component.find("companyName").get("v.value")) || isEmpty(component.find("taxNumber").get("v.value")))){
+            component.set("v.inputsValid",false);
+            this.fireToast("Warning",$A.get("$Label.c.FF_Please_provide_all_valid_information_for_billing"),"warning");
         }else{
             component.set("v.inputsValid",true);
         }
@@ -140,6 +101,16 @@
             }
             return (!str || str.length === 0 );
         }
+    },
+
+    fireToast : function(title,message,type) {
+        let toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams({
+            title: title,
+            message: message,
+            type: type
+        });
+        toastEvent.fire();
     }
 
 })
