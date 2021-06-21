@@ -3,7 +3,6 @@ global without sharing class FF_QuoteService {
     global static void prepareQuoteForOpportunity(String opportunityId) {
         Quote newQuote = createQuote(opportunityId);
         createQuoteLineItems(newQuote, opportunityId);
-        changeOpportunityOwnerToAutomatedProcess(opportunityId);
         generatePdf(newQuote.Id,newQuote.OpportunityId,newQuote.Email,newQuote.ContactId);
     }
 
@@ -21,6 +20,7 @@ global without sharing class FF_QuoteService {
 
     private static void createQuoteLineItems(Quote quote, String opportunityId) {
         List<OpportunityLineItem> opportunityItems = [SELECT Id,UnitPrice,TotalPrice,Quantity,Product2Id,PricebookEntryId FROM OpportunityLineItem WHERE OpportunityId = :opportunityId];
+        List<QuoteLineItem> quoteItems = new List<QuoteLineItem>();
         for (OpportunityLineItem opportunityItem : opportunityItems) {
             QuoteLineItem quoteItem = new QuoteLineItem();
             quoteItem.QuoteId = quote.Id;
@@ -28,8 +28,9 @@ global without sharing class FF_QuoteService {
             quoteItem.Quantity = opportunityItem.Quantity;
             quoteItem.Product2Id = opportunityItem.Product2Id;
             quoteItem.PricebookEntryId = opportunityItem.PricebookEntryId;
-            insert quoteItem;
+            quoteItems.add(quoteItem);
         }
+        insert quoteItems;
     }
 
     @future(callout=true)
@@ -39,7 +40,7 @@ global without sharing class FF_QuoteService {
 
         quoteUrl += quoteId;
         quoteUrl += '&headerHeight=190&footerHeight=188&summlid=';
-        quoteUrl += templateID ;
+        quoteUrl += templateID;
         quoteUrl += '#toolbar=1&navpanes=0&zoom=90';
 
         PageReference pg = new PageReference(quoteUrl);
@@ -79,15 +80,7 @@ global without sharing class FF_QuoteService {
         try {
             Messaging.sendEmail(new Messaging.SingleEmailMessage[] { message });
         } catch (Exception exc) {
-//            System.debug(exc);
             throw exc;
         }
-    }
-
-    private static void changeOpportunityOwnerToAutomatedProcess(String opportunityId){
-        String automatedProcessUserId = [SELECT Id,Name FROM User WHERE Name = 'Automated process'].Id;
-        Opportunity opportunity = [SELECT Id FROM Opportunity WHERE Id=:opportunityId];
-        opportunity.OwnerId = automatedProcessUserId;
-        upsert opportunity;
     }
 }
