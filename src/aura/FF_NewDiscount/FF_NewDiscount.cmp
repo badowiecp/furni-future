@@ -1,0 +1,15 @@
+<aura:component description="FF_NewDiscount">
+    <aura:attribute name="priceBook" type="Pricebook2"/>
+    <aura:attribute name="priceBookEntries" type="PricebookEntry"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+
+    <lightning:layout multipleRows="true">
+        <aura:iteration items="{!v.priceBookEntries}" var="entry">
+            <lightning:layoutItem size="12">
+                <c:FF_Tile showPrice="false" showName="true" product=""/>
+            </lightning:layoutItem>
+        </aura:iteration>
+    </lightning:layout>
+
+</aura:component>

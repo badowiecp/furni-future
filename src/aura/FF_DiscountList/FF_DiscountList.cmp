@@ -1,0 +1,45 @@
+<aura:component controller="FF_DiscountController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" description="FF_DiscountList" >
+    <aura:attribute name="priceBooksTable" type="Pricebook2"/>
+    <aura:attribute name="priceBooks" type="Pricebook2"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <div class="slds-page-header">
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-product">
+                                <lightning:icon iconName="standard:price_books"/>
+                            </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <div class="slds-page-header__name">
+                            <div class="slds-page-header__name-title">
+                                <span class="slds-page-header__title slds-truncate">Discounts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-page-header__col-actions">
+                <div class="slds-page-header__controls">
+                    <div class="slds-page-header__control">
+                        <lightning:button label="{!$Label.c.FF_New}" onclick="{!c.handleNew}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 500px">
+        <lightning:datatable
+                keyField="id"
+                data="{!v.priceBooksTable}"
+                columns="{!v.columns}"
+                hideCheckboxColumn="true"
+                onrowaction="{!c.handleRowAction}"/>
+    </div>
+
+</aura:component>
