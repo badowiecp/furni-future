@@ -3,7 +3,7 @@
     getPhotoId : function(component,event){
         let action = component.get("c.getContentVersionIdForMainProductImage");
         action.setParams({
-            "productId" : component.get("v.product.Id")
+            "productId" : component.get("v.productId")
         });
 
         action.setCallback(this, function(response){
@@ -19,7 +19,7 @@
     getProductPrice : function(component,event){
         let action = component.get("c.getPriceBookEntry");
         action.setParams({
-            "productId" : component.get("v.product.Id")
+            "productId" : component.get("v.productId")
         });
 
         action.setCallback(this, function(response){

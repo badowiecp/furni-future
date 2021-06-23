@@ -1,5 +1,7 @@
 <aura:component controller="FF_SearchController" description="FF_Tile">
     <aura:attribute name="product" type="Product2"/>
+    <aura:attribute name="productId" type="String" default="{!v.product.Id}"/>
+    <aura:attribute name="name" type="String" default="{!v.product.Name}"/>
     <aura:attribute name="contentVersionId" type="String"/>
     <aura:attribute name="price" type="Decimal"/>
     <aura:attribute name="showName" type="Boolean" default="true"/>
@@ -14,7 +16,7 @@
             <aura:if isTrue="{!if(or(v.showName,v.showPrice),true,false)}">
                 <div class="lower-third">
                     <aura:if isTrue="{!v.showName}">
-                        <h1 class="slds-truncate">{!v.product.Name}</h1>
+                        <h1 class="slds-truncate">{!v.name}</h1>
                     </aura:if>
                     <aura:if isTrue="{!v.showPrice}">
                         <lightning:formattedNumber value="{!v.price}" style="currency"/>
