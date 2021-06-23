@@ -27,7 +27,7 @@ global without sharing class FF_OpportunityToOrderService {
         newOrder.ShippingCity = selectedOpportunity.FF_Shipping_city__c;
         newOrder.ShippingCountry = selectedOpportunity.FF_Shipping_country__c;
         newOrder.ShippingState = selectedOpportunity.FF_Shipping_state__c;
-        newOrder.Pricebook2Id = [select Id, Name, IsActive from PriceBook2 where IsStandard=True LIMIT 1].Id;
+        newOrder.Pricebook2Id = [SELECT Id,Name,IsActive FROM PriceBook2 WHERE IsStandard = true LIMIT 1].Id;
         if(selectedOpportunity.FF_Invoice__c){
             newOrder.FF_Invoice__c = selectedOpportunity.FF_Invoice__c;
             newOrder.BillingStreet = selectedOpportunity.FF_Billing_street__c;
@@ -50,7 +50,7 @@ global without sharing class FF_OpportunityToOrderService {
             orderItem.Product2Id = lineItem.Product2Id;
             orderItem.Quantity = lineItem.Quantity;
             orderItem.UnitPrice = lineItem.UnitPrice;
-            orderItem.PricebookEntryId = [SELECT Id FROM PricebookEntry WHERE Product2Id = :lineItem.Product2Id].Id;
+            orderItem.PricebookEntryId = [SELECT Id FROM PricebookEntry WHERE Product2Id = :orderItem.Product2Id AND Pricebook2Id IN (SELECT Id FROM Pricebook2 WHERE IsStandard = true)].Id;
             orderItems.add(orderItem);
         }
         return orderItems;
@@ -62,17 +62,6 @@ global without sharing class FF_OpportunityToOrderService {
         newInvoice.Due_Date__c = Date.valueOf(System.today()) + daysToPay;
         newInvoice.Order__c = newOrder.Id;
         insert newInvoice;
-
-//        List<InvoiceLine> invoiceLines = new List<InvoiceLine>();
-//        List<OrderItem> orderItems = [SELECT Id,Product2Id,UnitPrice,Quantity,PricebookEntryId FROM OrderItem WHERE OrderId = :newOrder.Id];
-//        for(OrderItem orderItem : orderItems){
-//            InvoiceLine invoiceLine = new InvoiceLine();
-//            invoiceLine.InvoiceId = newInvoice.Id;
-//            invoiceLine.Quantity = orderItem.Quantity;
-//            invoiceLine.UnitPrice = orderItem.UnitPrice;
-//            invoiceLine.Product2Id = orderItem.Product2Id;
-//        }
-//        insert  invoiceLines;
     }
 
 }

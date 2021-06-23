@@ -17,8 +17,8 @@
     },
 
     navigate : function(component,event){
-        var navigate = component.get("v.navigateFlow");
-        var action = event.getParam("action");
+        let navigate = component.get("v.navigateFlow");
+        let action = event.getParam("action");
 
         if(action=='NEXT'){
             this.validateInputs(component,event);

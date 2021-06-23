@@ -18,14 +18,13 @@
 
         action.setCallback(this, function(response) {
             let bankUrl = response.getReturnValue();
-            console.log('Url: ' + bankUrl);
             component.set("v.bankUrl",bankUrl);
         });
         $A.enqueueAction(action);
     },
 
     goToPayment : function(component,event){
-        var eUrl= $A.get("e.force:navigateToURL");
+        let eUrl= $A.get("e.force:navigateToURL");
         eUrl.setParams({
           "url": component.get("v.bankUrl")
         });

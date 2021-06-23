@@ -6,8 +6,8 @@
             recordTypeId,
             false,
             $A.getCallback(function() {
-                var rec = component.get("v.newProduct");
-                var error = component.get("v.newProductError");
+                let rec = component.get("v.newProduct");
+                let error = component.get("v.newProductError");
                 if(error || (rec === null)) {
                 return;
                 }
@@ -16,7 +16,7 @@
     },
 
     fetchListOfRecordTypes: function(component, event) {
-       var action = component.get("c.fetchRecordTypeValues");
+       let action = component.get("c.fetchRecordTypeValues");
        action.setCallback(this, function(response) {
            let state = response.getState();
            if (state === "SUCCESS"){

@@ -32,17 +32,11 @@
             if (state === "SUCCESS"){
                 if(response.getReturnValue().totalQuantity!=null && response.getReturnValue().totalQuantity>0){
                     component.set("v.basket",response.getReturnValue());
-                    var resultsToast = $A.get("e.force:showToast");
-                    resultsToast.setParams({
-                        "title": "Success",
-                        "message": "Basket updated",
-                        "type": "success"
-                    });
-                    resultsToast.fire();
+                    this.fireToast("Success",$A.get("$Label.c.FF_Basket_updated"),"success");
                 }else{
                     event.preventDefault();
-                    var navService = component.find("navService");
-                    var pageReference = {
+                    let navService = component.find("navService");
+                    let pageReference = {
                         type: "comm__namedPage",
                         attributes: {
                             name: "Explore_products__c"
@@ -60,7 +54,7 @@
     },
 
     next : function(component,event){
-        var navigate = component.get("v.navigateFlow");
+        let navigate = component.get("v.navigateFlow");
         navigate(event.getParam("action"));
     },
 

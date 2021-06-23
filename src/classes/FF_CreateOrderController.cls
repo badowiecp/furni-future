@@ -17,14 +17,14 @@ public without sharing class FF_CreateOrderController {
                 newOpportunity.CloseDate = System.today();
                 newOpportunity.Name = UserInfo.getName() + ' ' + String.valueOf(newOpportunity.CloseDate) + ' opportunity';
                 newOpportunity.StageName = 'Collecting items';
-                newOpportunity.Pricebook2Id = '01s0900000B6HpHAAV';
+                newOpportunity.Pricebook2Id = [SELECT Id,Name,IsActive FROM PriceBook2 WHERE IsStandard = true LIMIT 1].Id;
                 insert newOpportunity;
                 opportunityId = newOpportunity.Id;
             }else{
                 opportunityId = usersOpportunities[0].Id;
             }
             basket = getBasketCache();
-
+            System.debug('Basket from cache in review order: ' + basket);
             if(basket!=null){
                 basket.opportunityId = opportunityId;
             }
@@ -61,6 +61,15 @@ public without sharing class FF_CreateOrderController {
             lineItem.Quantity = productWrapper.quantity;
             insert lineItem;
         }
+    }
+
+    private static Decimal returnCurrentPrice(String productId){
+        List<PricebookEntry> entries = [SELECT Id,UnitPrice,IsActive FROM PricebookEntry WHERE IsActive = true AND Product2Id = :productId ORDER BY UnitPrice ASC];
+        Decimal price = entries[0].UnitPrice;
+        if(entries.size()>1){
+            price = entries[1].UnitPrice;
+        }
+        return price;
     }
 
     @AuraEnabled
