@@ -28,6 +28,38 @@ public with sharing class FF_ProductController {
     }
 
     @AuraEnabled
+    public static Boolean checkIfAdmin(){
+        Set<Id> adminsIds = new Set<Id>();
+        for(Profile profile : [SELECT Id FROM Profile WHERE Name = 'System Administrator']){
+            if(String.isNotEmpty(profile.Id)){
+                adminsIds.add(profile.Id);
+            }
+        }
+        return adminsIds.contains(UserInfo.getProfileId()) ? true : false;
+    }
+
+    @AuraEnabled
+    public static void createProductApproval(String productId){
+        try{
+            Approval.ProcessSubmitRequest psr = new Approval.ProcessSubmitRequest();
+            psr.setObjectId(productId);
+            psr.setProcessDefinitionNameOrId('Product_add_approval');
+            Approval.ProcessResult result = Approval.process(psr);
+        }catch(Exception exc){
+            throw new AuraHandledException(System.Label.FF_Cannot_send_to_approval);
+        }
+    }
+
+    @AuraEnabled
+    public static Boolean checkIfLocked(String productId){
+        Boolean isLocked = false;
+        if(!checkIfAdmin()){
+            isLocked = Approval.isLocked(productId);
+        }
+        return isLocked;
+    }
+
+    @AuraEnabled
     public static Id getRecTypeId(String recordTypeLabel){
         Id recid = Schema.SObjectType.Product2.getRecordTypeInfosByName().get(recordTypeLabel).getRecordTypeId();
         return recid;
