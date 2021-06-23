@@ -1,45 +1,74 @@
 <aura:component controller="FF_DiscountController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" description="FF_DiscountList" >
     <aura:attribute name="priceBooksTable" type="Pricebook2"/>
-    <aura:attribute name="priceBooks" type="Pricebook2"/>
+<!--    <aura:attribute name="priceBooks" type="Pricebook2"/>-->
     <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="currentPage" type="Integer" default="1"/>
+    <aura:attribute name="totalPages" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="pagination" type="Integer"/>
+    <lightning:navigation aura:id="navService"/>
+    <aura:handler name="change" value="{!this}" action="{!c.init}"/>
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
     <lightning:overlayLibrary aura:id="overlayLib"/>
 
-    <div class="slds-page-header">
-        <div class="slds-page-header__row">
-            <div class="slds-page-header__col-title">
-                <div class="slds-media">
-                    <div class="slds-media__figure">
+    <div class="slds-card">
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
                             <span class="slds-icon_container slds-icon-standard-product">
                                 <lightning:icon iconName="standard:price_books"/>
                             </span>
-                    </div>
-                    <div class="slds-media__body">
-                        <div class="slds-page-header__name">
-                            <div class="slds-page-header__name-title">
-                                <span class="slds-page-header__title slds-truncate">Discounts</span>
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <span class="slds-page-header__title slds-truncate">{!$Label.c.FF_Discounts}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="slds-page-header__col-actions">
-                <div class="slds-page-header__controls">
-                    <div class="slds-page-header__control">
-                        <lightning:button label="{!$Label.c.FF_New}" onclick="{!c.handleNew}"/>
+                <div class="slds-page-header__col-actions">
+                    <div class="slds-page-header__controls">
+                        <div class="slds-page-header__control">
+                            <lightning:button label="{!$Label.c.FF_New}" onclick="{!c.handleNew}"/>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div style="height: 500px">
-        <lightning:datatable
-                keyField="id"
-                data="{!v.priceBooksTable}"
-                columns="{!v.columns}"
-                hideCheckboxColumn="true"
-                onrowaction="{!c.handleRowAction}"/>
+        <div style="height: 500px">
+            <lightning:datatable
+                    keyField="id"
+                    showRowNumberColumn="true"
+                    data="{!v.priceBooksTable}"
+                    columns="{!v.columns}"
+                    hideCheckboxColumn="true"
+                    onrowaction="{!c.handleRowAction}"/>
+        </div>
+
+        <div class="slds-p-around_small" style="display: flex; justify-content: space-between;">
+            <div style="display: inline-block;">
+                <ui:inputSelect aura:id="recordSize" value="{!v.pagination}" label="{!$Label.c.FF_Records_per_page + ':'}" change="{!c.onSelectChange}">
+                    <ui:inputSelectOption text="10" label="10"/>
+                    <ui:inputSelectOption text="15" label="15"/>
+                    <ui:inputSelectOption text="20" label="20" value="true"/>
+                </ui:inputSelect>
+            </div>
+
+            <div style="display: inline-block;">
+                <lightning:buttonGroup class="slds-p-top_small">
+                    <lightning:button variant="brand" disabled="{!v.currentPage == 1}" label="{!$Label.c.FF_First_Page}" onclick="{!c.navigateToFirst}"/>
+                    <lightning:button variant="brand" disabled="{!v.currentPage == 1}" label="{!$Label.c.FF_Previous_Page}" onclick="{!c.navigate}"/>
+                    <lightning:button label="{!$Label.c.FF_Showing + ' ' + ((v.pagination * (v.currentPage-1)) + 1) + ' - ' + if((v.currentPage==v.totalPages),v.totalRecords,(v.pagination * v.currentPage)) + ' ' + $Label.c.FF_of  + ' ' + v.totalRecords}"/>
+                    <lightning:button variant="brand" disabled="{!v.currentPage == v.totalPages}" label="{!$Label.c.FF_Next_Page}" onclick="{!c.navigate}"/>
+                    <lightning:button variant="brand" disabled="{!v.currentPage == v.totalPages}" label="{!$Label.c.FF_Last_Page}" onclick="{!c.navigateToLast}"/>
+                </lightning:buttonGroup>
+            </div>
+        </div>
     </div>
 
 </aura:component>

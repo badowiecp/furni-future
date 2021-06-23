@@ -1,17 +1,17 @@
-<aura:component controller="FF_DiscountController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" description="FF_NewDiscount">
+<aura:component controller="FF_DiscountController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" description="FF_EditDiscount">
     <aura:attribute name="priceBook" type="Pricebook2"/>
     <aura:attribute name="priceBookFields" type="Pricebook2"/>
     <aura:attribute name="priceBookEntryWrappers" type="Object"/>
     <aura:attribute name="checkedAll" type="Boolean"/>
     <aura:attribute name="inputsValid" type="Boolean"/>
-    <lightning:navigation aura:id="navService"/>
+    <aura:attribute name="recordId" type="String"/>
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
-    <force:recordData aura:id="newPriceBookService"
+    <force:recordData aura:id="priceBookEdit"
                       fields="Id,Name,IsActive,Description,IsStandard,Discount_Percent__c"
                       recordId="{!v.recordId}"
-                      targetRecord="{!v.priceBook}"
                       targetFields="{!v.priceBookFields}"
+                      mode="EDIT"
     />
 
     <aura:if isTrue="{!v.showSpinner}">
@@ -22,7 +22,7 @@
         <div style="margin: 0 auto;">
             <div class="slds-card" style="width: 1000px;">
                 <div class="slds-section__title slds-p-around_small">
-                    {!$Label.c.FF_New_Discount}
+                        {!$Label.c.FF_Edit_discount}
                 </div>
                 <div class="slds-align_absolute-center">
                     <div class="slds-grid slds-wrap">

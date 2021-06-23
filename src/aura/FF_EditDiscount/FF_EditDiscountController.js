@@ -1,7 +1,6 @@
 ({
 
     init : function(component,event,helper){
-        helper.getRecordTemplate(component,event);
         helper.getAvailableProducts(component,event);
     },
 

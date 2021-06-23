@@ -1,0 +1,17 @@
+.THIS {
+}
+
+.THIS .cFF_Tile.tile {
+    width: 100px;
+    height: 100px;
+}
+
+.THIS .cFF_Tile .lower-third {
+    padding: 0;
+}
+
+.THIS .checkbox{
+  display: inline-block;
+  float: left;
+  margin: 0 5px;
+}

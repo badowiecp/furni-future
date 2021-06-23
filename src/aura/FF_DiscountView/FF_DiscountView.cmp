@@ -1,0 +1,68 @@
+<aura:component controller="FF_DiscountController" description="FF_DiscountView">
+    <aura:attribute name="pricebookId" type="String"/>
+    <aura:attribute name="priceBook" type="Pricebook2"/>
+    <aura:attribute name="priceBookFields" type="Pricebook2"/>
+    <aura:attribute name="priceBookEntryWrappers" type="Object"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <force:recordData aura:id="priceBookEdit"
+                      fields="Id,Name,IsActive,Description,IsStandard,Discount_Percent__c"
+                      recordId="{!v.pricebookId}"
+                      targetFields="{!v.priceBookFields}"
+                      mode="VIEW"
+    />
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large"/>
+    </aura:if>
+
+    <div class="slds-align_absolute-center slds-m-bottom_large">
+        <div class="slds-grid slds-wrap">
+            <lightning:input disabled="true" value="{!v.priceBookFields.Name}" label="{!$Label.c.FF_Discount_name}" required="true"
+                             class="slds-size--1-of-2 slds-p-horizontal_medium slds-p-vertical_small"/>
+            <lightning:input disabled="true" type="number" step="1" value="{!v.priceBookFields.Discount_Percent__c}" placeholder="%" label="{!$Label.c.FF_Percentage_discount}" required="true"
+                             class="slds-size--1-of-2 slds-p-horizontal_medium slds-p-vertical_small"/>
+            <lightning:input disabled="true" value="{!v.priceBookFields.Description}" label="{!$Label.c.FF_Description}"
+                             class="slds-size--2-of-2 slds-p-horizontal_medium slds-p-top_xxx-small"/>
+        </div>
+    </div>
+
+    <lightning:layout class="slds-m-bottom_medium" multipleRows="true">
+        <lightning:layoutItem size="12" class="slds-border_bottom slds-border_top">
+            <lightning:layout multipleRows="false">
+                <lightning:layoutItem class="slds-p-horizontal_large slds-align_absolute-center slds-align-middle slds-p-vertical_small" size="3">
+                    <lightning:formattedText value="{!$Label.c.FF_Photo}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem class="slds-p-horizontal_large slds-align-middle slds-p-vertical_small" size="3">
+                    <lightning:formattedText value="{!$Label.c.FF_Product_Name}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-horizontal_large slds-p-vertical_small" size="3">
+                    <lightning:formattedText value="{!$Label.c.FF_Standard_price}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-horizontal_large slds-p-vertical_small" size="3">
+                    <lightning:formattedText value="{!$Label.c.FF_Discount_price}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:layoutItem>
+        <aura:iteration items="{!v.priceBookEntryWrappers}" var="wrapper" indexVar="index">
+            <lightning:layoutItem size="12" class="slds-border_bottom">
+                <lightning:layout multipleRows="false">
+                    <lightning:layoutItem class="slds-p-horizontal_large slds-align_absolute-center slds-align-middle slds-p-vertical_small" size="3">
+                        <c:FF_Tile showPrice="false" showName="false" productId="{!wrapper.entry.Product2Id}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-p-horizontal_large slds-align-middle slds-p-vertical_small" size="3">
+                        <lightning:formattedUrl label="{!wrapper.entry.Product2.Name}" value="{!wrapper.entry.Product2.Product_Name_Link__c}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-horizontal_large slds-p-vertical_small" size="3">
+                        <lightning:formattedNumber value="{!wrapper.entry.UnitPrice}" style="currency"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-horizontal_large slds-p-vertical_small" size="3">
+                        <lightning:formattedNumber value="{!wrapper.entry.UnitPrice * (100-v.priceBookFields.Discount_Percent__c)/100}" style="currency"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </lightning:layoutItem>
+        </aura:iteration>
+    </lightning:layout>
+
+</aura:component>

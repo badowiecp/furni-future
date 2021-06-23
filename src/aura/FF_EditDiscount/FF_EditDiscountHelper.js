@@ -1,16 +1,5 @@
 ({
 
-    getRecordTemplate : function(component, event){
-        component.find("newPriceBookService").getNewRecord(
-            "Pricebook2",
-            '',
-            false,
-            $A.getCallback(function() {
-                let rec = component.get("v.priceBook");
-            })
-        );
-    },
-
     addToDiscount : function(component,event){
         if(component.get("v.checkedAll")==true && event.getSource().get("v.value") == false){
         }
@@ -56,7 +45,12 @@
     },
 
     getAvailableProducts : function(component,event){
-        let action = component.get("c.getStandardPricebookEntries");
+        let action = component.get("c.getEntriesForEdit");
+
+        action.setParams({
+            "pricebookId": component.get("v.recordId")
+        });
+
         action.setCallback(this, function(response) {
             let state = response.getState();
             if (state === "SUCCESS"){
@@ -93,11 +87,11 @@
             let discount = component.get("v.priceBookFields.Discount_Percent__c");
             component.set("v.priceBookFields.IsActive",isActive);
 
-            component.find("newPriceBookService").saveRecord(function(saveResult) {
-                if(saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
+            component.find("priceBookEdit").saveRecord(function(saveResult) {
+                if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
                     let priceBookId = saveResult.recordId;
                     self.saveEntries(component,priceBookId,discount,isActive);
-                }else{
+                } else {
                     self.fireToast($A.get("$Label.c.FF_Error"),JSON.stringify(saveResult.error),"error");
                     component.set("v.showSpinner",false);
                 }
@@ -106,7 +100,7 @@
     },
 
     saveEntries : function(component,priceBookId,discount,isActive){
-        let action = component.get("c.savePriceBookEntries");
+        let action = component.get("c.updatePriceBookEntries");
         let self = this;
 
         action.setParams({

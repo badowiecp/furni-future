@@ -41,18 +41,8 @@ public without sharing class FF_SearchController {
     }
 
     @AuraEnabled(cacheable = true)
-    public static Decimal getPriceBookEntry(String productId){
-        List<PricebookEntry> pricebookEntryList = new List<PricebookEntry>();
-        for(PricebookEntry entry : [SELECT UnitPrice FROM PricebookEntry WHERE Product2Id = :productId]){
-            if(entry!=null){
-                pricebookEntryList.add(entry);
-            }
-        }
-        if(!pricebookEntryList.isEmpty()){
-            return pricebookEntryList[0].UnitPrice;
-        }else{
-            return null;
-        }
+    public static List<PricebookEntry> getPriceBookEntry(String productId){
+        return [SELECT Id,UnitPrice,IsActive FROM PricebookEntry WHERE IsActive = true AND Product2Id = :productId ORDER BY UnitPrice ASC];
     }
 
     private static String prepareQueryString(String name,String recordType,String productFamily, Integer pageNumber, Integer recordsPerPage){

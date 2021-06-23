@@ -1,5 +1,4 @@
 <aura:component controller="FF_DiscountController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" description="FF_DiscountManager">
-<!--    <aura:handler name="init" value="{!this}" action="{!c.init}"/>-->
     <ltng:require styles="{!$Resource.NoPageHeader}"/>
 
     <c:FF_DiscountList/>
