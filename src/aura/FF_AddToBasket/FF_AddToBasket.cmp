@@ -1,12 +1,20 @@
 <aura:component controller="FF_CacheController" description="FF_AddToBasket" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
-    <aura:attribute name="price" type="Decimal"/>
+    <aura:attribute name="price" type="List"/>
     <aura:attribute name="quantity" type="Decimal"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:registerEvent name="productAddedToBasketEvent" type="c:FF_ProductAddedToBasket"/>
 
     <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread slds-p-around_medium">
         <div style="font-size: 25px; font-weight: bold;" class="slds-p-horizontal_small slds-grid_vertical-align-center">
-            <lightning:formattedNumber value="{!v.price}" style="currency"/>
+            <aura:if isTrue="{!v.price.length>1}">
+                <div style="text-decoration: line-through;">
+                    <lightning:formattedNumber value="{!v.price[1].UnitPrice}" style="currency"/>
+                </div>
+                <lightning:formattedNumber value="{!v.price[0].UnitPrice}" style="currency"/>
+                <aura:set attribute="else">
+                    <lightning:formattedNumber value="{!v.price[0].UnitPrice}" style="currency"/>
+                </aura:set>
+            </aura:if>
         </div>
         <div class="slds-p-horizontal_small">
             <lightning:input variant="label-hidden" placeholder="{!$Label.c.FF_Quantity}" class="slds-show_inline-block" label="{!$Label.c.FF_Quantity}" type="number" value="{!v.quantity}"/>

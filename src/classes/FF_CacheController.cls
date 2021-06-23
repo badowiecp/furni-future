@@ -40,13 +40,19 @@ public with sharing class FF_CacheController {
         Basket currentBasket = new Basket();
         if(basketJson!=null){
             currentBasket = (Basket)JSON.deserialize(basketJson,Basket.class);
+            for(ProductWrapper wrapper : currentBasket.productWrappers){
+                wrapper.unitPrice = returnCurrentPrice(wrapper.productId);
+            }
+            currentBasket = calculateBasket(currentBasket);
+            basketJson = JSON.serialize(currentBasket);
+            shoppingCartCache.put('basket',basketJson);
         }
         return currentBasket;
     }
 
     @AuraEnabled
-    public static Decimal getPriceBookEntry(String productId){
-        return [SELECT UnitPrice FROM PricebookEntry WHERE Product2Id = :productId].UnitPrice;
+    public static List<PricebookEntry> getPriceBookEntry(String productId){
+        return [SELECT Id,UnitPrice,IsActive FROM PricebookEntry WHERE IsActive = true AND Product2Id = :productId ORDER BY UnitPrice ASC];
     }
 
     public static Basket calculateBasket(Basket basket){
@@ -104,6 +110,15 @@ public with sharing class FF_CacheController {
         currentBasket.products = parseWrapperListToProductList(currentBasket.productWrappers);
         basketJson = JSON.serialize(currentBasket);
         return basketJson;
+    }
+
+    private static Decimal returnCurrentPrice(String productId){
+        List<PricebookEntry> entries = [SELECT Id,UnitPrice,IsActive FROM PricebookEntry WHERE IsActive = true AND Product2Id = :productId ORDER BY UnitPrice DESC];
+        Decimal price = entries[0].UnitPrice;
+        if(entries.size()>1){
+            price = entries[1].UnitPrice;
+        }
+        return price;
     }
 
     private static List<Product2> parseWrapperListToProductList(List<ProductWrapper> wrappers){

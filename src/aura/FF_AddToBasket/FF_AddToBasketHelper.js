@@ -23,7 +23,7 @@
         let action = component.get("c.addProductToBasketCache");
         action.setParams({
             "productId": component.get("v.recordId"),
-            "price" : component.get("v.price"),
+            "price" : component.get("v.price[0].UnitPrice"),
             "quantity" : component.get("v.quantity")
         });
         action.setCallback(this, function(response) {

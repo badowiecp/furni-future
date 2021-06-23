@@ -17,8 +17,8 @@
     },
 
     showBasketModal : function(component,event,helper){
-        var modalBody;
-        var modalFooter;
+        let modalBody;
+        let modalFooter;
         let preparedComponents;
         if(component.get("v.basket.totalQuantity")>0){
             preparedComponents = [

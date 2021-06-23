@@ -2,8 +2,8 @@
 
     redirectToConfirmOrder : function(component,event){
         event.preventDefault();
-        var navService = component.find("navService");
-        var pageReference = {
+        let navService = component.find("navService");
+        let pageReference = {
             type: "comm__namedPage",
             attributes: {
                 name: "Confirm_basket__c"
