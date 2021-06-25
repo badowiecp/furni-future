@@ -11,7 +11,7 @@
         <div class="slds-page-header">
             <div class="slds-page-header__row">
                 <div class="slds-page-header__col-title">
-                    <span class="slds-page-header__title slds-truncate">Recently viewed</span>
+                    <span class="slds-page-header__title slds-truncate">{!$Label.c.FF_Recently_viewed}</span>
                 </div>
             </div>
         </div>
@@ -45,8 +45,7 @@
                     </lightning:layoutItem>
                     <lightning:layoutItem size="1">
                         <div class="sideButtons">
-                            <lightning:buttonIcon iconName="utility:chevronright" onclick="{!c.goRight}"
-                                                  alternativeText=""/>
+                            <lightning:buttonIcon iconName="utility:chevronright" onclick="{!c.goRight}" alternativeText=""/>
                         </div>
                     </lightning:layoutItem>
                 </lightning:layout>

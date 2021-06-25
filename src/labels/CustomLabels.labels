@@ -505,6 +505,13 @@
         <value>FURNI FUTURE</value>
     </labels>
     <labels>
+        <fullName>FF_Global_discount</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Global discount</shortDescription>
+        <value>Global discount</value>
+    </labels>
+    <labels>
         <fullName>FF_Go_to_payment</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -545,6 +552,13 @@
         <protected>true</protected>
         <shortDescription>Last name</shortDescription>
         <value>Last name</value>
+    </labels>
+    <labels>
+        <fullName>FF_Latest_products</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Latest products</shortDescription>
+        <value>Latest products</value>
     </labels>
     <labels>
         <fullName>FF_Loading</fullName>
@@ -825,6 +839,13 @@
         <protected>true</protected>
         <shortDescription>Products</shortDescription>
         <value>Products</value>
+    </labels>
+    <labels>
+        <fullName>FF_Products_do_not_have_valid_discounts</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Products do not have valid discounts</shortDescription>
+        <value>Products do not have valid discounts</value>
     </labels>
     <labels>
         <fullName>FF_Quantity</fullName>
@@ -1912,10 +1933,10 @@
         <value>Wrong file format, please upload a csv file</value>
     </labels>
     <labels>
-        <fullName>FF_Latest_products</fullName>
+        <fullName>FF_Recently_viewed</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Latest products</shortDescription>
-        <value>Latest products</value>
+        <shortDescription>Recently viewed</shortDescription>
+        <value>Recently viewed</value>
     </labels>
 </CustomLabels>
