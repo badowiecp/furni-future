@@ -3,7 +3,7 @@
     <aura:attribute name="fieldName" type="String"/>
     <aura:attribute name="editRecordTypeId" type="String"/>
     <aura:attribute name="picklistValues" type="Object"/>
-<!--    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:method access="public" name="getPicklistValues" action="{!c.fetch}">
         <aura:attribute name="recordTypeId" type="String"/>
     </aura:method>
@@ -11,6 +11,7 @@
         <aura:attribute name="recordId" type="String"/>
     </aura:method>
 
-<!--    <p>{!v.editRecordTypeId}</p>-->
+<!--    <p>{!v.sObjectName}</p>-->
+<!--    <p>{!v.fieldName}</p>-->
 
 </aura:component>

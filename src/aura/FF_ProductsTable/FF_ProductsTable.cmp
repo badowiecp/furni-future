@@ -3,8 +3,9 @@
     <lightning:overlayLibrary aura:id="overlayLib"/>
     <aura:attribute name="products" type="Product2[]"/>
     <aura:attribute name="currentPage" type="Integer" default="1"/>
-    <aura:attribute name="totalPages" type="Integer" description="Display Page Number"/>
-    <aura:attribute name="totalRecords" type="Integer" description="Total Number of Records"/>
+    <aura:attribute name="totalPages" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="pagination" type="Integer"/>
     <aura:attribute name="columns" type="List"/>
     <aura:attribute name="sortDirection" type="String" default="asc" />
     <aura:attribute name="defaultSortDirection" type="String" default="asc" />
@@ -23,7 +24,7 @@
                         <div class="slds-media__body">
                             <div class="slds-page-header__name">
                                 <div class="slds-page-header__name-title">
-                                    <span class="slds-page-header__title slds-truncate">Products</span>
+                                    <span class="slds-page-header__title slds-truncate">{!$Label.c.FF_Products}</span>
                                 </div>
                             </div>
                         </div>
@@ -32,7 +33,7 @@
                 <div class="slds-page-header__col-actions">
                     <div class="slds-page-header__controls">
                         <div class="slds-page-header__control">
-                            <lightning:button label="New" onclick="{!c.handleShowModal}"/>
+                            <lightning:button label="{!$Label.c.FF_New}" onclick="{!c.handleShowModal}"/>
                         </div>
                     </div>
                 </div>
@@ -49,20 +50,20 @@
 
         <div class="slds-p-around_small" style="display: flex; justify-content: space-between;">
             <div style="display: inline-block;">
-                <ui:inputSelect aura:id="recordSize" label="Records per page:" change="{!c.onSelectChange}">
-                    <ui:inputSelectOption text="3" label="3"/>
+                <ui:inputSelect aura:id="recordSize" value="{!v.pagination}" label="{!$Label.c.FF_Records_per_page + ':'}" change="{!c.onSelectChange}">
+                    <ui:inputSelectOption text="5" label="5"/>
+                    <ui:inputSelectOption text="10" label="10"/>
                     <ui:inputSelectOption text="15" label="15" value="true"/>
-                    <ui:inputSelectOption text="20" label="20"/>
                 </ui:inputSelect>
             </div>
 
             <div style="display: inline-block;">
                 <lightning:buttonGroup class="slds-p-top_small">
-                    <lightning:button variant="brand" disabled="{!v.currentPage == 1}" label="First Page" onclick="{!c.navigateToFirst}"/>
-                    <lightning:button variant="brand" disabled="{!v.currentPage == 1}" label="Previous Page" onclick="{!c.navigate}"/>
-                    <lightning:button label="{!'Showing ' + v.currentPage + ' of ' + v.totalPages}"/>
-                    <lightning:button variant="brand" disabled="{!v.currentPage == v.totalPages}" label="Next Page" onclick="{!c.navigate}"/>
-                    <lightning:button variant="brand" disabled="{!v.currentPage == v.totalPages}" label="Last Page" onclick="{!c.navigateToLast}"/>
+                    <lightning:button variant="brand" disabled="{!v.currentPage == 1}" label="{!$Label.c.FF_First_Page}" onclick="{!c.navigateToFirst}"/>
+                    <lightning:button variant="brand" disabled="{!v.currentPage == 1}" label="{!$Label.c.FF_Previous_Page}" onclick="{!c.navigate}"/>
+                    <lightning:button label="{!'Showing ' + ((v.pagination * (v.currentPage-1)) + 1) + ' - ' + if((v.currentPage==v.totalPages),v.totalRecords,(v.pagination * v.currentPage)) + ' of ' + v.totalRecords}"/>
+                    <lightning:button variant="brand" disabled="{!v.currentPage == v.totalPages}" label="{!$Label.c.FF_Next_Page}" onclick="{!c.navigate}"/>
+                    <lightning:button variant="brand" disabled="{!v.currentPage == v.totalPages}" label="{!$Label.c.FF_Last_Page}" onclick="{!c.navigateToLast}"/>
                 </lightning:buttonGroup>
             </div>
         </div>

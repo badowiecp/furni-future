@@ -15,3 +15,9 @@
     margin-top: 200px;
     margin-bottom: 200px;
 }
+
+.THIS .checkbox{
+  display: inline-block;
+  float: left;
+  margin: 0 5px;
+}
