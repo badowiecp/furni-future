@@ -11,7 +11,4 @@
         <aura:attribute name="recordId" type="String"/>
     </aura:method>
 
-<!--    <p>{!v.sObjectName}</p>-->
-<!--    <p>{!v.fieldName}</p>-->
-
 </aura:component>
