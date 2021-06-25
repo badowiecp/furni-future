@@ -2,6 +2,7 @@
 
     doInit: function(component, event, helper) {
         helper.fetchListOfRecordTypes(component,event);
+        helper.checkButtonVisibility(component,event);
     },
 
     handleSave : function(component, event, helper){
@@ -25,6 +26,10 @@
                 resultsToast.fire();
             }
         });
+    },
+
+    handleSendForApproval : function(component,event,helper){
+        helper.saveAndSendForApproval(component,event);
     },
 
     handleCancel : function (component, event, helper){
