@@ -1,0 +1,80 @@
+<aura:component controller="FF_CreateOrderController" description="FF_OrderSummary" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens,lightning:availableForFlowActions">
+    <aura:attribute name="basket" type="Object"/>
+    <aura:attribute name="opportunityFields" type="Opportunity"/>
+    <aura:attribute name="opportunityId" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+
+    <c:FF_LoadingSpinner show="{!v.showSpinner}"/>
+
+    <lightning:layout class="slds-p-around_large" multipleRows="true">
+        <aura:iteration items="{!v.basket.productWrappers}" var="product">
+            <lightning:layoutItem class="slds-border_bottom slds-p-left_xx-large" size="12">
+                <lightning:layout>
+                    <lightning:layoutItem class="slds-p-vertical_small" size="2">
+                        <c:FF_Tile name="{!product.name}" productId="{!product.productId}" showPrice="false"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="4">
+                        <p class="slds-p-horizontal_small">{!$Label.c.FF_Quantity}: <lightning:formattedNumber value="{!product.quantity}"/></p>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="3">
+                        <p>{!$Label.c.FF_Unit_price}: <lightning:formattedNumber style="currency" value="{!product.unitPrice}"/></p>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="3">
+                        <p>{!$Label.c.FF_Price}: <lightning:formattedNumber style="currency" value="{!product.price}"/></p>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </lightning:layoutItem>
+        </aura:iteration>
+    </lightning:layout>
+    <lightning:layout class="slds-p-top_small slds-p-horizontal_large" horizontalAlign="end">
+        <lightning:layoutItem class="slds-text-align_right slds-text-title_bold" size="3">
+            <span>{!$Label.c.FF_Total_price}: <lightning:formattedNumber style="currency" value="{!v.basket.totalPrice}"/></span>
+        </lightning:layoutItem>
+    </lightning:layout>
+
+    <lightning:layout class="slds-p-around_large">
+        <lightning:layoutItem class="slds-p-around_medium" size="4">
+            <lightning:layout multipleRows="true">
+                <lightning:layoutItem size="12">
+                    <p><lightning:formattedText class="slds-text-title_bold" value="{!$Label.c.FF_Payment_method}"/></p>
+                    <p><lightning:input class="slds-m-around_small" label="{!$Label.c.FF_Payment_method}" disabled="true" variant="label-hidden" value="{!v.opportunityFields.FF_Payment__c}"/></p>
+                </lightning:layoutItem>
+                <lightning:layoutItem class="slds-p-vertical_medium" size="12">
+                    <p><lightning:formattedText class="slds-text-title_bold" value="{!$Label.c.FF_Delivery_method}"/></p>
+                    <p><lightning:input class="slds-m-around_small" label="{!$Label.c.FF_Delivery_method}" disabled="true" variant="label-hidden" value="{!v.opportunityFields.FF_Delivery__c}"/></p>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:layoutItem>
+        <lightning:layoutItem  size="8">
+            <lightning:layout>
+                <lightning:layoutItem class="slds-p-around_medium" size="6">
+                    <lightning:formattedText class="slds-text-title_bold" value="{!$Label.c.FF_Delivery_address}"/>
+                    <lightning:formattedAddress title="{!$Label.c.FF_Delivery_address}" showStaticMap="true" disabled="true" aura:id="shippingAddress"
+                                                city="{!v.opportunityFields.FF_Shipping_city__c}"
+                                                country="{!v.opportunityFields.FF_Shipping_country__c}"
+                                                postalCode="{!v.opportunityFields.FF_Shipping_postal_code__c}"
+                                                street="{!v.opportunityFields.FF_Shipping_street__c}"
+                                                province="{!v.opportunityFields.FF_Shipping_state__c}"
+                    />
+                </lightning:layoutItem>
+                <lightning:layoutItem class="slds-p-around_medium" size="6">
+                    <aura:if isTrue="{!v.opportunityFields.FF_Invoice__c}">
+                        <p><lightning:formattedText class="slds-text-title_bold" value="{!$Label.c.FF_Billing_address}"/></p>
+                        <p><lightning:formattedText value="{!v.opportunityFields.FF_Company__c}"/></p>
+                        <lightning:formattedAddress disabled="true" title="{!$Label.c.FF_Billing_address}" aura:id="billingAddress"
+                                                    city="{!v.opportunityFields.FF_Billing_city__c}"
+                                                    country="{!v.opportunityFields.FF_Billing_country__c}"
+                                                    postalCode="{!v.opportunityFields.FF_Billing_postal_code__c}"
+                                                    street="{!v.opportunityFields.FF_Billing_street__c}"
+                                                    province="{!v.opportunityFields.FF_Billing_state__c}"
+                        />
+                        <p><lightning:formattedText value="{!$Label.c.FF_Tax_number + ': ' + v.opportunityFields.FF_Tax_number__c}"/></p>
+                    </aura:if>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:layoutItem>
+    </lightning:layout>
+
+    <c:FF_OrderSummaryFooter navigateFlowEvent="{!c.handleNavigate}"/>
+
+</aura:component>

@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="opportunityId" label="Opportunity Id"/>
+    <design:attribute name="paymentMethod" label="Payment method"/>
+</design:component>
