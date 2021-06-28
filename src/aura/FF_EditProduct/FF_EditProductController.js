@@ -1,10 +1,14 @@
 ({
 
     doInit : function(component,event,helper){
-        helper.getImageLinkSuffix(component,event);
-        helper.getPictures(component,event);
-        let familyPicklistComponent = component.find("familyPicklist");
-        familyPicklistComponent.getPicklistValuesForEdit(component.get("v.recordId"));
+        component.set("v.showSpinner",true);
+        helper.checkApprovalPending(component,event);
+        if(!component.get("v.isLocked")){
+            helper.getImageLinkSuffix(component,event);
+            helper.getPictures(component,event);
+            let familyPicklistComponent = component.find("familyPicklist");
+            familyPicklistComponent.getPicklistValuesForEdit(component.get("v.recordId"));
+        }
     },
 
     handleSave: function(component, event, helper) {

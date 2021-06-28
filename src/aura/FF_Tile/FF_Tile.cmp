@@ -3,7 +3,7 @@
     <aura:attribute name="productId" type="String" default="{!v.product.Id}"/>
     <aura:attribute name="name" type="String" default="{!v.product.Name}"/>
     <aura:attribute name="contentVersionId" type="String"/>
-    <aura:attribute name="price" type="Decimal"/>
+    <aura:attribute name="price" type="List"/>
     <aura:attribute name="showName" type="Boolean" default="true"/>
     <aura:attribute name="showPrice" type="Boolean" default="true"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
@@ -19,7 +19,13 @@
                         <h1 class="slds-truncate">{!v.name}</h1>
                     </aura:if>
                     <aura:if isTrue="{!v.showPrice}">
-                        <lightning:formattedNumber value="{!v.price}" style="currency"/>
+                        <aura:if isTrue="{!v.price.length>1}">
+                            <span style="text-decoration: line-through; margin-right: 5px;"><lightning:formattedNumber value="{!v.price[1].UnitPrice}" style="currency"/></span>
+                            <lightning:formattedNumber value="{!v.price[0].UnitPrice}" style="currency"/>
+                            <aura:set attribute="else">
+                                <lightning:formattedNumber value="{!v.price[0].UnitPrice}" style="currency"/>
+                            </aura:set>
+                        </aura:if>
                     </aura:if>
                 </div>
             </aura:if>

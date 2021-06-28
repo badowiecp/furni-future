@@ -1,0 +1,71 @@
+<aura:component controller="FF_RatingController" description="FF_RatingFeed" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="productId" type="String"/>
+    <aura:attribute name="userId" type="String"/>
+    <aura:attribute name="ratingsWrapper" type="Object"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler event="c:FF_RatingAdded" action="{!c.doInit}"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <div class="slds-box slds-box_border" style="margin-bottom: 10px;">
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <span class="slds-page-header__title slds-truncate">Opinions</span>
+                    <aura:if isTrue="{!v.ratingsWrapper.average>0}">
+                        <span>Average product rating:
+                                {!v.ratingsWrapper.average}
+                        </span>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+        <ui:scrollerWrapper class="slds-feed scrollerSize">
+            <ul class="slds-feed__list">
+                <aura:iteration items="{!v.ratingsWrapper.ratings}" var="rating">
+                    <li class="slds-feed__item">
+                        <article class="slds-post slds-border_bottom">
+                            <header class="slds-post__header slds-media">
+                                <div class="slds-media__figure slds-avatar slds-avatar_circle">
+                                    <img src="{!rating.CreatedBy.SmallPhotoUrl}"/>
+                                </div>
+                                <div class="slds-media__body">
+                                    <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                        <div>
+                                            <p>{!rating.CreatedBy.Name}</p>
+                                            <p class="slds-text-body_small">
+                                                <lightning:formattedDateTime value="{!rating.CreatedDate}"/>
+                                            </p>
+                                        </div>
+                                        <aura:if isTrue="{!rating.CreatedById==v.userId}">
+                                            <lightning:button label="Delete" variant="neutral" value="{!rating.Id}" onclick="{!c.handleDelete}"/>
+                                        </aura:if>
+                                    </div>
+
+                                </div>
+                            </header>
+                            <aura:if isTrue="{!rating.FF_Score__c!=null}">
+                                <div class="slds-post__content">
+                                    <h3 class="slds-text-heading_small">Rating: </h3>
+                                    <c:FF_RatingStars value="{!rating.FF_Score__c}" readonly="true"/>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!rating.FF_Comment__c!=null}">
+                                <div class="slds-post__content">
+                                    <h3 class="slds-text-heading_small">Comment: </h3>
+                                    <lightning:formattedRichText value="{!rating.FF_Comment__c}"/>
+                                </div>
+                            </aura:if>
+                        </article>
+                    </li>
+                </aura:iteration>
+            </ul>
+
+            <aura:if isTrue="{!v.ratingsWrapper.ratings.length==0}">
+                <div class="scrollerSize" style="display: flex; justify-content: center; align-items: center;">
+                    <span style="text-align: center; width:70%; padding: 20px 0;">Nobody has rated this product yet, be the first, give your thoughts below!</span>
+                </div>
+            </aura:if>
+        </ui:scrollerWrapper>
+    </div>
+
+</aura:component>
