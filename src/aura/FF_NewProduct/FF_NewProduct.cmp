@@ -57,7 +57,6 @@
                                         <option value="{!item}">{!item}</option>
                                     </aura:iteration>
                                 </lightning:select>
-
                                 <lightning:input value="{!v.productFields.Color__c}" label="{!$Label.c.FF_Color}"
                                                  class="slds-size--1-of-2 slds-p-horizontal_xx-small"/>
                                 <lightning:input value="{!v.productFields.Dimensions__c}" label="{!$Label.c.FF_Dimensions}"
