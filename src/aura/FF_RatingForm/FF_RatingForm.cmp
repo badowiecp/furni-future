@@ -1,0 +1,51 @@
+<aura:component description="FF_RatingForm" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="productId" type="String"/>
+    <aura:attribute name="ratingId" type="String"/>
+    <aura:attribute name="ratingFields" type="FF_Product_Rating__c"/>
+    <aura:attribute name="ratingRecord" type="FF_Product_Rating__c"/>
+    <aura:attribute access="private" name="ratingError" type="String"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:registerEvent name="ratingAdded" type="c:FF_RatingAdded"/>
+    <force:recordData aura:id="service"
+                      fields="Id,FF_Product__c,FF_Score__c,FF_Comment__c"
+                      targetRecord="{!v.ratingRecord}"
+                      targetFields="{!v.ratingFields}"
+                      targetError="{!v.ratingError}"
+                      recordId="{!v.ratingId}"
+                      mode="EDIT"/>
+
+    <div class="slds-box slds-box_border">
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <span class="slds-page-header__title slds-truncate">Add score or comment</span>
+                </div>
+                <div class="slds-page-header__col-actions">
+                    <div class="slds-page-header__controls">
+                        <div class="slds-page-header__control">
+                            <lightning:button label="Add" iconName="utility:save" onclick="{!c.onSave}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form class="slds-form">
+            <div class="slds-form-element slds-p-around_small">
+                <span>Score:</span>
+                <c:MFY_StarRating value="{!v.ratingFields.FF_Score__c}" readonly="false"/>
+            </div>
+            <div >
+                <lightning:inputRichText variant="bottom-toolbar" aura:id="description" placeholder="Comment" disabledCategories="FORMAT_FONT,ALIGN_TEXT" label="Comment" value="{!v.ratingFields.FF_Comment__c}"/>
+            </div>
+        </form>
+
+        <aura:if isTrue="{!not(empty(v.ratingError))}">
+            <div class="ratingError">
+                    {!v.ratingError}
+            </div>
+        </aura:if>
+    </div>
+
+
+</aura:component>
