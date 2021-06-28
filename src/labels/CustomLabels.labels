@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>FF_Activate</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Activate</shortDescription>
+        <value>Activate</value>
+    </labels>
+    <labels>
+        <fullName>FF_Activate_discount</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Activate discount</shortDescription>
+        <value>Activate discount</value>
+    </labels>
+    <labels>
         <fullName>FF_Active</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -41,6 +55,13 @@
         <protected>true</protected>
         <shortDescription>Basket</shortDescription>
         <value>Basket</value>
+    </labels>
+    <labels>
+        <fullName>FF_Basket_updated</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Basket updated</shortDescription>
+        <value>Basket updated</value>
     </labels>
     <labels>
         <fullName>FF_Billing_address</fullName>
@@ -139,6 +160,13 @@
         <protected>true</protected>
         <shortDescription>Cannot get product image info</shortDescription>
         <value>Cannot get product image infos</value>
+    </labels>
+    <labels>
+        <fullName>FF_Cannot_retrieve_discount_list</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cannot retrieve discount list</shortDescription>
+        <value>Cannot retrieve discount list</value>
     </labels>
     <labels>
         <fullName>FF_Cannot_retrieve_product_list</fullName>
@@ -302,6 +330,20 @@
         <value>Current price</value>
     </labels>
     <labels>
+        <fullName>FF_Deactivate</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Deactivate</shortDescription>
+        <value>Deactivate</value>
+    </labels>
+    <labels>
+        <fullName>FF_Deactivate_discount</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Deactivate discount</shortDescription>
+        <value>Deactivate discount</value>
+    </labels>
+    <labels>
         <fullName>FF_Delete</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -337,6 +379,13 @@
         <value>Dimensions</value>
     </labels>
     <labels>
+        <fullName>FF_Disc</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Standard price</shortDescription>
+        <value>Standard price</value>
+    </labels>
+    <labels>
         <fullName>FF_Discount_activated</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -358,11 +407,32 @@
         <value>Discount name</value>
     </labels>
     <labels>
+        <fullName>FF_Discount_price</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Discount price</shortDescription>
+        <value>Discount price</value>
+    </labels>
+    <labels>
         <fullName>FF_Discount_saved</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Discount saved</shortDescription>
         <value>Discount saved</value>
+    </labels>
+    <labels>
+        <fullName>FF_Discounts</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Discounts</shortDescription>
+        <value>Discounts</value>
+    </labels>
+    <labels>
+        <fullName>FF_Edit</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Edit</shortDescription>
+        <value>Edit</value>
     </labels>
     <labels>
         <fullName>FF_Edit_discount</fullName>
@@ -475,6 +545,13 @@
         <protected>true</protected>
         <shortDescription>Last name</shortDescription>
         <value>Last name</value>
+    </labels>
+    <labels>
+        <fullName>FF_Latest_products</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Latest products</shortDescription>
+        <value>Latest products</value>
     </labels>
     <labels>
         <fullName>FF_Loading</fullName>
@@ -596,6 +673,20 @@
         <value>Please choose payment method first</value>
     </labels>
     <labels>
+        <fullName>FF_Please_confirm_activation</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Please confirm activation</shortDescription>
+        <value>Please confirm activation</value>
+    </labels>
+    <labels>
+        <fullName>FF_Please_confirm_deactivation</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Please confirm deactivation</shortDescription>
+        <value>Please confirm deactivation</value>
+    </labels>
+    <labels>
         <fullName>FF_Please_insert_valid_number_less_than_100</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -622,6 +713,13 @@
         <protected>true</protected>
         <shortDescription>Please provide valid address for shipping</shortDescription>
         <value>Please provide valid address for shipping</value>
+    </labels>
+    <labels>
+        <fullName>FF_Please_remove_them_or_deactivate</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Please remove or deactivate</shortDescription>
+        <value>Please remove them from existing discount or deactivate before adding to new one or activating</value>
     </labels>
     <labels>
         <fullName>FF_Please_select_space_type_first</fullName>
@@ -848,6 +946,13 @@
         <value>Specify quantity of products before adding to cart</value>
     </labels>
     <labels>
+        <fullName>FF_Standard_price</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Standard price</shortDescription>
+        <value>Standard price</value>
+    </labels>
+    <labels>
         <fullName>FF_State_province</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -876,6 +981,13 @@
         <value>Submit</value>
     </labels>
     <labels>
+        <fullName>FF_Success</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Success</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
         <fullName>FF_Tax_number</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -897,6 +1009,13 @@
         <value>The record was saved</value>
     </labels>
     <labels>
+        <fullName>FF_These_products_are_already_on_sale</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>These products are already on sale</shortDescription>
+        <value>These products are already on sale</value>
+    </labels>
+    <labels>
         <fullName>FF_Total_price</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -909,6 +1028,13 @@
         <protected>true</protected>
         <shortDescription>Unit price</shortDescription>
         <value>Unit price</value>
+    </labels>
+    <labels>
+        <fullName>FF_View</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>View</shortDescription>
+        <value>View</value>
     </labels>
     <labels>
         <fullName>FF_Warning</fullName>
@@ -1793,10 +1919,17 @@
         <value>Wrong file format, please upload a csv file</value>
     </labels>
     <labels>
-        <fullName>FF_Basket_updated</fullName>
+        <fullName>FF_Global_discount</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Basket updated</shortDescription>
-        <value>Basket updated</value>
+        <shortDescription>Global discount</shortDescription>
+        <value>Global discount</value>
+    </labels>
+    <labels>
+        <fullName>FF_Products_do_not_have_valid_discounts</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Products do not have valid discounts</shortDescription>
+        <value>Products do not have valid discounts</value>
     </labels>
 </CustomLabels>

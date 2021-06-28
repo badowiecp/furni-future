@@ -1,0 +1,56 @@
+<aura:component controller="FF_ProductController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" description="FF_RecentlyViewedProducts">
+    <aura:attribute name="position" type="Integer" default="1"/>
+    <aura:attribute name="maxPosition" type="Integer" default="1"/>
+    <aura:attribute name="totalWidth" type="Integer" default="1000"/>
+    <aura:attribute name="maxWidth" type="Integer" default="0"/>
+    <aura:attribute name="products" type="String[]"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler event="aura:doneRendering" action="{!c.handleResize}"/>
+
+    <div class="slds-card" style="{!if(or(v.products==null,v.products.length==0),'display:none;','')}" aura:id="card-x">
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <span class="slds-page-header__title slds-truncate">{!$Label.c.FF_Recently_viewed}</span>
+                </div>
+            </div>
+        </div>
+        <p style="display:none;">{!v.position}</p>
+        <p style="display:none;">{!v.maxPosition}</p>
+        <lightning:layout multipleRows="true" verticalAlign="center" horizontalAlign="center">
+            <lightning:layoutItem size="12" padding="around-medium">
+                <lightning:layout horizontalAlign="center" verticalAlign="center" class="outer_container">
+                    <lightning:layoutItem size="1">
+                        <div class="sideButtons">
+                            <lightning:buttonIcon iconName="utility:chevronleft" onclick="{!c.goLeft}"
+                                                  alternativeText=""/>
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="10" padding="around-small" flexibility="auto">
+                        <div aura:id="wrapper">
+                            <ui:scrollerWrapper class="scroll_wrapper" aura:id="scroll_wrapper">
+                                <div class="inner_container" aura:id="inner"
+                                     style="{! 'width:'+v.products.length * 155 +'px;'}">
+                                    <lightning:layout class="inner_container" horizontalAlign="center"
+                                                      verticalAlign="center">
+                                        <aura:iteration var="product" items="{!v.products}" indexVar="index">
+                                            <lightning:layoutItem>
+                                                <c:FF_Tile productId="{!product}" showName="false" showPrice="false"/>
+                                            </lightning:layoutItem>
+                                        </aura:iteration>
+                                    </lightning:layout>
+                                </div>
+                            </ui:scrollerWrapper>
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1">
+                        <div class="sideButtons">
+                            <lightning:buttonIcon iconName="utility:chevronright" onclick="{!c.goRight}" alternativeText=""/>
+                        </div>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+
+</aura:component>

@@ -16,6 +16,20 @@
        $A.enqueueAction(action);
     },
 
+    checkApprovalPending : function(component,event){
+        let action = component.get("c.checkIfLocked");
+
+        action.setParams({
+            "productId": component.get("v.recordId")
+        });
+
+        action.setCallback(this, function(response) {
+            component.set("v.isLocked", response.getReturnValue());
+            component.set("v.showSpinner",false);
+        });
+        $A.enqueueAction(action);
+    },
+
     getImageLinkSuffix : function (component,event){
        let action = component.get("c.queryImageLinkSuffix");
 
