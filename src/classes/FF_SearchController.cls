@@ -1,4 +1,4 @@
-public with sharing class FF_SearchController {
+public without sharing class FF_SearchController {
 
     @AuraEnabled(cacheable = true)
     public static ProductSearchResponse getProductList(String query, Integer pageNumber, Integer recordsPerPage, String recordType, String productFamily){
@@ -73,7 +73,7 @@ public with sharing class FF_SearchController {
             queryString += ' WHERE ';
             queryString += String.join(params, ' AND ');
         }
-        queryString += ' ORDER BY Name ';
+        queryString += ' ORDER BY CreatedDate DESC ';
         return queryString;
     }
 

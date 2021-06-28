@@ -16,6 +16,20 @@ public with sharing class FF_ProductController {
     }
 
     @AuraEnabled
+    public static List<String> getRecentProducts() {
+        List<String> latestProducts = new List<String>();
+        Set<Id> latestProductsIds = new Set<Id>();
+        try{
+            for(RecentlyViewed recent : [SELECT Id,Name,Type,LastViewedDate FROM RecentlyViewed WHERE Type = 'Product2' ORDER BY LastViewedDate DESC LIMIT 10]){
+                    latestProducts.add(recent.Id);
+            }
+            return latestProducts;
+        }catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Cannot_retrieve_product_list + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
+        }
+    }
+
+    @AuraEnabled
     public static List<String> fetchRecordTypeValues(){
         List<Schema.RecordTypeInfo> recordtypes = Product2.SObjectType.getDescribe().getRecordTypeInfos();
         Map<Id,String> recordtypemap = new Map<Id, String>();
