@@ -1,0 +1,18 @@
+<aura:component controller="FF_CacheController" description="FF_BasketWidget" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="basket" type="Object"/>
+    <aura:attribute name="displayWidget" type="Boolean" default="true"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:handler event="c:FF_ProductAddedToBasket" action="{!c.handleUpdateBasket}"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <aura:if isTrue="{!v.displayWidget}">
+        <lightning:card class="footer">
+            <lightning:button iconName="utility:cart" variant="base" label="{!$Label.c.FF_Show_basket}" onclick="{!c.handleShowBasket}"/>
+            <aura:if isTrue="{!v.basket.totalQuantity>0}">
+                <p>{!$Label.c.FF_Products}: {!v.basket.totalQuantity}</p>
+                <p>{!$Label.c.FF_Price}: <lightning:formattedNumber value="{!v.basket.totalPrice}" style="currency"/></p>
+            </aura:if>
+        </lightning:card>
+    </aura:if>
+
+</aura:component>

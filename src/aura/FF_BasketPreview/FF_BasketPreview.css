@@ -1,0 +1,11 @@
+.THIS {
+}
+
+.THIS .cFF_Tile.tile {
+    width: 100px;
+    height: 100px;
+}
+
+.THIS .cFF_Tile .lower-third {
+    padding: 0;
+}
