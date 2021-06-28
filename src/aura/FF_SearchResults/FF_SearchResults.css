@@ -1,0 +1,44 @@
+.THIS {
+
+}
+
+.THIS.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: baseline;
+    padding: 0 5px;
+}
+
+@media (min-width: 1001px) {
+    .THIS .item {
+        display: inline-block;
+        flex: 0 0 calc(10% - 10px);
+        margin: 5px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .THIS .item {
+        display: inline-block;
+        flex: 0 0 calc(20% - 6px);
+        margin: 3px;
+    }
+}
+
+@media (max-width: 700px) {
+    .THIS .item {
+        display: inline-block;
+        flex: 0 0 calc(33% - 6px);
+        margin: 3px;
+    }
+}
+
+@media (max-width: 480px) {
+    .THIS .item {
+        display: inline-block;
+        flex: 0 0 calc(50% - 4px);
+        margin: 2px;
+    }
+}

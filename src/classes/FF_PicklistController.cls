@@ -13,23 +13,56 @@ public with sharing class FF_PicklistController {
         Schema.SObjectType convertToObj = Schema.getGlobalDescribe().get(objectType);
         Schema.DescribeSObjectResult res = convertToObj.getDescribe();
         Schema.DescribeFieldResult fieldResult = res.fields.getMap().get(selectedField).getDescribe();
-        System.debug(fieldResult);
         List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
-        System.debug(ple);
         for( Schema.PicklistEntry pickListVal : ple){
             pickListValuesList.add(pickListVal.getLabel());
         }
-        System.debug(pickListValuesList);
         return pickListValuesList;
     }
 
-    private class deserializeResponse {
-        public String id;
-        public String access_token;
-        public String instance_url;
-        public String token_type;
-        public String issued_at;
-        public String signature;
+    @AuraEnabled
+    public static List<String> getPicklistForRecordType(String recordTypeId){
+        List<String> values = new List<String>();
+        String picklistLink = [SELECT Product_picklist_url__c FROM Product_Setting__mdt].Product_picklist_url__c;
+        try{
+            String accessToken = returnAccessToken();
+            if(accessToken!=null){
+                String endpoint = picklistLink + recordTypeId + '/Family';
+                HttpResponse httpResponse = sendRequest(endpoint,'GET',null,accessToken);
+                RecordTypePicklistResponse picklistResponse = (RecordTypePicklistResponse) JSON.deserialize(httpResponse.getBody(),RecordTypePicklistResponse.class);
+                if(picklistResponse.values!=null){
+                    for (PicklistOption option : picklistResponse.values){
+                        values.add(option.label);
+                    }
+                }
+            }
+            return values;
+        }catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Cannot_get_picklist + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static List<String> getPicklistForRecordTypeForEdit(String recordId){
+        List<String> values = new List<String>();
+        String picklistLink = [SELECT Product_picklist_url__c FROM Product_Setting__mdt].Product_picklist_url__c;
+        try{
+            String recordTypeId = [SELECT Id,RecordTypeId FROM Product2 WHERE Id = :recordId].RecordTypeId;
+            String accessToken = returnAccessToken();
+            if(accessToken!=null){
+                String endpoint = picklistLink + recordTypeId + '/Family';
+                HttpResponse httpResponse = sendRequest(endpoint,'GET',null,accessToken);
+                RecordTypePicklistResponse picklistResponse = (RecordTypePicklistResponse) JSON.deserialize(httpResponse.getBody(),RecordTypePicklistResponse.class);
+                if(picklistResponse.values!=null){
+                    for (PicklistOption option : picklistResponse.values){
+                        values.add(option.label);
+                    }
+                }
+            }
+            return values;
+        }catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Cannot_get_picklist + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
+        }
     }
 
     public static String returnAccessToken() {
@@ -40,50 +73,6 @@ public with sharing class FF_PicklistController {
         HttpResponse httpResponse = sendRequest(endpoint,'POST',null,null);
         deserializeResponse response = (deserializeResponse) JSON.deserialize(httpResponse.getBody(), deserializeResponse.class);
         return response.access_token;
-    }
-
-    @AuraEnabled
-    public static List<String> getPicklistForRecordType(String recordTypeId){
-        List<String> values = new List<String>();
-        String accessToken = returnAccessToken();
-        if(accessToken!=null){
-            String endpoint = 'https://britenet13-dev-ed.my.salesforce.com/services/data/v51.0/ui-api/object-info/Product2/picklist-values/' + recordTypeId + '/Family';
-            HttpResponse httpResponse = sendRequest(endpoint,'GET',null,accessToken);
-            RecordTypePicklistResponse picklistResponse = (RecordTypePicklistResponse) JSON.deserialize(httpResponse.getBody(),RecordTypePicklistResponse.class);
-            if(picklistResponse.values!=null){
-                for (PicklistOption option : picklistResponse.values){
-                    values.add(option.label);
-                }
-            }
-        }
-        return values;
-    }
-
-    @AuraEnabled
-    public static List<String> getPicklistForRecordTypeForEdit(String recordId){
-        List<String> values = new List<String>();
-        String recordTypeId = [SELECT Id,RecordTypeId FROM Product2 WHERE Id = :recordId].RecordTypeId;
-        String accessToken = returnAccessToken();
-        if(accessToken!=null){
-            String endpoint = 'https://britenet13-dev-ed.my.salesforce.com/services/data/v51.0/ui-api/object-info/Product2/picklist-values/' + recordTypeId + '/Family';
-            HttpResponse httpResponse = sendRequest(endpoint,'GET',null,accessToken);
-            RecordTypePicklistResponse picklistResponse = (RecordTypePicklistResponse) JSON.deserialize(httpResponse.getBody(),RecordTypePicklistResponse.class);
-            if(picklistResponse.values!=null){
-                for (PicklistOption option : picklistResponse.values){
-                    values.add(option.label);
-                }
-            }
-        }
-        return values;
-    }
-
-    public class RecordTypePicklistResponse {
-        public List<PicklistOption> values {get;set;}
-    }
-
-    public class PicklistOption {
-        public String value {get;set;}
-        public String label {get;set;}
     }
 
     private static HttpResponse sendRequest(String endpoint,String method,String body,String accessToken){
@@ -102,4 +91,23 @@ public with sharing class FF_PicklistController {
         HttpResponse httpResponse = http.send(httpRequest);
         return httpResponse;
     }
+
+    private class deserializeResponse {
+        public String id;
+        public String access_token;
+        public String instance_url;
+        public String token_type;
+        public String issued_at;
+        public String signature;
+    }
+
+    public class RecordTypePicklistResponse {
+        public List<PicklistOption> values {get;set;}
+    }
+
+    public class PicklistOption {
+        public String value {get;set;}
+        public String label {get;set;}
+    }
+
 }
