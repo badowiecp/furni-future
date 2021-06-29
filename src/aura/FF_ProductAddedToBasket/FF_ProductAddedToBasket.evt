@@ -1,0 +1,2 @@
+<aura:event type="APPLICATION" description="FF_ProductAddedToBasket">
+</aura:event>

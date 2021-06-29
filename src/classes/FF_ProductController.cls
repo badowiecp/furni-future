@@ -16,6 +16,20 @@ public with sharing class FF_ProductController {
     }
 
     @AuraEnabled
+    public static List<String> getRecentProducts() {
+        List<String> latestProducts = new List<String>();
+        Set<Id> latestProductsIds = new Set<Id>();
+        try{
+            for(RecentlyViewed recent : [SELECT Id,Name,Type,LastViewedDate FROM RecentlyViewed WHERE Type = 'Product2' ORDER BY LastViewedDate DESC LIMIT 10]){
+                    latestProducts.add(recent.Id);
+            }
+            return latestProducts;
+        }catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Cannot_retrieve_product_list + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
+        }
+    }
+
+    @AuraEnabled
     public static List<String> fetchRecordTypeValues(){
         List<Schema.RecordTypeInfo> recordtypes = Product2.SObjectType.getDescribe().getRecordTypeInfos();
         Map<Id,String> recordtypemap = new Map<Id, String>();
@@ -25,6 +39,38 @@ public with sharing class FF_ProductController {
             }
         }
         return recordtypemap.values();
+    }
+
+    @AuraEnabled
+    public static Boolean checkIfAdmin(){
+        Set<Id> adminsIds = new Set<Id>();
+        for(Profile profile : [SELECT Id FROM Profile WHERE Name = 'System Administrator']){
+            if(String.isNotEmpty(profile.Id)){
+                adminsIds.add(profile.Id);
+            }
+        }
+        return adminsIds.contains(UserInfo.getProfileId()) ? true : false;
+    }
+
+    @AuraEnabled
+    public static void createProductApproval(String productId){
+        try{
+            Approval.ProcessSubmitRequest psr = new Approval.ProcessSubmitRequest();
+            psr.setObjectId(productId);
+            psr.setProcessDefinitionNameOrId('Product_add_approval');
+            Approval.ProcessResult result = Approval.process(psr);
+        }catch(Exception exc){
+            throw new AuraHandledException(System.Label.FF_Cannot_send_to_approval);
+        }
+    }
+
+    @AuraEnabled
+    public static Boolean checkIfLocked(String productId){
+        Boolean isLocked = false;
+        if(!checkIfAdmin()){
+            isLocked = Approval.isLocked(productId);
+        }
+        return isLocked;
     }
 
     @AuraEnabled

@@ -1,0 +1,7 @@
+<aura:component description="FF_Rating" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
+    <aura:handler name="ratingAdded" event="c:FF_RatingAdded" action="{!c.onRatingAdded}"/>
+
+    <c:FF_RatingFeed aura:id="ratingFeed" productId="{!v.recordId}"/>
+    <c:FF_RatingForm aura:id="ratingForm" productId="{!v.recordId}"/>
+
+</aura:component>

@@ -1,0 +1,14 @@
+<aura:component controller="FF_CreateOrderController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens,lightning:availableForFlowActions" description="FF_OrderFinish">
+    <aura:attribute name="paymentMethod" type="String"/>
+    <aura:attribute name="opportunityId" type="String"/>
+    <aura:attribute name="displayPaymentButton" type="Boolean"/>
+    <aura:attribute name="bankUrl" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+
+    <lightning:formattedText class="slds-align_absolute-center slds-m-around_large" value="{!$Label.c.FF_Thank_you_for_your_purchase}"/>
+
+    <aura:if isTrue="{!v.displayPaymentButton}">
+        <lightning:button class="slds-align_absolute-center" label="{!$Label.c.FF_Go_to_payment}" onclick="{!c.handleGoToPayment}"/>
+    </aura:if>
+
+</aura:component>

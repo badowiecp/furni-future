@@ -48,7 +48,7 @@
                 modalBody = components[0];
                 modalFooter = components[1];
                 component.find('overlayLib').showCustomModal({
-                   header: $A.get("$Label.c.FF_New_product"),
+                   header: $A.get("$Label.c.FF_New_Product"),
                    body: modalBody,
                    footer: modalFooter,
                    showCloseButton: true,

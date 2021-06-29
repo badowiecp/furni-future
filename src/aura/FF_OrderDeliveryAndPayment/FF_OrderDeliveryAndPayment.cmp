@@ -1,0 +1,91 @@
+<aura:component controller="FF_CreateOrderController" implements="forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens,lightning:availableForFlowActions" description="FF_OrderDeliveryAndPayment">
+    <aura:attribute name="opportunityId" type="String"/>
+    <aura:attribute name="opportunityFields" type="Opportunity"/>
+    <aura:attribute name="inputsValid" type="Boolean" default="true"/>
+    <aura:attribute name="paymentMethod" type="String"/>
+    <aura:attribute name="deliveryPicklist" type="Object"/>
+    <aura:attribute name="paymentPicklist" type="Object"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="invoice" type="Boolean" default="{!v.opportunityFields.FF_Invoice__c}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+
+    <c:FF_PicklistValues fieldName="FF_Delivery__c" sObjectName="Opportunity" picklistValues="{!v.deliveryPicklist}"/>
+    <c:FF_PicklistValues fieldName="FF_Payment__c" sObjectName="Opportunity" picklistValues="{!v.paymentPicklist}"/>
+    <c:FF_LoadingSpinner show="{!v.showSpinner}"/>
+
+    <lightning:layout class="slds-p-around_large">
+        <lightning:layoutItem class="slds-p-around_medium" size="3">
+            <lightning:layout multipleRows="true">
+                <lightning:layoutItem size="12">
+                    <lightning:select class="slds-m-around_small" label="{!$Label.c.FF_Choose_payment_method}" value="{!v.opportunityFields.FF_Payment__c}">
+                        <option value="">{!$Label.c.FF_Select}</option>
+                        <aura:iteration items="{!v.paymentPicklist}" var="paymentMethod">
+                            <aura:if isTrue="{!v.opportunityFields.FF_Payment__c == paymentMethod}">
+                                <option value="{!paymentMethod}" selected="selected">{!paymentMethod}</option>
+                                <aura:set attribute="else">
+                                    <option value="{!paymentMethod}">{!paymentMethod}</option>
+                                </aura:set>
+                            </aura:if>
+                        </aura:iteration>
+                    </lightning:select>
+                </lightning:layoutItem>
+                <lightning:layoutItem class="slds-p-vertical_medium" size="12">
+                    <lightning:select class="slds-m-around_small" label="{!$Label.c.FF_Choose_delivery_method}" value="{!v.opportunityFields.FF_Delivery__c}">
+                        <option value="">{!$Label.c.FF_Select}</option>
+                        <aura:iteration items="{!v.deliveryPicklist}" var="deliveryMethod">
+                            <aura:if isTrue="{!v.opportunityFields.FF_Delivery__c == deliveryMethod}">
+                                <option value="{!deliveryMethod}" selected="selected">{!deliveryMethod}</option>
+                                <aura:set attribute="else">
+                                    <option value="{!deliveryMethod}">{!deliveryMethod}</option>
+                                </aura:set>
+                            </aura:if>
+                        </aura:iteration>
+                    </lightning:select>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="9">
+            <lightning:layout>
+                <lightning:layoutItem class="slds-p-around_medium" size="6">
+                    <lightning:inputAddress class="slds-m-around_small" aura:id="shippingAddress" addressLabel="{!$Label.c.FF_Delivery_address}"
+                                            cityLabel="{!$Label.c.FF_City}"
+                                            city="{!v.opportunityFields.FF_Shipping_city__c}"
+                                            countryLabel="{!$Label.c.FF_Country}"
+                                            country="{!v.opportunityFields.FF_Shipping_country__c}"
+                                            postalCodeLabel="{!$Label.c.FF_Zip}"
+                                            postalCode="{!v.opportunityFields.FF_Shipping_postal_code__c}"
+                                            streetLabel="{!$Label.c.FF_Street}"
+                                            street="{!v.opportunityFields.FF_Shipping_street__c}"
+                                            provinceLabel="{!$Label.c.FF_State_province}"
+                                            province="{!v.opportunityFields.FF_Shipping_state__c}"
+                                            required="true"
+                    />
+                </lightning:layoutItem>
+                <lightning:layoutItem class="slds-p-around_medium" size="6">
+                    <lightning:input class="slds-m-around_small" label="{!$Label.c.FF_Invoice}" type="checkbox" checked="{!v.opportunityFields.FF_Invoice__c}" value="{!v.opportunityFields.FF_Invoice__c}" onchange="{!c.handleInvoiceChange}"/>
+
+                    <aura:if isTrue="{!v.opportunityFields.FF_Invoice__c}">
+                        <lightning:input aura:id="companyName" required="{!v.opportunityFields.FF_Invoice__c}" class="slds-m-around_small" label="{!$Label.c.FF_Company_name}" type="text" value="{!v.opportunityFields.FF_Company__c}"/>
+                        <lightning:input aura:id="taxNumber" required="{!v.opportunityFields.FF_Invoice__c}" class="slds-m-around_small" label="{!$Label.c.FF_Tax_number}" type="text" value="{!v.opportunityFields.FF_Tax_number__c}"/>
+                        <lightning:inputAddress class="slds-m-around_small" aura:id="billingAddress" addressLabel="{!$Label.c.FF_Billing_address}"
+                                                cityLabel="{!$Label.c.FF_City}"
+                                                city="{!v.opportunityFields.FF_Billing_city__c}"
+                                                countryLabel="{!$Label.c.FF_Country}"
+                                                country="{!v.opportunityFields.FF_Billing_country__c}"
+                                                postalCodeLabel="{!$Label.c.FF_Zip}"
+                                                postalCode="{!v.opportunityFields.FF_Billing_postal_code__c}"
+                                                streetLabel="{!$Label.c.FF_Street}"
+                                                street="{!v.opportunityFields.FF_Billing_street__c}"
+                                                provinceLabel="{!$Label.c.FF_State_province}"
+                                                province="{!v.opportunityFields.FF_Billing_state__c}"
+                                                required="{!v.opportunityFields.FF_Invoice__c}"
+                        />
+                    </aura:if>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:layoutItem>
+    </lightning:layout>
+
+    <c:FF_OrderDeliveryAndPaymentFooter navigateFlowEvent="{!c.handleNavigate}"/>
+
+</aura:component>

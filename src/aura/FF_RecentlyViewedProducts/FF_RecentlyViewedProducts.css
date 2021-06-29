@@ -1,0 +1,54 @@
+.THIS .inner_container {
+    overflow: hidden;
+}
+
+.THIS .scroll_wrapper::-webkit-scrollbar {
+    width: 0 !important
+}
+
+.THIS .scroll_wrapper {
+    overflow: hidden;
+}
+
+.THIS .outer_container {
+    width: 100%;
+}
+
+.THIS .img_element {
+    width: 150px;
+    cursor: pointer;
+}
+
+.THIS .img_element:hover {
+    width: 140px;
+    border: 2px solid black;
+}
+
+.THIS .slds-modal__container {
+    max-width: 150%
+}
+
+.THIS .slds-modal__header {
+    border-radius: 25px;
+    margin: 0px;
+    padding: 10px
+}
+
+.THIS .image {
+    object-fit: contain;
+    height: 400px;
+    border-radius: 25px;
+}
+
+.THIS .sideButtons {
+    text-align:center;
+}
+
+.THIS .cFF_Tile.tile {
+    width: 150px;
+    height: 150px;
+}
+
+.THIS .cFF_Tile .lower-third {
+    padding: 0;
+}

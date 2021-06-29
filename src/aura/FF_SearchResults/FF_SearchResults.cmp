@@ -1,4 +1,4 @@
-<aura:component controller="FF_SearchController" description="FF_SearchResults">
+<aura:component controller="FF_SearchController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" description="FF_SearchResults">
     <aura:attribute name="products" type="Product2[]"/>
     <aura:attribute name="content" type="String" required="true"/>
     <aura:attribute name="pageNumber" type="Integer" default="1"/>
