@@ -1,6 +1,5 @@
 <aura:component controller="FF_DiscountController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" description="FF_DiscountList" >
     <aura:attribute name="priceBooksTable" type="Pricebook2"/>
-<!--    <aura:attribute name="priceBooks" type="Pricebook2"/>-->
     <aura:attribute name="columns" type="List"/>
     <aura:attribute name="currentPage" type="Integer" default="1"/>
     <aura:attribute name="totalPages" type="Integer"/>

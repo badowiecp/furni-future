@@ -11,9 +11,8 @@
         );
     },
 
-    addToDiscount : function(component,event){
-        if(component.get("v.checkedAll")==true && event.getSource().get("v.value") == false){
-        }
+    clearGlobal : function(component,event){
+        component.find('globalDiscount').set("v.value",null);
     },
 
     cancel : function(component,event){
@@ -33,18 +32,33 @@
                 return;
             }
         });
-
         if(isEmpty(component.get("v.priceBookFields.Name"))){
             component.set("v.inputsValid",false);
             this.fireToast("Warning",$A.get("$Label.c.FF_Please_specify_discount_name"),"warning");
-        }else if(component.get("v.priceBookFields.Discount_Percent__c") > 99 || component.get("v.priceBookFields.Discount_Percent__c") < 1){
-            component.set("v.inputsValid",false);
-            this.fireToast("Warning",$A.get("$Label.c.FF_Please_insert_valid_number_less_than_100_and_greater_than_0"),"warning");
         }else if(!anyChecked){
             component.set("v.inputsValid",false);
             this.fireToast("Warning",$A.get("$Label.c.FF_Please_choose_at_least_one_product_for_your_discount"),"warning");
         }else{
-            component.set("v.inputsValid",true);
+            let inputs = component.find('discountInput');
+            let invalidNames = [];
+            if(inputs){
+                if(Array.isArray(inputs)){
+                    inputs.forEach(function(inputs) {
+                        if(inputs.get("v.value") == null || inputs.get("v.value") > 99 || inputs.get("v.value") < 1){
+                            invalidNames.push(inputs.get("v.name"));
+                        }
+                    });
+                }else{
+                    if(inputs.get("v.value") == null || inputs.get("v.value") > 99 || inputs.get("v.value") < 1){
+                        invalidNames.push(inputs.get("v.name"));
+                    }
+                }
+                if(invalidNames.length > 0){
+                    this.fireToast("Warning","Products dont have valid discounts: " + invalidNames.join(', '),"warning");
+                }else{
+                   component.set("v.inputsValid",true);
+                }
+            }
         }
 
         function isEmpty(str) {
@@ -83,7 +97,6 @@
                 checkbox.set('v.value', true);
             });
         }
-
     },
 
     save : function(component,event,isActive){
@@ -133,6 +146,19 @@
             component.set("v.showSpinner",false);
         });
         $A.enqueueAction(action);
+    },
+
+    changeGlobalDiscount : function(component,event){
+        let inputs = component.find('discountInput');
+        if(inputs){
+            if(Array.isArray(inputs)){
+                inputs.forEach(function(inputs) {
+                    inputs.set('v.value', event.getSource().get("v.value"));
+                });
+            }else{
+                inputs.set('v.value', event.getSource().get("v.value"));
+            }
+        }
     },
 
     fireToast : function(title,message,type,mode) {

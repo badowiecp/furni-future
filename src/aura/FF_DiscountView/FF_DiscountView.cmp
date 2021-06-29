@@ -19,12 +19,10 @@
 
     <div class="slds-align_absolute-center slds-m-bottom_large">
         <div class="slds-grid slds-wrap">
-            <lightning:input disabled="true" value="{!v.priceBookFields.Name}" label="{!$Label.c.FF_Discount_name}" required="true"
-                             class="slds-size--1-of-2 slds-p-horizontal_medium slds-p-vertical_small"/>
-            <lightning:input disabled="true" type="number" step="1" value="{!v.priceBookFields.Discount_Percent__c}" placeholder="%" label="{!$Label.c.FF_Percentage_discount}" required="true"
-                             class="slds-size--1-of-2 slds-p-horizontal_medium slds-p-vertical_small"/>
-            <lightning:input disabled="true" value="{!v.priceBookFields.Description}" label="{!$Label.c.FF_Description}"
-                             class="slds-size--2-of-2 slds-p-horizontal_medium slds-p-top_xxx-small"/>
+            <aura:if isTrue="{!v.priceBookFields.Description}">
+                <lightning:input disabled="true" value="{!v.priceBookFields.Description}" label="{!$Label.c.FF_Description}"
+                                 class="slds-size--2-of-2 slds-p-horizontal_medium slds-p-top_xxx-small"/>
+            </aura:if>
         </div>
     </div>
 
@@ -38,10 +36,10 @@
                     <lightning:formattedText value="{!$Label.c.FF_Product_Name}"/>
                 </lightning:layoutItem>
                 <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-horizontal_large slds-p-vertical_small" size="3">
-                    <lightning:formattedText value="{!$Label.c.FF_Standard_price}"/>
+                    <lightning:formattedText value="{!$Label.c.FF_Discount_price}"/>
                 </lightning:layoutItem>
                 <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-horizontal_large slds-p-vertical_small" size="3">
-                    <lightning:formattedText value="{!$Label.c.FF_Discount_price}"/>
+                    <lightning:formattedText value="{!$Label.c.FF_Standard_price}"/>
                 </lightning:layoutItem>
             </lightning:layout>
         </lightning:layoutItem>
@@ -55,10 +53,10 @@
                         <lightning:formattedUrl label="{!wrapper.entry.Product2.Name}" value="{!wrapper.entry.Product2.Product_Name_Link__c}"/>
                     </lightning:layoutItem>
                     <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-horizontal_large slds-p-vertical_small" size="3">
-                        <lightning:formattedNumber value="{!wrapper.entry.UnitPrice}" style="currency"/>
+                        <span style="font-weight: bold;"><lightning:formattedNumber value="{!wrapper.entry.UnitPrice}" style="currency"/></span>
                     </lightning:layoutItem>
                     <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-horizontal_large slds-p-vertical_small" size="3">
-                        <lightning:formattedNumber value="{!wrapper.entry.UnitPrice * (100-v.priceBookFields.Discount_Percent__c)/100}" style="currency"/>
+                        <lightning:formattedNumber value="{!(wrapper.entry.UnitPrice * 100) / (100-wrapper.entry.Discount__c)}" style="currency"/>
                     </lightning:layoutItem>
                 </lightning:layout>
             </lightning:layoutItem>

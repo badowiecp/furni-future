@@ -28,8 +28,8 @@
                     <div class="slds-grid slds-wrap">
                         <lightning:input value="{!v.priceBookFields.Name}" label="{!$Label.c.FF_Discount_name}" required="true"
                                          class="slds-size--1-of-2 slds-p-horizontal_medium slds-p-vertical_small"/>
-                        <lightning:input type="number" step="1" value="{!v.priceBookFields.Discount_Percent__c}" placeholder="%" label="{!$Label.c.FF_Percentage_discount}" required="true"
-                                         class="slds-size--1-of-2 slds-p-horizontal_medium slds-p-vertical_small"/>
+                        <lightning:input aura:id="globalDiscount" type="number" step="1" value="{!v.priceBookFields.Discount_Percent__c}" placeholder="%" label="{!$Label.c.FF_Global_discount}"
+                                         class="slds-size--1-of-2 slds-p-horizontal_medium slds-p-vertical_small" onchange="{!c.handleChangeGlobalDiscount}"/>
                         <lightning:input value="{!v.priceBookFields.Description}" label="{!$Label.c.FF_Description}"
                                          class="slds-size--2-of-2 slds-p-horizontal_medium slds-p-top_xxx-small"/>
                     </div>
@@ -44,20 +44,23 @@
                 <lightning:layout multipleRows="true">
                     <lightning:layoutItem size="12" class="slds-border_bottom slds-border_top">
                         <lightning:layout multipleRows="false">
-                            <lightning:layoutItem class="slds-p-horizontal_large slds-align_absolute-center slds-align-middle slds-p-vertical_small" size="3">
+                            <lightning:layoutItem class="slds-p-left_large slds-align-middle slds-p-vertical_small" size="2">
+                                <ui:inputCheckbox class="checkbox" aura:id="allCheckbox" value="{!v.checkedAll}" label="{!$Label.c.FF_Add_all}" change="{!c.handleAddAll}" />
+                            </lightning:layoutItem>
+                            <lightning:layoutItem class="slds-p-horizontal_large slds-align_absolute-center slds-align-middle slds-p-vertical_small" size="2">
                                 <lightning:formattedText value="{!$Label.c.FF_Photo}"/>
                             </lightning:layoutItem>
-                            <lightning:layoutItem class="slds-p-horizontal_large slds-align-middle slds-p-vertical_small" size="3">
+                            <lightning:layoutItem class="slds-p-horizontal_large slds-align-middle slds-p-vertical_small" size="2">
                                 <lightning:formattedText value="{!$Label.c.FF_Product_Name}"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem class="slds-text-align_right slds-align-middle lds-p-vertical_small" size="2">
+                                <lightning:formattedText value="{!$Label.c.FF_Percentage_discount}"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-vertical_small" size="2">
+                                <lightning:formattedText value="{!$Label.c.FF_Price_after_discount}"/>
                             </lightning:layoutItem>
                             <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-horizontal_large slds-p-vertical_small" size="2">
                                 <lightning:formattedText value="{!$Label.c.FF_Standard_price}"/>
-                            </lightning:layoutItem>
-                            <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-horizontal_large slds-p-vertical_small" size="2">
-                                <lightning:formattedText value="{!$Label.c.FF_Price_after_discount}"/>
-                            </lightning:layoutItem>
-                            <lightning:layoutItem class="slds-p-horizontal_large slds-align-middle slds-p-vertical_small" size="4">
-                                <ui:inputCheckbox class="checkbox" aura:id="allCheckbox" value="{!v.checkedAll}" label="{!$Label.c.FF_Add_all}" change="{!c.handleAddAll}" />
                             </lightning:layoutItem>
                         </lightning:layout>
                     </lightning:layoutItem>
@@ -65,20 +68,28 @@
                     <aura:iteration items="{!v.priceBookEntryWrappers}" var="wrapper" indexVar="index">
                         <lightning:layoutItem size="12" class="slds-border_bottom">
                             <lightning:layout multipleRows="false">
-                                <lightning:layoutItem class="slds-p-horizontal_large slds-align_absolute-center slds-align-middle slds-p-vertical_small" size="3">
+                                <lightning:layoutItem class="slds-p-horizontal_large slds-align-middle slds-p-vertical_small" size="2">
+                                    <ui:inputCheckbox class="checkbox" aura:id="checkbox" value="{!wrapper.checked}" label="{!$Label.c.FF_Add}" name="{!index}"/>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem class="slds-p-horizontal_large slds-align_absolute-center slds-align-middle slds-p-vertical_small" size="2">
                                     <c:FF_Tile showPrice="false" showName="false" productId="{!wrapper.entry.Product2Id}"/>
                                 </lightning:layoutItem>
-                                <lightning:layoutItem class="slds-p-horizontal_large slds-align-middle slds-p-vertical_small" size="3">
+                                <lightning:layoutItem class="slds-p-horizontal_large slds-align-middle slds-p-vertical_small" size="2">
                                     <lightning:formattedUrl label="{!wrapper.entry.Product2.Name}" value="{!wrapper.entry.Product2.Product_Name_Link__c}"/>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-horizontal_medium slds-p-vertical_small" size="2">
+                                    <aura:if isTrue="{!wrapper.checked}">
+                                        <lightning:input aura:id="discountInput" name="{!wrapper.entry.Product2.Name}" type="number" step="1" value="{!wrapper.entry.Discount__c}" placeholder="%" label="{!$Label.c.FF_Percentage_discount}"
+                                                         class="slds-p-vertical_small" variant="label-hidden" onchange="{!c.handleChangeInput}"/>
+                                    </aura:if>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-horizontal_large slds-p-vertical_small" size="2">
+                                    <aura:if isTrue="{!wrapper.checked}">
+                                        <lightning:formattedNumber value="{!wrapper.entry.UnitPrice * (100-wrapper.entry.Discount__c)/100}" style="currency"/>
+                                    </aura:if>
                                 </lightning:layoutItem>
                                 <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-horizontal_large slds-p-vertical_small" size="2">
                                     <lightning:formattedNumber value="{!wrapper.entry.UnitPrice}" style="currency"/>
-                                </lightning:layoutItem>
-                                <lightning:layoutItem class="slds-text-align_right slds-align-middle slds-p-horizontal_large slds-p-vertical_small" size="2">
-                                    <lightning:formattedNumber value="{!wrapper.entry.UnitPrice * (100-v.priceBookFields.Discount_Percent__c)/100}" style="currency"/>
-                                </lightning:layoutItem>
-                                <lightning:layoutItem class="slds-p-horizontal_large slds-align-middle slds-p-vertical_small" size="4">
-                                    <ui:inputCheckbox class="checkbox" aura:id="checkbox" value="{!wrapper.checked}" label="{!$Label.c.FF_Add}" name="{!index}" change="{!c.handleAddToDiscount}" />
                                 </lightning:layoutItem>
                             </lightning:layout>
                         </lightning:layoutItem>

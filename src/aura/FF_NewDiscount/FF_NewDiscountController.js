@@ -5,8 +5,8 @@
         helper.getAvailableProducts(component,event);
     },
 
-    handleAddToDiscount : function(component,event,helper){
-        helper.addToDiscount(component,event);
+    handleChangeInput : function(component,event,helper){
+        helper.clearGlobal(component,event);
     },
 
     handleAddAll : function(component,event,helper){
@@ -25,6 +25,10 @@
 
     handleCancel : function(component,event,helper){
         helper.cancel(component,event);
+    },
+
+    handleChangeGlobalDiscount : function(component,event,helper){
+        helper.changeGlobalDiscount(component,event);
     }
 
 })
