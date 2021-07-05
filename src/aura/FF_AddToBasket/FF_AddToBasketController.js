@@ -15,6 +15,14 @@
 
     checkIfStockAvailable : function(component,event,helper){
         helper.validateQuantity(component,event);
+    },
+
+    handleSubtract : function(component,event,helper){
+        helper.subtract(component,event);
+    },
+
+    handleAdd : function(component,event,helper){
+        helper.add(component,event);
     }
 
 })

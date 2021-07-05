@@ -61,6 +61,24 @@
         }
     },
 
+    subtract : function(component,event){
+        component.set("v.quantity",parseInt(component.get("v.quantity"))-1);
+        if(component.get("v.quantity") > component.get("v.availableNumber")){
+            component.set("v.validQuantity",false);
+        }else{
+            component.set("v.validQuantity",true);
+        }
+    },
+
+    add : function(component,event){
+        component.set("v.quantity",parseInt(component.get("v.quantity"))+1);
+        if(component.get("v.quantity") > component.get("v.availableNumber")){
+            component.set("v.validQuantity",false);
+        }else{
+            component.set("v.validQuantity",true);
+        }
+    },
+
     addToBasket : function(component,event){
         let action = component.get("c.addProductToBasketCache");
         action.setParams({
