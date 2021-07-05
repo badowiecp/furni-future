@@ -1,0 +1,8 @@
+.quantityInput {
+    float: right;
+    width: 100px;
+}
+
+.edited {
+    color: rgb(1, 118, 211);
+}

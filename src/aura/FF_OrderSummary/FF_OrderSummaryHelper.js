@@ -1,6 +1,7 @@
 ({
 
     getProducts : function(component,event){
+        component.set("v.showSpinner",true);
         let action = component.get("c.checkAndReturnBasket");
         action.setCallback(this, function(response) {
             let state = response.getState();
@@ -10,11 +11,13 @@
                 let errors = response.getError();
                 this.fireToast("Error",errors[0].message,"error");
             }
+            component.set("v.showSpinner",false);
         });
         $A.enqueueAction(action);
     },
 
     getOrderInfo: function(component,event){
+        component.set("v.showSpinner",true);
         let action = component.get("c.getOpportunity");
         action.setParams({
             "opportunityId": component.get("v.opportunityId")
@@ -27,11 +30,13 @@
                 let errors = response.getError();
                 this.fireToast("Error",errors[0].message,"error");
             }
+            component.set("v.showSpinner",false);
         });
         $A.enqueueAction(action);
     },
 
     confirm : function(component,event){
+        component.set("v.showSpinner",true);
         let action = component.get("c.createOrder");
         action.setParams({
             "opportunityId": component.get("v.opportunityId"),
@@ -39,21 +44,27 @@
         });
         action.setCallback(this, function(response) {
             let state = response.getState();
-            if (state === "ERROR"){
+            if(state === "SUCCESS"){
+                let action = event.getParam("action");
+                let navigate = component.get("v.navigateFlow");
+                navigate(action);
+            }else{
                 let errors = response.getError();
                 this.fireToast("Error",errors[0].message,"error");
             }
+            component.set("v.showSpinner",false);
         });
         $A.enqueueAction(action);
     },
 
     navigate : function(component,event){
-        let navigate = component.get("v.navigateFlow");
         let action = event.getParam("action");
         if(action=='NEXT'){
             this.confirm(component,event);
+        }else{
+            let navigate = component.get("v.navigateFlow");
+            navigate(action);
         }
-        navigate(action);
     },
 
     fireToast : function(title,message,type) {
@@ -61,7 +72,8 @@
         toastEvent.setParams({
             title: title,
             message: message,
-            type: type
+            type: type,
+            mode: 'sticky'
         });
         toastEvent.fire();
     }

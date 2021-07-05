@@ -1,0 +1,12 @@
+<template>
+    <lightning-spinner if:true={showSpinner} alternative-text="Loading" size="medium"></lightning-spinner>
+    <template if:true={warehouseWrappers}>
+        <lightning-layout multiple-rows="true">
+            <template for:each={warehouseWrappers} for:item="wrapper">
+                <lightning-layout-item key={wrapper.warehouse.Id} size="6" class="slds-var-p-around_x-small">
+                    <c-ff-pickup-point-tile wrapper={wrapper}></c-ff-pickup-point-tile>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
+    </template>
+</template>

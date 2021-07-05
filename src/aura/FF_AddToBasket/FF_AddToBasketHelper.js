@@ -11,6 +11,48 @@
         $A.enqueueAction(action);
     },
 
+    getAvailableNumber : function(component,event){
+        let action = component.get("c.getWarehouseItemCount");
+        action.setParams({
+            "productId": component.get("v.recordId")
+        });
+        action.setCallback(this, function(response) {
+            component.set("v.availableNumber",response.getReturnValue());
+        });
+        $A.enqueueAction(action);
+    },
+
+    showAvailablePickupPoints : function(component,event){
+        let modalBody;
+        $A.createComponents([
+            ["c:ffPickupPointsList",{
+                "productId": component.get("v.recordId")
+            }]
+        ],
+        function(components, status){
+            if (status === "SUCCESS") {
+                modalBody = components[0];
+                component.find('overlayLib').showCustomModal({
+                   header: "Pickup points",
+                   body: modalBody,
+                   showCloseButton: true,
+                   cssClass: "slds-modal_small",
+                   closeCallback: function() {
+                   }
+                })
+            }
+        }
+        );
+    },
+
+    validateQuantity : function(component,event){
+        if(event.getSource().get("v.value") > component.get("v.availableNumber")){
+            component.set("v.validQuantity",false);
+        }else{
+            component.set("v.validQuantity",true);
+        }
+    },
+
     validateAndAdd : function(component,event){
         if(component.get("v.quantity")>0){
             this.addToBasket(component,event);

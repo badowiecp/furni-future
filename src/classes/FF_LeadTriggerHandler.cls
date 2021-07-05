@@ -4,19 +4,19 @@ public with sharing class FF_LeadTriggerHandler implements FF_TriggerHandler{
 
     public void bulkAfter(){}
 
-    public void beforeInsert(SObject so){}
+    public void beforeInsert(List<SObject> newList){}
 
-    public void beforeUpdate(SObject oldSo, SObject so){}
+    public void beforeUpdate(List<SObject> newList, Map<Id, SObject> newMap, List<SObject> oldList, Map<Id, SObject> oldMap){}
 
-    public void beforeDelete(SObject so){}
+    public void beforeDelete(List<SObject> oldList, Map<Id, SObject> oldMap){}
 
-    public void afterInsert(SObject so){
+    public void afterInsert(List<SObject> newList, Map<Id, SObject> newMap){
         FF_WebToLeadHandler.setPersonalLeadForLeadsWithoutCompany(Trigger.new);
     }
 
-    public void afterUpdate(SObject oldSo, SObject so){}
+    public void afterUpdate(List<SObject> newList, Map<Id, SObject> newMap, List<SObject> oldList, Map<Id, SObject> oldMap){}
 
-    public void afterDelete(SObject so){}
+    public void afterDelete(List<SObject> oldList, Map<Id, SObject> oldMap){}
 
     public void andFinally(){}
 

@@ -4,6 +4,12 @@
         let action = component.get("c.checkAndReturnBasket");
         action.setCallback(this, function(response) {
             component.set("v.basket",response.getReturnValue());
+            if(component.get("v.basket")!=null){
+                if(component.get("v.basket").quantitiesUpdated){
+                    this.fireToast($A.get("$Label.c.FF_Warning"),$A.get("$Label.c.FF_Products_availability_changed"),"warning");
+                }
+                component.set("v.basket.quantitiesUpdated",false);
+            }
         });
         $A.enqueueAction(action);
     },

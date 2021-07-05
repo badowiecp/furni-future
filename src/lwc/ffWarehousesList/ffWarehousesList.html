@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title={label.warehousesLabel}>
+        <div class="slds-border_top" style="height: 60vh;">
+            <lightning-datatable
+            hide-checkbox-column
+            show-row-number-column
+            key-field="id"
+            data={warehouses}
+            columns={columns}
+            onrowaction={handleRowAction}>
+        </lightning-datatable>
+        </div>
+    </lightning-card>
+</template>

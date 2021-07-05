@@ -14,37 +14,25 @@ public with sharing class FF_TriggerFactory {
             handler.bulkBefore();
 
             if (Trigger.isDelete) {
-                for (SObject so : Trigger.old) {
-                    handler.beforeDelete(so);
-                }
+                handler.beforeDelete(Trigger.old, Trigger.oldMap);
             }
             else if (Trigger.isInsert) {
-                for (SObject so : Trigger.new) {
-                    handler.beforeInsert(so);
-                }
+                handler.beforeInsert(Trigger.new);
             }
             else if (Trigger.isUpdate) {
-                for (SObject so : Trigger.old) {
-                    handler.beforeUpdate(so, Trigger.newMap.get(so.Id));
-                }
+                handler.beforeUpdate(Trigger.new, Trigger.newMap, Trigger.old, Trigger.oldMap);
             }
         } else {
             handler.bulkAfter();
 
             if (Trigger.isDelete) {
-                for (SObject so : Trigger.old) {
-                    handler.afterDelete(so);
-                }
+                handler.afterDelete(Trigger.old, Trigger.oldMap);
             }
             else if (Trigger.isInsert) {
-                for (SObject so : Trigger.new) {
-                    handler.afterInsert(so);
-                }
+                handler.afterInsert(Trigger.new, Trigger.newMap);
             }
             else if (Trigger.isUpdate) {
-                for (SObject so : Trigger.old) {
-                    handler.afterUpdate(so, Trigger.newMap.get(so.Id));
-                }
+                handler.afterUpdate(Trigger.new, Trigger.newMap, Trigger.old, Trigger.oldMap);
             }
         }
         handler.andFinally();
@@ -59,6 +47,10 @@ public with sharing class FF_TriggerFactory {
             return new FF_ProductRatingTriggerHandler();
         }else if (soType == Quote_event__e.SObjectType) {
             return new FF_QuoteTriggerHandler();
+        }else if (soType == Order.SObjectType){
+            return new FF_OrderTriggerHandler();
+        }else if (soType == OrderItem.SObjectType){
+            return new FF_OrderItemTriggerHandler();
         }
         return null;
     }
