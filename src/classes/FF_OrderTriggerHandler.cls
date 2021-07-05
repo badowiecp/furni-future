@@ -1,12 +1,10 @@
-public with sharing class FF_ProductRatingTriggerHandler implements FF_TriggerHandler{
+public with sharing class FF_OrderTriggerHandler implements FF_TriggerHandler{
 
     public void bulkBefore(){}
 
     public void bulkAfter(){}
 
-    public void beforeInsert(List<SObject> newList){
-        FF_ProductRatingTriggerHelper.checkIfAlreadyRated(Trigger.new);
-    }
+    public void beforeInsert(List<SObject> newList){}
 
     public void beforeUpdate(List<SObject> newList, Map<Id, SObject> newMap, List<SObject> oldList, Map<Id, SObject> oldMap){}
 

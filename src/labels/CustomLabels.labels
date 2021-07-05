@@ -50,6 +50,13 @@
         <value>Add to basket</value>
     </labels>
     <labels>
+        <fullName>FF_Available_stock</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Available stock</shortDescription>
+        <value>Available stock</value>
+    </labels>
+    <labels>
         <fullName>FF_Basket</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -176,11 +183,25 @@
         <value>Cannot retrieve product list</value>
     </labels>
     <labels>
+        <fullName>FF_Cannot_retrieve_products</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cannot retrieve products</shortDescription>
+        <value>Cannot retrieve products</value>
+    </labels>
+    <labels>
         <fullName>FF_Cannot_save_file</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Cannot save file</shortDescription>
         <value>Cannot save file</value>
+    </labels>
+    <labels>
+        <fullName>FF_Cannot_save_warehouse_storage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cannot save, warehouse storage</shortDescription>
+        <value>Cannot save, warehouse storage capacity exceeded, please adjust inserted quantities</value>
     </labels>
     <labels>
         <fullName>FF_Cannot_search_products</fullName>
@@ -197,11 +218,25 @@
         <value>Cannot send to approval</value>
     </labels>
     <labels>
+        <fullName>FF_Capacity_left</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Capacity left</shortDescription>
+        <value>Capacity left</value>
+    </labels>
+    <labels>
         <fullName>FF_Change</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Change</shortDescription>
         <value>Change</value>
+    </labels>
+    <labels>
+        <fullName>FF_Check_pick_up_points</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Check pick-up points</shortDescription>
+        <value>Check pick-up points</value>
     </labels>
     <labels>
         <fullName>FF_Choose_delivery_method</fullName>
@@ -223,6 +258,13 @@
         <protected>true</protected>
         <shortDescription>City</shortDescription>
         <value>City</value>
+    </labels>
+    <labels>
+        <fullName>FF_Clear</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Clear</shortDescription>
+        <value>Clear</value>
     </labels>
     <labels>
         <fullName>FF_Close</fullName>
@@ -309,11 +351,25 @@
         <value>Could not save product</value>
     </labels>
     <labels>
+        <fullName>FF_Could_not_save_storage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Could not save storage</shortDescription>
+        <value>Could not save storage</value>
+    </labels>
+    <labels>
         <fullName>FF_Could_not_save_uploaded_images</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Could not save uploaded images</shortDescription>
         <value>Could not save uploaded images</value>
+    </labels>
+    <labels>
+        <fullName>FF_Could_save_storage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Could not save storage</shortDescription>
+        <value>Could not save storage</value>
     </labels>
     <labels>
         <fullName>FF_Country</fullName>
@@ -463,11 +519,25 @@
         <value>Error receiving file urls</value>
     </labels>
     <labels>
+        <fullName>FF_Error_retrieving_warehouses_data</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error retrieving warehouses data</shortDescription>
+        <value>Error retrieving warehouses data</value>
+    </labels>
+    <labels>
         <fullName>FF_Error_saving_product</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error saving product</shortDescription>
         <value>Error saving product</value>
+    </labels>
+    <labels>
+        <fullName>FF_Error_while_searching_for_warehouses</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error while searching for warehouses</shortDescription>
+        <value>Error while searching for warehouses</value>
     </labels>
     <labels>
         <fullName>FF_First</fullName>
@@ -503,6 +573,13 @@
         <protected>true</protected>
         <shortDescription>Furni Future</shortDescription>
         <value>FURNI FUTURE</value>
+    </labels>
+    <labels>
+        <fullName>FF_Global_discount</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Global discount</shortDescription>
+        <value>Global discount</value>
     </labels>
     <labels>
         <fullName>FF_Go_to_payment</fullName>
@@ -561,6 +638,13 @@
         <value>Loading</value>
     </labels>
     <labels>
+        <fullName>FF_Manage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Manage</shortDescription>
+        <value>Manage</value>
+    </labels>
+    <labels>
         <fullName>FF_Materials</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -573,6 +657,13 @@
         <protected>true</protected>
         <shortDescription>Message sent</shortDescription>
         <value>Message sent</value>
+    </labels>
+    <labels>
+        <fullName>FF_Name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Name</shortDescription>
+        <value>Name</value>
     </labels>
     <labels>
         <fullName>FF_New</fullName>
@@ -617,11 +708,25 @@
         <value>No products</value>
     </labels>
     <labels>
+        <fullName>FF_No_products_available</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No products available</shortDescription>
+        <value>No products available</value>
+    </labels>
+    <labels>
         <fullName>FF_No_products_found</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>No products found</shortDescription>
         <value>No products found</value>
+    </labels>
+    <labels>
+        <fullName>FF_No_warehouses_found</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No warehouses found</shortDescription>
+        <value>No warehouses found</value>
     </labels>
     <labels>
         <fullName>FF_Payment_method</fullName>
@@ -685,6 +790,13 @@
         <protected>true</protected>
         <shortDescription>Please confirm deactivation</shortDescription>
         <value>Please confirm deactivation</value>
+    </labels>
+    <labels>
+        <fullName>FF_Please_correct_inputs</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Please correct inputs</shortDescription>
+        <value>Please correct inputs</value>
     </labels>
     <labels>
         <fullName>FF_Please_insert_valid_number_less_than_100</fullName>
@@ -778,6 +890,13 @@
         <value>Problem setting main image</value>
     </labels>
     <labels>
+        <fullName>FF_Product</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Product</shortDescription>
+        <value>Product</value>
+    </labels>
+    <labels>
         <fullName>FF_Product_Code</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -834,11 +953,25 @@
         <value>Products</value>
     </labels>
     <labels>
+        <fullName>FF_Products_do_not_have_valid_discounts</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Products do not have valid discounts</shortDescription>
+        <value>Products do not have valid discounts</value>
+    </labels>
+    <labels>
         <fullName>FF_Quantity</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Quantity</shortDescription>
         <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>FF_Recently_viewed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Recently viewed</shortDescription>
+        <value>Recently viewed</value>
     </labels>
     <labels>
         <fullName>FF_Records_per_page</fullName>
@@ -888,6 +1021,13 @@
         <protected>true</protected>
         <shortDescription>Search for</shortDescription>
         <value>Search for</value>
+    </labels>
+    <labels>
+        <fullName>FF_Search_results</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search results</shortDescription>
+        <value>Search results</value>
     </labels>
     <labels>
         <fullName>FF_Select</fullName>
@@ -967,6 +1107,27 @@
         <value>State/province</value>
     </labels>
     <labels>
+        <fullName>FF_Storage_capacity</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Storage capacity</shortDescription>
+        <value>Storage capacity</value>
+    </labels>
+    <labels>
+        <fullName>FF_Storage_capacity_used</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Storage capacity used</shortDescription>
+        <value>Storage capacity used</value>
+    </labels>
+    <labels>
+        <fullName>FF_Storage_size</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Storage size</shortDescription>
+        <value>Storage size</value>
+    </labels>
+    <labels>
         <fullName>FF_Street</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -1023,6 +1184,20 @@
         <value>Total price</value>
     </labels>
     <labels>
+        <fullName>FF_Total_size</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Total size</shortDescription>
+        <value>Total size</value>
+    </labels>
+    <labels>
+        <fullName>FF_Type</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Type</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
         <fullName>FF_Unit_price</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -1035,6 +1210,27 @@
         <protected>true</protected>
         <shortDescription>View</shortDescription>
         <value>View</value>
+    </labels>
+    <labels>
+        <fullName>FF_Warehouse_storage_capacity_exceeded</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Warehouse storage capacity exceeded</shortDescription>
+        <value>Warehouse storage capacity exceeded</value>
+    </labels>
+    <labels>
+        <fullName>FF_Warehouses</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Warehouses</shortDescription>
+        <value>Warehouses</value>
+    </labels>
+    <labels>
+        <fullName>FF_Warehouses_map</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Warehouses map</shortDescription>
+        <value>Warehouses map</value>
     </labels>
     <labels>
         <fullName>FF_Warning</fullName>
@@ -1919,17 +2115,24 @@
         <value>Wrong file format, please upload a csv file</value>
     </labels>
     <labels>
-        <fullName>FF_Global_discount</fullName>
+        <fullName>FF_Basket_help</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Global discount</shortDescription>
-        <value>Global discount</value>
+        <shortDescription>Basket help</shortDescription>
+        <value>Please note that adding or confirming your cart does not mean reservation of products. Final product availability will be confirmed upon your order finish</value>
     </labels>
     <labels>
-        <fullName>FF_Products_do_not_have_valid_discounts</fullName>
+        <fullName>FF_Products_availability_changed</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Products do not have valid discounts</shortDescription>
-        <value>Products do not have valid discounts</value>
+        <shortDescription>Products availability changed, your basket is updated</shortDescription>
+        <value>Products availability changed, your basket is updated</value>
+    </labels>
+    <labels>
+        <fullName>FF_Products_available</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Products available</shortDescription>
+        <value>Products available</value>
     </labels>
 </CustomLabels>

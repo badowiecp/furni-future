@@ -18,13 +18,13 @@ public without sharing class FF_CreateOrderController {
                 newOpportunity.Name = UserInfo.getName() + ' ' + String.valueOf(newOpportunity.CloseDate) + ' opportunity';
                 newOpportunity.StageName = 'Collecting items';
                 newOpportunity.Pricebook2Id = [SELECT Id,Name,IsActive FROM PriceBook2 WHERE IsStandard = true LIMIT 1].Id;
+                newOpportunity.ContactId = [SELECT Id FROM Contact WHERE Email = :UserInfo.getUserEmail()].Id;
                 insert newOpportunity;
                 opportunityId = newOpportunity.Id;
             }else{
                 opportunityId = usersOpportunities[0].Id;
             }
             basket = getBasketCache();
-            System.debug('Basket from cache in review order: ' + basket);
             if(basket!=null){
                 basket.opportunityId = opportunityId;
             }
@@ -48,19 +48,20 @@ public without sharing class FF_CreateOrderController {
     }
 
     private static void saveOpportunityLineItems(FF_CacheController.Basket basket){
-        List<OpportunityLineItem> lineItems = [SELECT Id FROM OpportunityLineItem WHERE OpportunityId = :basket.opportunityId];
-        if(!lineItems.isEmpty()){
-            delete lineItems;
+        List<OpportunityLineItem> currentItems = [SELECT Id FROM OpportunityLineItem WHERE OpportunityId = :basket.opportunityId];
+        if(!currentItems.isEmpty()){
+            delete currentItems;
         }
-
+        List<OpportunityLineItem> updatedItems = new List<OpportunityLineItem>();
         for(FF_CacheController.ProductWrapper productWrapper : basket.productWrappers){
             OpportunityLineItem lineItem = new OpportunityLineItem();
             lineItem.OpportunityId = basket.opportunityId;
             lineItem.Product2Id = productWrapper.productId;
             lineItem.UnitPrice = productWrapper.unitPrice;
             lineItem.Quantity = productWrapper.quantity;
-            insert lineItem;
+            updatedItems.add(lineItem);
         }
+        insert updatedItems;
     }
 
     private static Decimal returnCurrentPrice(String productId){
@@ -103,8 +104,11 @@ public without sharing class FF_CreateOrderController {
             Order newOrder = FF_OpportunityToOrderService.createOrderFromOpportunity(opportunityId,'customer','Accepted unpaid',contactId);
             FF_OpportunityToOrderService.createInvoiceForOrder(newOrder,14);
             clearBasket();
-        }catch (Exception exc){
-            throw new AuraHandledException(System.Label.FF_Cannot_create_order_review_information_provided);
+        }catch (DmlException exc){
+            throw new AuraHandledException(exc.getDmlMessage(0));
+        }
+        catch (Exception exc){
+            throw new AuraHandledException(System.Label.FF_Cannot_create_order_review_information_provided + ': ' + exc.getMessage());
         }
     }
 
@@ -120,6 +124,14 @@ public without sharing class FF_CreateOrderController {
             upsert userContact;
         }catch(Exception exc){
             throw new AuraHandledException(System.Label.FF_Invalid_data_please_review_your_information);
+        }
+
+    }
+
+    @AuraEnabled
+    public static void recalculateProductWrappers(List<FF_CacheController.ProductWrapper> wrappers, String opportunityId){
+        for(FF_CacheController.ProductWrapper productWrapper : wrappers){
+            recalculateLineItems(productWrapper.productId,opportunityId,productWrapper.quantity);
         }
 
     }

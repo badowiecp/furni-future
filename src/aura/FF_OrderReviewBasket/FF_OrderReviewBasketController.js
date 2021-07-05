@@ -9,7 +9,12 @@
     },
 
     handleChange : function(component,event,helper){
-        helper.change(component,event);
+        helper.validateInput(component,event);
+        helper.calculateTotalPrice(component,event);
+    },
+
+    handleDelete : function(component,event,helper){
+        helper.delete(component,event);
     }
 
 })
