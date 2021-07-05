@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>FF_Accept_terms_and_conditions</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Accept terms and conditions</shortDescription>
+        <value>Accept terms and conditions</value>
+    </labels>
+    <labels>
         <fullName>FF_Activate</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -83,6 +90,20 @@
         <protected>true</protected>
         <shortDescription>Billing address</shortDescription>
         <value>Billing address</value>
+    </labels>
+    <labels>
+        <fullName>FF_Birthdate</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Birthdate</shortDescription>
+        <value>Birthdate</value>
+    </labels>
+    <labels>
+        <fullName>FF_Birthdate_cannot_be_in_the_future</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Birthdate cannot be in the future</shortDescription>
+        <value>Birthdate cannot be in the future</value>
     </labels>
     <labels>
         <fullName>FF_Cancel</fullName>
@@ -246,6 +267,13 @@
         <value>Check pick-up points</value>
     </labels>
     <labels>
+        <fullName>FF_Check_products</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Check products</shortDescription>
+        <value>Check products</value>
+    </labels>
+    <labels>
         <fullName>FF_Choose_delivery_method</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -300,6 +328,13 @@
         <protected>true</protected>
         <shortDescription>Company name</shortDescription>
         <value>Company name</value>
+    </labels>
+    <labels>
+        <fullName>FF_Complete_form</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Complete form</shortDescription>
+        <value>Complete form</value>
     </labels>
     <labels>
         <fullName>FF_Confirm</fullName>
@@ -393,6 +428,13 @@
         <value>Current price</value>
     </labels>
     <labels>
+        <fullName>FF_Date_of_joining</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Date of joining</shortDescription>
+        <value>Date of joining</value>
+    </labels>
+    <labels>
         <fullName>FF_Deactivate</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -447,6 +489,13 @@
         <protected>true</protected>
         <shortDescription>Standard price</shortDescription>
         <value>Standard price</value>
+    </labels>
+    <labels>
+        <fullName>FF_Discount</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Discount %</shortDescription>
+        <value>Discount %</value>
     </labels>
     <labels>
         <fullName>FF_Discount_activated</fullName>
@@ -582,6 +631,27 @@
         <value>FURNI FUTURE</value>
     </labels>
     <labels>
+        <fullName>FF_Furni_club_confirmation_email_sent</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Furni club confirmation email sent</shortDescription>
+        <value>Thank you, email with confirmation of your membership will be sent to you shortly</value>
+    </labels>
+    <labels>
+        <fullName>FF_Furni_club_member_message</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Furni club member message</shortDescription>
+        <value>Great! You are already a FurniClub member, check out special prices we prepared for you!</value>
+    </labels>
+    <labels>
+        <fullName>FF_Furniture_category</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Furniture category</shortDescription>
+        <value>Furniture category</value>
+    </labels>
+    <labels>
         <fullName>FF_Global_discount</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -608,6 +678,13 @@
         <protected>true</protected>
         <shortDescription>Invoice</shortDescription>
         <value>Invoice</value>
+    </labels>
+    <labels>
+        <fullName>FF_Join</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Join</shortDescription>
+        <value>Join</value>
     </labels>
     <labels>
         <fullName>FF_Last</fullName>
@@ -736,6 +813,20 @@
         <value>No warehouses found</value>
     </labels>
     <labels>
+        <fullName>FF_Orders_amount</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Orders amount</shortDescription>
+        <value>Orders amount</value>
+    </labels>
+    <labels>
+        <fullName>FF_Orders_count</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Orders count</shortDescription>
+        <value>Orders count</value>
+    </labels>
+    <labels>
         <fullName>FF_Payment_method</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -776,6 +867,13 @@
         <protected>true</protected>
         <shortDescription>Please choose delivery method first</shortDescription>
         <value>Please choose delivery method first</value>
+    </labels>
+    <labels>
+        <fullName>FF_Please_choose_desired_furniture_category_first</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Please choose desired furniture category first</shortDescription>
+        <value>Please choose desired furniture category first</value>
     </labels>
     <labels>
         <fullName>FF_Please_choose_payment_method_first</fullName>
@@ -832,6 +930,20 @@
         <protected>true</protected>
         <shortDescription>Please provide valid address for shipping</shortDescription>
         <value>Please provide valid address for shipping</value>
+    </labels>
+    <labels>
+        <fullName>FF_Please_provide_your_birthdate_first</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Please provide your birthdate first</shortDescription>
+        <value>Please provide your birthdate first</value>
+    </labels>
+    <labels>
+        <fullName>FF_Please_read_and_accept_terms_and_conditions</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Please read and accept terms and conditions</shortDescription>
+        <value>Please read and accept terms and conditions</value>
     </labels>
     <labels>
         <fullName>FF_Please_remove_them_or_deactivate</fullName>
@@ -1007,6 +1119,13 @@
         <protected>true</protected>
         <shortDescription>Request product add</shortDescription>
         <value>Request product add</value>
+    </labels>
+    <labels>
+        <fullName>FF_Revert_changes</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Revert changes</shortDescription>
+        <value>Revert changes</value>
     </labels>
     <labels>
         <fullName>FF_Save</fullName>
@@ -1198,6 +1317,13 @@
         <value>These products are already on sale</value>
     </labels>
     <labels>
+        <fullName>FF_Tier</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tier</shortDescription>
+        <value>Tier</value>
+    </labels>
+    <labels>
         <fullName>FF_Total_price</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -1224,6 +1350,13 @@
         <protected>true</protected>
         <shortDescription>Unit price</shortDescription>
         <value>Unit price</value>
+    </labels>
+    <labels>
+        <fullName>FF_Users</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Users</shortDescription>
+        <value>Users</value>
     </labels>
     <labels>
         <fullName>FF_View</fullName>
@@ -2134,131 +2267,5 @@
         <protected>true</protected>
         <shortDescription>Wrong file format, please upload a csv file</shortDescription>
         <value>Wrong file format, please upload a csv file</value>
-    </labels>
-    <labels>
-        <fullName>FF_Complete_form</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Complete form</shortDescription>
-        <value>Complete form</value>
-    </labels>
-    <labels>
-        <fullName>FF_Furni_club_confirmation_email_sent</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Furni club confirmation email sent</shortDescription>
-        <value>Thank you, email with confirmation of your membership will be sent to you shortly</value>
-    </labels>
-    <labels>
-        <fullName>FF_Furni_club_member_message</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Furni club member message</shortDescription>
-        <value>Great! You are already a FurniClub member, check out special prices we prepared for you!</value>
-    </labels>
-    <labels>
-        <fullName>FF_Furniture_category</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Furniture category</shortDescription>
-        <value>Furniture category</value>
-    </labels>
-    <labels>
-        <fullName>FF_Birthdate</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Birthdate</shortDescription>
-        <value>Birthdate</value>
-    </labels>
-    <labels>
-        <fullName>FF_Accept_terms_and_conditions</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Accept terms and conditions</shortDescription>
-        <value>Accept terms and conditions</value>
-    </labels>
-    <labels>
-        <fullName>FF_Join</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Join</shortDescription>
-        <value>Join</value>
-    </labels>
-    <labels>
-        <fullName>FF_Check_products</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Check products</shortDescription>
-        <value>Check products</value>
-    </labels>
-    <labels>
-        <fullName>FF_Please_choose_desired_furniture_category_first</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Please choose desired furniture category first</shortDescription>
-        <value>Please choose desired furniture category first</value>
-    </labels>
-    <labels>
-        <fullName>FF_Please_provide_your_birthdate_first</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Please provide your birthdate first</shortDescription>
-        <value>Please provide your birthdate first</value>
-    </labels>
-    <labels>
-        <fullName>FF_Birthdate_cannot_be_in_the_future</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Birthdate cannot be in the future</shortDescription>
-        <value>Birthdate cannot be in the future</value>
-    </labels>
-    <labels>
-        <fullName>FF_Please_read_and_accept_terms_and_conditions</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Please read and accept terms and conditions</shortDescription>
-        <value>Please read and accept terms and conditions</value>
-    </labels>
-    <labels>
-        <fullName>FF_Date_of_joining</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Date of joining</shortDescription>
-        <value>Date of joining</value>
-    </labels>
-    <labels>
-        <fullName>FF_Tier</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Tier</shortDescription>
-        <value>Tier</value>
-    </labels>
-    <labels>
-        <fullName>FF_Discount</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Discount %</shortDescription>
-        <value>Discount %</value>
-    </labels>
-    <labels>
-        <fullName>FF_Orders_count</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Orders count</shortDescription>
-        <value>Orders count</value>
-    </labels>
-    <labels>
-        <fullName>FF_Orders_amount</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Orders amount</shortDescription>
-        <value>Orders amount</value>
-    </labels>
-    <labels>
-        <fullName>FF_Users</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Users</shortDescription>
-        <value>Users</value>
     </labels>
 </CustomLabels>

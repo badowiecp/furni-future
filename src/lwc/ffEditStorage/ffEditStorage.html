@@ -1,0 +1,71 @@
+<template>
+    <lightning-spinner if:true={showSpinner} alternative-text="Loading" size="medium"></lightning-spinner>
+    <template if:true={warehouse}>
+        <lightning-card title={warehouse.Name} icon-name="custom:custom57">
+            <div slot="actions">
+                <lightning-button
+                    label={label.cancelLabel}
+                    variant="neutral"
+                    onclick={handleCancel}>
+                </lightning-button>
+                <lightning-button
+                    class="slds-m-horizontal_xx-small"
+                    label="Revert changes"
+                    variant="neutral"
+                    onclick={handleRevert}>
+                </lightning-button>
+                <lightning-button
+                    label={label.saveLabel}
+                    variant="brand"
+                    onclick={handleSave}>
+                </lightning-button>
+            </div>
+            <lightning-layout class="slds-m-bottom_medium" size="12" multiple-rows=false>
+                <lightning-layout-item class="slds-p-left_medium slds-p-right_large  slds-align-middle" size="2">
+                    <lightning-formatted-address
+                    disabled=true
+                    street={warehouse.FF_Street__c}
+                    postal-code={warehouse.FF_Postal_code__c}
+                    city={warehouse.FF_City__c}
+                    ></lightning-formatted-address>
+                </lightning-layout-item>
+                <lightning-layout-item class="slds-p-horizontal_large slds-align-middle" size="2">
+                    <p>{label.storageCapacityLabel}: {warehouse.FF_Storage_capacity__c}</p>
+                </lightning-layout-item>
+                <lightning-layout-item class="slds-p-horizontal_large slds-align-middle" size="2">
+                    <p>{label.storageCapacityUsedLabel}: {warehouseCapacityUsed}</p>
+                </lightning-layout-item>
+                <lightning-layout-item class="slds-p-horizontal_large slds-align-middle" size="2">
+                    <p>{label.capacityLeftLabel}: {capacityLeft}</p>
+                </lightning-layout-item>
+            </lightning-layout>
+            
+            <lightning-layout class="slds-border_top" size="12" multiple-rows=true>
+                <lightning-layout-item class="slds-border_bottom" size="12">
+                    <lightning-layout size="12">
+                        <lightning-layout-item class="slds-p-horizontal_large slds-align-middle slds-p-vertical_small" size="3">
+                            <lightning-formatted-text class="slds-text-title_bold" value={label.productLabel}></lightning-formatted-text>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-horizontal_large slds-align-middle slds-p-vertical_small" size="3">
+                            <lightning-formatted-text class="slds-text-title_bold" value={label.typeLabel}></lightning-formatted-text>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-text-align_right slds-p-horizontal_large slds-align-middle slds-p-vertical_small" size="2">
+                            <lightning-formatted-text class="slds-text-title_bold" value={label.storageSizeLabel}></lightning-formatted-text>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-text-align_right slds-p-horizontal_large slds-align-middle slds-p-vertical_small" size="2">
+                            <lightning-formatted-text class="slds-text-title_bold" value={label.totalSizeLabel}></lightning-formatted-text>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-text-align_right slds-p-horizontal_large slds-align-middle slds-p-vertical_small" size="2">
+                            <lightning-formatted-text class="slds-text-title_bold" value={label.quantityLabel}></lightning-formatted-text>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+            <template for:each={productWrappers} for:item="wrapper">
+                <lightning-layout-item class="slds-border_bottom" key={wrapper.product.Id} size="12">
+                    <c-ff-warehouse-product-wrapper-element class="wrapperElement" wrapper={wrapper} onquantitychange={updateStorage}></c-ff-warehouse-product-wrapper-element>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
+        </lightning-card>
+    </template>
+</template>

@@ -4,17 +4,17 @@ public interface FF_TriggerHandler {
 
     void bulkAfter();
 
-    void beforeInsert(SObject so);
+    void beforeInsert(List<SObject> newList);
 
-    void beforeUpdate(SObject oldSo, SObject so);
+    void beforeUpdate(List<SObject> newList, Map<Id, SObject> newMap, List<SObject> oldList, Map<Id, SObject> oldMap);
 
-    void beforeDelete(SObject so);
+    void beforeDelete(List<SObject> oldList, Map<Id, SObject> oldMap);
 
-    void afterInsert(SObject so);
+    void afterInsert(List<SObject> newList, Map<Id, SObject> newMap);
 
-    void afterUpdate(SObject oldSo, SObject so);
+    void afterUpdate(List<SObject> newList, Map<Id, SObject> newMap, List<SObject> oldList, Map<Id, SObject> oldMap);
 
-    void afterDelete(SObject so);
+    void afterDelete(List<SObject> oldList, Map<Id, SObject> oldMap);
 
     void andFinally();
 

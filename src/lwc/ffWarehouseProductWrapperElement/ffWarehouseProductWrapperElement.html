@@ -1,0 +1,19 @@
+<template>
+    <lightning-layout size="12">
+        <lightning-layout-item class="slds-p-horizontal_large slds-align-middle slds-p-vertical_xx-small" size="3">
+            <lightning-formatted-url label={wrapper.product.Name} value={wrapper.product.Product_Name_Link__c}></lightning-formatted-url>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-p-horizontal_large slds-align-middle slds-p-vertical_xx-small" size="3">
+            <lightning-formatted-text value={wrapper.product.Family}></lightning-formatted-text>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-text-align_right slds-p-horizontal_large slds-align-middle slds-p-vertical_xx-small" size="2">
+            <lightning-formatted-number value={wrapper.product.FF_Storage_size__c}></lightning-formatted-number>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-text-align_right slds-p-horizontal_large slds-align-middle slds-p-vertical_xx-small" size="2">
+            <lightning-formatted-number class="totalSize" value={wrapper.totalSize}></lightning-formatted-number>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-text-align_right slds-p-horizontal_large slds-align-middle slds-p-vertical_xx-small" size="2">
+            <lightning-input value={wrapper.quantity} class={inputClass} variant="label-hidden" type="number" step=1 min="0" onchange={handleQuantityChange} label={label.quantityLabel}></lightning-input>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
