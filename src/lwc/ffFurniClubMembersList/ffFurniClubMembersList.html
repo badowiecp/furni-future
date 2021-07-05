@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title={label.usersLabel}>
+        <div class="slds-border_top" style="height: 60vh;">
+            <lightning-datatable
+            hide-checkbox-column
+            show-row-number-column
+            key-field="id"
+            data={members}
+            columns={columns}>
+        </lightning-datatable>
+        </div>
+    </lightning-card>
+</template>
