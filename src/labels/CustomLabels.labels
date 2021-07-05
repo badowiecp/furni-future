@@ -1121,6 +1121,13 @@
         <value>Request product add</value>
     </labels>
     <labels>
+        <fullName>FF_Revert_changes</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Revert changes</shortDescription>
+        <value>Revert changes</value>
+    </labels>
+    <labels>
         <fullName>FF_Save</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -2260,12 +2267,5 @@
         <protected>true</protected>
         <shortDescription>Wrong file format, please upload a csv file</shortDescription>
         <value>Wrong file format, please upload a csv file</value>
-    </labels>
-    <labels>
-        <fullName>FF_Revert_changes</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Revert changes</shortDescription>
-        <value>Revert changes</value>
     </labels>
 </CustomLabels>

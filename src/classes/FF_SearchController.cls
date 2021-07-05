@@ -42,7 +42,16 @@ public without sharing class FF_SearchController {
 
     @AuraEnabled(cacheable = true)
     public static List<PricebookEntry> getPriceBookEntry(String productId){
-        return [SELECT Id,UnitPrice,IsActive FROM PricebookEntry WHERE IsActive = true AND Product2Id = :productId ORDER BY UnitPrice ASC];
+        Contact userContact = [SELECT Id,Email FROM Contact WHERE Email = :UserInfo.getUserEmail()];
+        List<PricebookEntry> discountEntries = new List<PricebookEntry>();
+        List<PricebookEntry> entries = [SELECT Id,UnitPrice,IsActive FROM PricebookEntry WHERE IsActive = true AND Product2Id = :productId AND (Pricebook2.FF_Furni_Club_member__c = NULL OR Pricebook2.FF_Furni_Club_member__c = :userContact.Id) ORDER BY UnitPrice ASC];
+        if(entries.size()>1){
+            discountEntries.add(entries[0]);
+            discountEntries.add(entries[entries.size()-1]);
+        }else{
+            discountEntries.add(entries[0]);
+        }
+        return discountEntries;
     }
 
     private static String prepareQueryString(String name,String recordType,String productFamily, Integer pageNumber, Integer recordsPerPage){
