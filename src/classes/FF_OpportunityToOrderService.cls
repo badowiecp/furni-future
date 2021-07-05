@@ -18,6 +18,7 @@ global without sharing class FF_OpportunityToOrderService {
         }
         newOrder.Status = status;
         newOrder.ShipToContactId = contactId;
+        newOrder.Contact__c = contactId;
         newOrder.EffectiveDate = System.today();
         newOrder.OpportunityId = opportunityId;
         newOrder.FF_Payment__c = selectedOpportunity.FF_Payment__c;

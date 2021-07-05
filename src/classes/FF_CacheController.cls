@@ -1,4 +1,4 @@
-public with sharing class FF_CacheController {
+public without sharing class FF_CacheController {
 
     @AuraEnabled
     public static void addProductToBasketCache(String productId, Decimal price, Integer quantity){
@@ -38,12 +38,12 @@ public with sharing class FF_CacheController {
         Cache.SessionPartition  shoppingCartCache = Cache.Session.getPartition('ShoppingCartCache');
         String basketJson = (String)shoppingCartCache.get('basket');
         Basket currentBasket = new Basket();
-        if(basketJson!=null){
+        if(String.isNotEmpty(basketJson)){
             currentBasket = (Basket)JSON.deserialize(basketJson,Basket.class);
             for(ProductWrapper wrapper : currentBasket.productWrappers){
                 wrapper.unitPrice = returnCurrentPrice(wrapper.productId);
             }
-            currentBasket = calculateBasket(currentBasket);
+            currentBasket = calculateBasket(getOnlyAvailableProducts(currentBasket));
             basketJson = JSON.serialize(currentBasket);
             shoppingCartCache.put('basket',basketJson);
         }
@@ -52,7 +52,49 @@ public with sharing class FF_CacheController {
 
     @AuraEnabled
     public static List<PricebookEntry> getPriceBookEntry(String productId){
-        return [SELECT Id,UnitPrice,IsActive FROM PricebookEntry WHERE IsActive = true AND Product2Id = :productId ORDER BY UnitPrice ASC];
+        Contact userContact = [SELECT Id,Email FROM Contact WHERE Email = :UserInfo.getUserEmail()];
+        List<PricebookEntry> discountEntries = new List<PricebookEntry>();
+        List<PricebookEntry> entries = [SELECT Id,UnitPrice,IsActive FROM PricebookEntry WHERE IsActive = true AND Product2Id = :productId AND (Pricebook2.FF_Furni_Club_member__c = NULL OR Pricebook2.FF_Furni_Club_member__c = :userContact.Id) ORDER BY UnitPrice ASC];
+        if(entries.size()>1){
+            discountEntries.add(entries[0]);
+            discountEntries.add(entries[entries.size()-1]);
+        }else{
+            discountEntries.add(entries[0]);
+        }
+        return discountEntries;
+    }
+
+    @AuraEnabled
+    public static Integer getWarehouseItemCount(String productId){
+        Integer count = 0;
+        for(FF_Warehouse_Item__c item : [SELECT Id,FF_Quantity__c FROM FF_Warehouse_Item__c WHERE FF_Product__c = :productId]){
+            count += Integer.valueOf(item.FF_Quantity__c);
+        }
+        return count;
+    }
+
+    private static Basket getOnlyAvailableProducts(Basket basket){
+        for(ProductWrapper productWrapper : basket.productWrappers){
+            if(setValidQuantity(productWrapper) && basket !=null){
+                basket.quantitiesUpdated = true;
+            }
+        }
+        return basket;
+    }
+
+    private static Boolean setValidQuantity(ProductWrapper productWrapper){
+        Boolean quantityChanged = false;
+        productWrapper.availableStock = Integer.valueOf(getAvailableNumber(productWrapper.productId));
+        if(productWrapper.availableStock < productWrapper.quantity){
+            productWrapper.quantity = Integer.valueOf(productWrapper.availableStock);
+            quantityChanged = true;
+        }
+        return quantityChanged;
+    }
+
+    private static Integer getAvailableNumber(String productId){
+        Decimal sum = (Decimal)[SELECT SUM(FF_Quantity__c) quantity FROM FF_Warehouse_Item__c WHERE FF_Quantity__c > 0 AND FF_Product__c = :productId][0].get('quantity');
+        return sum != null ? Integer.valueOf(sum) : 0;
     }
 
     public static Basket calculateBasket(Basket basket){
@@ -113,11 +155,9 @@ public with sharing class FF_CacheController {
     }
 
     private static Decimal returnCurrentPrice(String productId){
-        List<PricebookEntry> entries = [SELECT Id,UnitPrice,IsActive FROM PricebookEntry WHERE IsActive = true AND Product2Id = :productId ORDER BY UnitPrice DESC];
+        Contact userContact = [SELECT Id,Email FROM Contact WHERE Email = :UserInfo.getUserEmail()];
+        List<PricebookEntry> entries = [SELECT Id,UnitPrice,IsActive FROM PricebookEntry WHERE IsActive = true AND Product2Id = :productId AND (Pricebook2.FF_Furni_Club_member__c = NULL OR Pricebook2.FF_Furni_Club_member__c = :userContact.Id) ORDER BY UnitPrice ASC];
         Decimal price = entries[0].UnitPrice;
-        if(entries.size()>1){
-            price = entries[1].UnitPrice;
-        }
         return price;
     }
 
@@ -152,11 +192,13 @@ public with sharing class FF_CacheController {
         @AuraEnabled public Integer totalQuantity {get;set;}
         @AuraEnabled public Decimal totalPrice {get;set;}
         @AuraEnabled public String opportunityId {get;set;}
+        @AuraEnabled public Boolean quantitiesUpdated {get;set;}
 
         public Basket(){
             productWrappers = new List<ProductWrapper>();
             products = new List<Product2>();
             opportunityId = null;
+            quantitiesUpdated = false;
         }
     }
 
@@ -169,5 +211,6 @@ public with sharing class FF_CacheController {
         @AuraEnabled public Integer quantity {get;set;}
         @AuraEnabled public String productUrl {get;set;}
         @AuraEnabled public String name {get;set;}
+        @AuraEnabled public Decimal availableStock {get;set;}
     }
 }

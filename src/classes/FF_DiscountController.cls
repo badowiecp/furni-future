@@ -7,7 +7,7 @@ public with sharing class FF_DiscountController {
         responseWrapper.pageNumber = pageNumber;
         List<Pricebook2> priceBooks = new List<Pricebook2>();
         try {
-            for (Pricebook2 priceBook : [SELECT Id,Name,IsActive,Description,IsStandard,Discount_Percent__c FROM Pricebook2 WHERE IsStandard = false LIMIT :recordToDisplay OFFSET :(pageNumber - 1) * recordToDisplay]) {
+            for (Pricebook2 priceBook : [SELECT Id,Name,IsActive,Description,IsStandard,Discount_Percent__c FROM Pricebook2 WHERE IsStandard = false AND Pricebook2.FF_Furni_Club_member__c = NULL LIMIT :recordToDisplay OFFSET :(pageNumber - 1) * recordToDisplay]) {
                 priceBooks.add(priceBook);
             }
             responseWrapper.pricebooks = priceBooks;
@@ -78,7 +78,7 @@ public with sharing class FF_DiscountController {
         }
         try {
             for (PriceBookEntryWrapper wrapper : wrappers) {
-                if (wrapper.checked && (!currentEntryProductIds.contains(wrapper.entry.Product2Id) || isActive == false)) {
+                if (wrapper.checked) {
                     PricebookEntry newEntry = new PricebookEntry();
                     newEntry.UnitPrice = wrapper.entry.UnitPrice * (100 - wrapper.entry.Discount__c) / 100;
                     newEntry.Product2Id = wrapper.entry.Product2Id;
@@ -86,15 +86,9 @@ public with sharing class FF_DiscountController {
                     newEntry.Pricebook2Id = priceBookId;
                     newEntry.IsActive = isActive;
                     newEntries.add(newEntry);
-                } else if (wrapper.checked && isActive) {
-                    duplicateEntries.add(wrapper.entry.Product2.Name);
                 }
             }
-            if (!duplicateEntries.isEmpty()) {
-                throw new FF_ActiveDiscountDuplicateException(System.Label.FF_These_products_are_already_on_sale + ': ' + String.join(duplicateEntries, ', ') + '. ' + System.Label.FF_Please_remove_them_or_deactivate);
-            } else {
-                insert newEntries;
-            }
+            insert newEntries;
         } catch (Exception exc) {
             throw new AuraHandledException(System.Label.FF_Cannot_create_discount + ': ' + exc.getMessage());
         }
@@ -132,13 +126,9 @@ public with sharing class FF_DiscountController {
                         duplicateEntries.add(entry.Product2.Name);
                     }
                 }
-                if (!duplicateEntries.isEmpty()) {
-                    throw new FF_ActiveDiscountDuplicateException(System.Label.FF_These_products_are_already_on_sale + ': ' + String.join(duplicateEntries, ', ') + '. ' + System.Label.FF_Please_remove_them_or_deactivate);
-                } else {
-                    pricebook.IsActive = true;
-                    upsert pricebook;
-                    upsert entries;
-                }
+                pricebook.IsActive = true;
+                upsert pricebook;
+                upsert entries;
             }
         } catch (Exception exc) {
             throw new AuraHandledException(exc.getMessage());
