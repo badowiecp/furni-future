@@ -7,6 +7,7 @@
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
     <lightning:navigation aura:id="navService"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:registerEvent name="updateBasket" type="c:FF_UpdateBasket"/>
 
     <c:FF_LoadingSpinner show="{!v.showSpinner}"/>
 

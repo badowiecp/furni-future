@@ -11,6 +11,22 @@
         $A.enqueueAction(action);
     },
 
+    checkIfGuest : function(component,event){
+        let action = component.get("c.getIsGuest");
+        action.setCallback(this, function(response) {
+            component.set("v.isGuest",response.getReturnValue());
+        });
+        $A.enqueueAction(action);
+    },
+
+    navigateToLogin : function(component,event){
+        let urlEvent = $A.get("e.force:navigateToURL");
+        urlEvent.setParams({
+          "url": "/s/login"
+        });
+        urlEvent.fire();
+    },
+
     getAvailableNumber : function(component,event){
         let action = component.get("c.getWarehouseItemCount");
         action.setParams({

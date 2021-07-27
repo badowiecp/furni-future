@@ -4,13 +4,13 @@ public without sharing class FF_FurniClubController {
     public static void addCustomerToClub(String productTypeId, String birthdate) {
         Contact userContact = [SELECT Id,Email FROM Contact WHERE Email = :UserInfo.getUserEmail()];
         insertNewDiscountPriceBook(productTypeId, userContact);
-        saveBirthdateAndSetMemberOnContact(birthdate, userContact);
+        saveBirthdateAndSetMemberOnContact(birthdate, userContact, productTypeId);
         sendWelcomeEmail(userContact);
     }
 
     @AuraEnabled
-    public static Boolean checkIfMember(){
-        return [SELECT Id,FF_Furni_Club_member__c FROM Contact WHERE Email = :UserInfo.getUserEmail()].FF_Furni_Club_member__c;
+    public static Contact checkIfMember(){
+        return [SELECT Id,FF_Furni_Club_member__c,FF_Product_Type_Chosen__c,FF_Club_Member_Discount__c FROM Contact WHERE Email = :UserInfo.getUserEmail()];
     }
 
     @AuraEnabled
@@ -56,10 +56,12 @@ public without sharing class FF_FurniClubController {
         insert newEntries;
     }
 
-    private static void saveBirthdateAndSetMemberOnContact(String birthdate, Contact userContact){
+    private static void saveBirthdateAndSetMemberOnContact(String birthdate, Contact userContact,String productTypeId){
         userContact.Birthdate = Date.valueOf(birthdate);
         userContact.FF_Furni_Club_member__c = true;
         userContact.FF_Member_Tier__c = 'Tier I';
+        userContact.FF_Club_Member_Discount__c = 5;
+        userContact.FF_Product_Type_Chosen__c = [SELECT Id,RecordType.Name FROM Product2 WHERE RecordTypeId = :productTypeId LIMIT 1].RecordType.Name;
         userContact.FF_Joined_Club_Date__c = System.now();
         upsert userContact;
     }

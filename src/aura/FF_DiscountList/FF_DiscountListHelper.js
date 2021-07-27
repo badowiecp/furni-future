@@ -3,7 +3,7 @@
     prepareRowActions : function(component,event){
         let rowActions = this.getRowActions.bind(this, component);
         component.set('v.columns', [
-            {label: $A.get("$Label.c.FF_Discounts"), fieldName: 'Name', type: 'text'},
+            {label: $A.get("$Label.c.FF_Discounts"), initialWidth: 300, fieldName: 'Name', type: 'text'},
             {label: $A.get("$Label.c.FF_Description"), fieldName: 'Description', type: 'text'},
             {label: $A.get("$Label.c.FF_Active"), fieldName: 'IsActive', type: 'boolean'},
             {label: $A.get("$Label.c.FF_Percentage_discount") + ' (%)', fieldName: 'Discount_Percent__c', type: 'number'},
@@ -11,7 +11,9 @@
         ]);
     },
 
-    getPriceBooks : function(component, page, recordToDisplay){
+    getPriceBooks : function(component,event){
+        let page = component.get("v.currentPage");
+        let recordToDisplay = component.find("recordSize").get("v.value");
         let action = component.get("c.fetchPriceBooks");
         action.setParams({
             "pageNumber": page,

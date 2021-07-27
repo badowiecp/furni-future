@@ -1,7 +1,7 @@
 <aura:component implements="force:lightningQuickAction,flexipage:availableForAllPageTypes" description="FF_ProductsTable" controller="FF_ProductController">
     <ltng:require styles="{!$Resource.NoPageHeader}"/>
     <lightning:overlayLibrary aura:id="overlayLib"/>
-    <aura:attribute name="products" type="Product2[]"/>
+    <aura:attribute name="products" type="List" default="[]"/>
     <aura:attribute name="currentPage" type="Integer" default="1"/>
     <aura:attribute name="totalPages" type="Integer"/>
     <aura:attribute name="totalRecords" type="Integer"/>
@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div style="height: 470px">
+        <div style="height: 480px">
             <lightning:datatable
                     keyField="id"
                     data="{!v.products}"

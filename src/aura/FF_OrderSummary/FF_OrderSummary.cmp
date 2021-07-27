@@ -4,9 +4,10 @@
     <aura:attribute name="opportunityId" type="String"/>
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:registerEvent name="updateBasket" type="c:FF_UpdateBasket"/>
 
     <c:FF_LoadingSpinner show="{!v.showSpinner}"/>
-
+    <p>testing ant23</p>
     <lightning:layout class="slds-p-around_large" multipleRows="true">
         <aura:iteration items="{!v.basket.productWrappers}" var="product">
             <lightning:layoutItem class="slds-border_bottom slds-p-left_xx-large" size="12">

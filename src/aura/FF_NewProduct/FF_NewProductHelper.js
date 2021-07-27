@@ -15,6 +15,30 @@
         );
     },
 
+    saveProductPrice : function(component,event,productId){
+        let action = component.get("c.createStandardPricebookEntry");
+
+        action.setParams({
+            "productId" : productId,
+            "productPrice" : component.get("v.productPrice")
+        });
+
+        action.setCallback(this, function(response){
+            let state = response.getState();
+            if (state !== "SUCCESS"){
+                let errors = response.getError();
+                let resultsToast = $A.get("e.force:showToast");
+                resultsToast.setParams({
+                    "title": $A.get("$Label.c.FF_Error"),
+                    "message": errors[0].message,
+                    "type": "error"
+                });
+                resultsToast.fire();
+            }
+        });
+        $A.enqueueAction(action);
+    },
+
     fetchListOfRecordTypes: function(component, event) {
        let action = component.get("c.fetchRecordTypeValues");
        action.setCallback(this, function(response) {

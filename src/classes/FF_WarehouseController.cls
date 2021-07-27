@@ -1,4 +1,4 @@
-public with sharing class FF_WarehouseController {
+public without sharing class FF_WarehouseController {
 
     @AuraEnabled
     public static List<FF_Warehouse__c> getWarehouses(String city, Integer capacity){

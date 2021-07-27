@@ -51,10 +51,20 @@ public without sharing class FF_CacheController {
     }
 
     @AuraEnabled
+    public static Boolean getIsGuest(){
+        return UserInfo.getName() == 'Furni Future Community Page Site Guest User' ? true : false;
+    }
+
+    @AuraEnabled
     public static List<PricebookEntry> getPriceBookEntry(String productId){
-        Contact userContact = [SELECT Id,Email FROM Contact WHERE Email = :UserInfo.getUserEmail()];
+        List<PricebookEntry> entries = new List<PricebookEntry>();
         List<PricebookEntry> discountEntries = new List<PricebookEntry>();
-        List<PricebookEntry> entries = [SELECT Id,UnitPrice,IsActive FROM PricebookEntry WHERE IsActive = true AND Product2Id = :productId AND (Pricebook2.FF_Furni_Club_member__c = NULL OR Pricebook2.FF_Furni_Club_member__c = :userContact.Id) ORDER BY UnitPrice ASC];
+        if(UserInfo.getName() != 'Furni Future Community Page Site Guest User'){
+            Contact userContact = [SELECT Id,Email FROM Contact WHERE Email = :UserInfo.getUserEmail()];
+            entries = [SELECT Id,UnitPrice,IsActive FROM PricebookEntry WHERE IsActive = true AND Product2Id = :productId AND (Pricebook2.FF_Furni_Club_member__c = NULL OR Pricebook2.FF_Furni_Club_member__c = :userContact.Id) ORDER BY UnitPrice ASC];
+        }else{
+            entries = [SELECT Id,UnitPrice,IsActive FROM PricebookEntry WHERE IsActive = true AND Product2Id = :productId AND Pricebook2.FF_Furni_Club_member__c = NULL ORDER BY UnitPrice ASC];
+        }
         if(entries.size()>1){
             discountEntries.add(entries[0]);
             discountEntries.add(entries[entries.size()-1]);

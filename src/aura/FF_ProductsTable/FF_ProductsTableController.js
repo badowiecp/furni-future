@@ -2,10 +2,11 @@
 
     init: function (component, event, helper) {
         component.set('v.columns', [
-            {label: $A.get("$Label.c.FF_Product_Name"), fieldName: 'Product_Name_Link__c', type: 'url', typeAttributes: {label: { fieldName: 'Name' }, target: '_blank'}},
-            {label: $A.get("$Label.c.FF_Space_Type"), fieldName: 'Record_Type_Name__c', type: 'text'},
-            {label: $A.get("$Label.c.FF_Product_Type"), fieldName: 'Family', type: 'text'},
-            {label: $A.get("$Label.c.FF_Description"), fieldName: 'Description', type: 'text'},
+            {label: $A.get("$Label.c.FF_Product_Name"), fieldName: 'productNameLink', type: 'url', typeAttributes: {label: { fieldName: 'productName' }, target: '_blank'}},
+            {label: $A.get("$Label.c.FF_Space_Type"), fieldName: 'recordTypeName', type: 'text'},
+            {label: $A.get("$Label.c.FF_Product_Type"), fieldName: 'productFamily', type: 'text'},
+            {label: "Storage size", initialWidth: 150, fieldName: 'storageSize', type: 'number'},
+            {label: "Base price", initialWidth: 200, fieldName: 'price', type: 'currency'}
         ]);
 
         let page = component.get("v.currentPage");

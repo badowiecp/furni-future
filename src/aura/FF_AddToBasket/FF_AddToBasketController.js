@@ -3,10 +3,15 @@
     onInit : function(component,event,helper){
         helper.getPrice(component,event);
         helper.getAvailableNumber(component,event);
+        helper.checkIfGuest(component,event);
     },
 
     handleAddToBasket : function(component,event,helper){
-        helper.validateAndAdd(component,event);
+        if(component.get("v.isGuest")){
+            helper.navigateToLogin(component,event);
+        }else{
+            helper.validateAndAdd(component,event);
+        }
     },
 
     handleCheckPickup : function(component,event,helper){

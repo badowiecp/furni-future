@@ -45,6 +45,8 @@
         action.setCallback(this, function(response) {
             let state = response.getState();
             if(state === "SUCCESS"){
+                let updateBasket = $A.get("e.c:FF_UpdateBasket");
+                updateBasket.fire();
                 let action = event.getParam("action");
                 let navigate = component.get("v.navigateFlow");
                 navigate(action);

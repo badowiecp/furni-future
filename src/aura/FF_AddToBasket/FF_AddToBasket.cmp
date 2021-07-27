@@ -3,9 +3,11 @@
     <aura:attribute name="quantity" type="Decimal" default="1"/>
     <aura:attribute name="availableNumber" type="Integer"/>
     <aura:attribute name="validQuantity" type="Boolean" default="true"/>
+    <aura:attribute name="isGuest" type="Boolean" default="true"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:registerEvent name="productAddedToBasketEvent" type="c:FF_ProductAddedToBasket"/>
     <lightning:overlayLibrary aura:id="overlayLib"/>
+    <lightning:navigation aura:id="navService"/>
 
     <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread slds-p-horizontal_medium">
         <div  class="slds-p-horizontal_small slds-grid_vertical-align-center">

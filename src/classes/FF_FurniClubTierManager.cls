@@ -9,11 +9,13 @@ public without sharing class FF_FurniClubTierManager {
             Decimal totalOrdersAmount = getTotalOrdersAmount(order.Contact__c, member.FF_Joined_Club_Date__c, orderItems);
             if(totalOrdersAmount > 10000 && member.FF_Member_Tier__c == 'Tier I'){
                 member.FF_Member_Tier__c = 'Tier II';
+                member.FF_Club_Member_Discount__c = 10;
                 pricebook.Discount_Percent__c = 10;
                 recordsToUpdate.add(member);
                 recordsToUpdate.add(pricebook);
             }else if(totalOrdersAmount > 20000 && member.FF_Member_Tier__c == 'Tier II'){
                 member.FF_Member_Tier__c = 'Tier III';
+                member.FF_Club_Member_Discount__c = 15;
                 pricebook.Discount_Percent__c = 15;
                 recordsToUpdate.add(member);
                 recordsToUpdate.add(pricebook);
