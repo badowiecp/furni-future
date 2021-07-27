@@ -1,38 +1,23 @@
 ({
 
     getProducts: function(component, page, recordToDisplay) {
-
-        // create a server-side action.
         let action = component.get("c.getProduct");
-        // set the parameters to method
         action.setParams({
             "pageNumber": page,
             "recordToDisplay": recordToDisplay
         });
 
         action.setCallback(this, function(response) {
-            // store the response
             let result = response.getReturnValue();
-
-            try{
-                result.forEach(function(record){
-                                record.Product_Name_Link__c = "/" + record.Id;
-                            });
-
-            }catch(error){
-                console.log(error.message);
+            for (let i = 0; i < result.ProductListToDisplay.length; i++) {
+                let record = result.ProductListToDisplay[i];
+                if (record.product.RecordType.Name) record.product.Record_Type_Name__c = record.product.RecordType.Name;
             }
-
-
-            // set the component attributes
             component.set("v.products", result.ProductListToDisplay);
             component.set("v.currentPage", result.pageNumber);
             component.set("v.totalRecords", result.totalRecords);
             component.set("v.totalPages", Math.ceil(result.totalRecords / recordToDisplay));
-
         });
-
-        // enqueue the action
         $A.enqueueAction(action);
     }
 

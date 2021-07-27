@@ -1,0 +1,59 @@
+<aura:component controller="FF_SearchController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" description="FF_SearchResults">
+    <aura:attribute name="products" type="Product2[]"/>
+    <aura:attribute name="content" type="String" required="true"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1"/>
+    <aura:attribute name="totalPages" type="Integer" default="1"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="recordsPerPage" type="Integer"/>
+    <aura:attribute name="query" type="String"/>
+    <aura:attribute name="productFamily" type="String"/>
+    <aura:attribute name="recordType" type="String"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="paginationMultiplier" type="Integer" required="true"/>
+    <aura:attribute name="paginationDefault" type="Integer" required="true"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:method name="search" action="{!c.doSearch}">
+        <aura:attribute name="query" type="String"/>
+        <aura:attribute name="recordType" type="String"/>
+        <aura:attribute name="productFamily" type="String"/>
+    </aura:method>
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="{!$Label.c.FF_Loading}"/>
+    </aura:if>
+
+    <aura:if isTrue="{!v.totalRecords>0}">
+        <aura:if isTrue="{!v.content=='products'}">
+            <div class="container">
+                <aura:iteration items="{!v.products}" var="product">
+                    <div class="item">
+                        <c:FF_Tile product="{!product}"/>
+                    </div>
+                </aura:iteration>
+            </div>
+        </aura:if>
+    </aura:if>
+    <aura:if isTrue="{!v.totalRecords==0}">
+        <p class="slds-align_absolute-center">{!$Label.c.FF_No_products_found}</p>
+    </aura:if>
+
+    <div class="slds-p-around_small" style="{!if(v.totalRecords==0,'display: none;','display: flex; justify-content: space-between;')}">
+        <div style="display: inline-block;">
+            <lightning:select aura:id="recordsPerPage" value="{!v.recordsPerPage}" label="{!$Label.c.FF_Records_per_page}" onchange="{!c.onSelectChange}">
+                <option text="{!v.paginationMultiplier}"></option>
+                <option text="{!v.paginationMultiplier * 2}"></option>
+                <option text="{!v.paginationMultiplier * 3}"></option>
+            </lightning:select>
+        </div>
+
+        <div style="display: inline-block;">
+            <lightning:buttonGroup class="slds-p-top_small">
+                <lightning:button variant="brand" disabled="{!v.pageNumber == 1}" label="{!$Label.c.FF_First}" onclick="{!c.navigateToFirst}"/>
+                <lightning:button variant="brand" disabled="{!v.pageNumber == 1}" label="{!$Label.c.FF_Previous}" onclick="{!c.navigate}"/>
+                <lightning:button label="{!$Label.c.FF_Showing + ' ' + v.pageNumber + ' ' + $Label.c.FF_of + ' ' + v.totalPages}"/>
+                <lightning:button variant="brand" disabled="{!v.pageNumber == v.totalPages}" label="{!$Label.c.FF_Next}" onclick="{!c.navigate}"/>
+                <lightning:button variant="brand" disabled="{!v.pageNumber == v.totalPages}" label="{!$Label.c.FF_Last}" onclick="{!c.navigateToLast}"/>
+            </lightning:buttonGroup>
+        </div>
+    </div>
+</aura:component>

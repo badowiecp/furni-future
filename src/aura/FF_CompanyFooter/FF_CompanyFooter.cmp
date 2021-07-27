@@ -1,0 +1,23 @@
+<aura:component controller="FF_CompanyFooterController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" description="FF_CompanyFooter">
+    <aura:attribute name="footerContent" type="Object"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+
+    <lightning:layout>
+        <lightning:layoutItem size="1">
+            <img src="{!$Resource.furnilogo}"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="4">
+            <div class="slds-p-around_small">
+                <lightning:formattedText value="{!v.footerContent.Name}"/>
+                <lightning:formattedAddress province="{!v.footerContent.Address.state}"
+                                            city="{!v.footerContent.Address.city}"
+                                            street="{!v.footerContent.Address.street}"
+                                            country="{!v.footerContent.Address.country}"
+                                            postalCode="{!v.footerContent.Address.postalCode}"/>
+                <lightning:formattedPhone value="{!v.footerContent.Phone}"/>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+
+
+</aura:component>

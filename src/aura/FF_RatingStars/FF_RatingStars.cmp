@@ -1,0 +1,12 @@
+<aura:component description="FF_RatingStars">
+    <aura:attribute name="value" type="Integer" default="0"/>
+    <aura:attribute name="readonly" type="Boolean" default="false"/>
+    <ltng:require
+            styles="{!$Resource.starRating  + '/rating.css'}"
+            scripts="{!$Resource.starRating + '/rating.js'}"
+            afterScriptsLoaded="{!c.afterScriptsLoaded}" />
+    <aura:handler name="change" value="{!v.value}" action="{!c.onValueChange}"/>
+
+    <ul aura:id="ratingarea" class="{!(readonly) ? 'readonly c-rating' : 'c-rating'}">
+    </ul>
+</aura:component>

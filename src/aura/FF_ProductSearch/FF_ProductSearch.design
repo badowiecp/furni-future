@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="pagination" label="Pagination"/>
+    <design:attribute name="defaultPaginationSize" label="Default pagination size"/>
+</design:component>

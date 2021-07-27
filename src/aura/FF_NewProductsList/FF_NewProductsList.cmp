@@ -1,0 +1,28 @@
+<aura:component controller="FF_SearchController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" description="FF_NewProductsList">
+    <aura:attribute name="products" type="Product2[]"/>
+    <aura:attribute name="recordsPerPage" type="Integer" default="10"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+
+    <div class="slds-box slds-box_border" style="margin-bottom: 100px;">
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <span class="slds-page-header__title slds-truncate">{!$Label.c.FF_Latest_products}</span>
+                </div>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.products.length>0}">
+                <div class="slds-scrollable_x" style="height: 210px; width: 1140px">
+                    <div style="{!'padding-bottom: 30px; width: ' + (((v.products.length) * 190)) + 'px;'}">
+                        <aura:iteration items="{!v.products}" var="product">
+                                <c:FF_Tile product="{!product}"/>
+                        </aura:iteration>
+                    </div>
+                </div>
+        </aura:if>
+        <aura:if isTrue="{!v.totalRecords==0}">
+            <p class="slds-align_absolute-center">{!$Label.c.FF_No_products_found}</p>
+        </aura:if>
+    </div>
+
+</aura:component>

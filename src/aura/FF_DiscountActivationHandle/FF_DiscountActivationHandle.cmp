@@ -1,0 +1,22 @@
+<aura:component controller="FF_DiscountController" description="FF_DiscountActivationHandle">
+    <aura:attribute name="pricebookId" type="String"/>
+    <aura:attribute name="isActive" type="Boolean"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <aura:if isTrue="{!v.isActive}">
+        <div class="slds-align_absolute-center">
+            <p>{!$Label.c.FF_Please_confirm_deactivation}</p>
+        </div>
+        <aura:set attribute="else">
+            <div class="slds-align_absolute-center">
+                <p>{!$Label.c.FF_Please_confirm_activation}</p>
+            </div>
+        </aura:set>
+    </aura:if>
+
+    <div class="slds-align_absolute-center slds-p-top_small">
+        <lightning:button variant="neutral" label="{!$Label.c.FF_Cancel}" onclick="{!c.handleCancel}"/>
+        <lightning:button variant="brand" label="{!$Label.c.FF_Confirm}" onclick="{!c.handleConfirm}"/>
+    </div>
+
+</aura:component>

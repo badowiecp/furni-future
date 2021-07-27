@@ -1,0 +1,45 @@
+<template>
+    <lightning-card title={label.warehousesLabel}>
+		<div class="slds-card__body_inner">
+            <div class="slds-align_absolute-center">
+                <lightning-input type="search"
+	                onchange={handleCityInputChange}
+	                class="slds-var-m-bottom_small slds-m-horizontal_xx-small"
+	                label={label.cityLabel}
+	                value={city}>
+                </lightning-input>
+                <lightning-input type="search"
+	                onchange={handleStorageInputChange}
+	                class="slds-var-m-bottom_small slds-m-horizontal_xx-small"
+	                label={label.storageCapacityLabel}
+	                value={storageCapacity}>
+                </lightning-input>
+            </div>
+            <div class="slds-align_absolute-center">
+                <lightning-button class="slds-m-horizontal_xx-small" label={label.clearLabel} onclick={clear}></lightning-button>
+                <lightning-button class="slds-m-horizontal_xx-small" label={label.searchLabel} variant="brand" onclick={search}></lightning-button>
+            </div>
+        </div>
+
+        <template if:true={warehouses}>   
+            <lightning-card title={label.searchResultsLabel}>
+                <div class="slds-card__body_inner">
+                    <lightning-layout multiple-rows="true" pull-to-boundary="small">
+                        <template for:each={warehouses} for:item="warehouse">
+                            <lightning-layout-item key={warehouse.Id} size="4" class="slds-var-p-around_x-small">
+                                <c-f-f_-warehouse-tile warehouse={warehouse}></c-f-f_-warehouse-tile>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                    <template if:false={hasResults}>
+                        <p class="slds-align_absolute-center slds-var-m-vertical_small">
+                            {label.noWarehousesLabel}
+                        </p>
+                    </template>
+                </div>
+            </lightning-card>  
+        </template>
+	</lightning-card>  
+    
+
+</template>

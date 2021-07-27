@@ -1,0 +1,56 @@
+<template>
+    <lightning-spinner if:true={showSpinner} alternative-text="Loading" size="medium"></lightning-spinner>
+    <template if:false={isMember}>
+        <template if:true={spaceTypes}>
+            <lightning-card>
+                <div slot="title">
+                    <h3 style="font-weight: bold;">{label.completeFormLabel}</h3>
+                </div>
+                <div class="slds-var-p-horizontal_medium">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <template if:false={joinSent}>
+                                <lightning-combobox class="slds-m-vertical_xx-small"
+                                required="true"
+                                label={label.furnitureCategoryLabel}
+                                options={spaceTypes}
+                                placeholder="Select space type"
+                                value={selectedSpaceType}
+                                onchange={handleChangeType}
+                            ></lightning-combobox>
+                            <lightning-input class="slds-m-vertical_xx-small"
+                                required="true"
+                                type="date" 
+                                value={birthdate} 
+                                label={label.birthdateLabel}
+                                onchange={handleChangeBirthdate}
+                            ></lightning-input>
+                            <lightning-input class="slds-m-vertical_xx-small"
+                                required="true"
+                                type="checkbox"
+                                label={label.acceptTermsLabel}
+                                checked={termsAccepted}
+                                onchange={handleChangeTerms}
+                            ></lightning-input>
+                            <lightning-button class="slds-m-vertical_medium slds-align_absolute-center"
+                                variant="brand"
+                                label={label.joinLabel}
+                                onclick={handleJoin}
+                            ></lightning-button>
+                            </template>
+                            <template if:true={joinSent}>
+                                <p class="slds-align_absolute-center slds-m-top_large">{label.membershipConfirmationLabel}</p>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </lightning-card>
+        </template>
+    </template>
+    <template if:true={isMember}>
+        <span class="slds-align_absolute-center">
+            {label.currentMemberMessageLabel}
+        </span>
+        <lightning-button variant="brand" class="slds-align_absolute-center slds-m-top_large" label={label.checkProductsLabel}></lightning-button>
+    </template>
+</template>
