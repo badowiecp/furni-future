@@ -16,6 +16,20 @@
        $A.enqueueAction(action);
     },
 
+    checkApprovalPending : function(component,event){
+        let action = component.get("c.checkIfLocked");
+
+        action.setParams({
+            "productId": component.get("v.recordId")
+        });
+
+        action.setCallback(this, function(response) {
+            component.set("v.isLocked", response.getReturnValue());
+            component.set("v.showSpinner",false);
+        });
+        $A.enqueueAction(action);
+    },
+
     getImageLinkSuffix : function (component,event){
        let action = component.get("c.queryImageLinkSuffix");
 
@@ -26,6 +40,61 @@
            }
        });
        $A.enqueueAction(action);
+    },
+
+    getProductPrice : function(component,event){
+        let action = component.get("c.getStandardPriceBookEntry");
+
+        action.setParams({
+            "productId": component.get("v.recordId")
+        });
+
+        action.setCallback(this, function(response) {
+            let state = response.getState();
+            component.set("v.currentPrice",response.getReturnValue().UnitPrice);
+            component.set("v.productPrice",response.getReturnValue());
+        });
+        $A.enqueueAction(action);
+    },
+
+    saveProductPrice : function(component,event){
+        let action = component.get("c.saveStandardPricebookEntry");
+
+        action.setParams({
+            "pricebookEntry": component.get("v.productPrice")
+        });
+
+        action.setCallback(this, function(response) {
+            let state = response.getState();
+            if(state !== 'SUCCESS'){
+                console.log('ERROR: ' + response.getError());
+            }
+        });
+        $A.enqueueAction(action);
+    },
+
+    saveProduct : function(component,event){
+        let self = this;
+        component.set("v.showSpinner",true);
+        let productEdit = component.find("productEdit");
+        productEdit.saveRecord($A.getCallback(function(saveResult) {
+            if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
+                if(component.get("v.imagesToDelete").length>0){
+                    self.deleteImages(component,event);
+                }
+                self.saveImages(component,component.get("v.fileWrappers"));
+                self.setMain(component);
+                console.log(component.get("v.productPrice.UnitPrice"));
+                console.log(component.get("v.currentPrice"));
+                if(component.get("v.productPrice.UnitPrice")!=component.get("v.currentPrice")){
+                    self.saveProductPrice(component,event);
+                }
+                self.fireToast($A.get("$Label.FF_Success"),"Changes saved","success");
+            } else {
+                self.fireToast($A.get("$Label.FF_Error"),$A.get("$Label.FF_Error_saving_product"),"error");
+            }
+            component.set("v.showSpinner",false);
+        }));
     },
 
     deleteImages : function (component,event){
@@ -111,6 +180,16 @@
             }
         });
         $A.enqueueAction(action);
+    },
+
+    fireToast : function(title,message,type) {
+        let toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams({
+            title: title,
+            message: message,
+            type: type
+        });
+        toastEvent.fire();
     }
 
 })

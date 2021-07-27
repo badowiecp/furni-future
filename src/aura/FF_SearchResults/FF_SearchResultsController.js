@@ -3,7 +3,7 @@
     doInit : function(component, event, helper) {
         component.set("v.query",'');
         component.set("v.recordsPerPage",component.get("v.paginationMultiplier") * component.get("v.paginationDefault"));
-        helper.getProducts(component, '', '', '', 1, component.find("recordsPerPage").get("v.value"));
+        helper.getProducts(component, '', component.get("v.recordType"), '', 1, component.find("recordsPerPage").get("v.value"));
     },
 
     doSearch : function(component, event, helper) {

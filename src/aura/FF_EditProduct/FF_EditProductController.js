@@ -1,38 +1,19 @@
 ({
 
     doInit : function(component,event,helper){
-        helper.getImageLinkSuffix(component,event);
-        helper.getPictures(component,event);
-        let familyPicklistComponent = component.find("familyPicklist");
-        familyPicklistComponent.getPicklistValuesForEdit(component.get("v.recordId"));
+        component.set("v.showSpinner",true);
+        helper.checkApprovalPending(component,event);
+        if(!component.get("v.isLocked")){
+            helper.getImageLinkSuffix(component,event);
+            helper.getPictures(component,event);
+            let familyPicklistComponent = component.find("familyPicklist");
+            familyPicklistComponent.getPicklistValuesForEdit(component.get("v.recordId"));
+            helper.getProductPrice(component,event);
+        }
     },
 
     handleSave: function(component, event, helper) {
-        let productEdit = component.find("productEdit");
-        productEdit.saveRecord($A.getCallback(function(saveResult) {
-            if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
-
-                if(component.get("v.imagesToDelete").length>0){
-                    helper.deleteImages(component,event);
-                }
-                helper.saveImages(component,component.get("v.fileWrappers"));
-                helper.setMain(component);
-                let resultsToast = $A.get("e.force:showToast");
-                resultsToast.setParams({
-                    "title": "Saved",
-                    "message": "The record was saved."
-                });
-                resultsToast.fire();
-            } else {
-                let resultsToast = $A.get("e.force:showToast");
-                resultsToast.setParams({
-                    "title": $A.get("$Label.FF_Error"),
-                    "message": $A.get("$Label.FF_Error_saving_product"),
-                    "type": "error"
-                });
-                resultsToast.fire();
-            }
-        }));
+        helper.saveProduct(component,event);
     },
 
     handleCancel : function(component,event,helper){

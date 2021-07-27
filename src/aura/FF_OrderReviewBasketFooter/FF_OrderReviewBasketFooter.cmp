@@ -1,0 +1,11 @@
+<aura:component description="FF_OrderReviewBasketFooter" implements="lightning:availableForFlowScreens">
+    <aura:attribute name="validInputs" type="Boolean"/>
+    <aura:registerEvent name="navigateFlowEvent" type="c:FF_NavigateFlow"/>
+
+    <div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_medium">
+        <div class="slds-float_right">
+            <lightning:button disabled="{!!v.validInputs}" aura:id="NEXT" label="{!$Label.c.FF_Next}" variant="brand" onclick="{!c.handleNext}"/>
+        </div>
+    </div>
+
+</aura:component>

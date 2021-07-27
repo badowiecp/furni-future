@@ -1,0 +1,21 @@
+<template>
+    <template if:true={wrapper}> 
+        <lightning-card title={wrapper.warehouse.Name} variant="narrow" icon-name="custom:custom57" class="slds-box slds-box_xx-small tile">
+            <div class="slds-align-middle" slot="actions">
+                <span style="margin-bottom: 5px; font-weight: bold;">Stock: {wrapper.availableStock}</span>
+            </div>
+	    	<div class="slds-var-p-horizontal_medium">
+	    		<div class="slds-media">
+	    			<div class="slds-media__body">
+                        <lightning-formatted-address
+                            show-static-map="true"
+                            street={wrapper.warehouse.FF_Street__c}
+                            postal-code={wrapper.warehouse.FF_Postal_code__c}
+                            city={wrapper.warehouse.FF_City__c}
+                        ></lightning-formatted-address>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </lightning-card>
+    </template>
+</template>

@@ -1,0 +1,25 @@
+<template>
+    <lightning-card title={warehouse.Name} variant="narrow" icon-name="custom:custom57" class="slds-box slds-box_xx-small tile">
+        <div slot="actions">
+            <lightning-button-icon
+                size="medium"
+                icon-name="utility:location"
+                variant="bare"
+                onclick={handleLocationClick}>
+            </lightning-button-icon>
+        </div>
+		<div class="slds-var-p-horizontal_medium">
+			<div class="slds-media">
+				<div class="slds-media__body">
+                    <lightning-formatted-address
+                    disabled=true
+                    street={warehouse.FF_Street__c}
+                    postal-code={warehouse.FF_Postal_code__c}
+                    city={warehouse.FF_City__c}
+                    ></lightning-formatted-address>
+					<p>{label.storageCapacityLabel}: {warehouse.FF_Storage_capacity__c}</p>
+				</div>
+			</div>
+		</div>
+	</lightning-card>
+</template>

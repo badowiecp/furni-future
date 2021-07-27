@@ -1,0 +1,8 @@
+<aura:component description="FF_RatingDeleteMessage">
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    
+    <div class="slds-align_absolute-center">
+        <span>Are you sure you want to delete your rating?</span>
+    </div>
+
+</aura:component>

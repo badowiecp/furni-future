@@ -1,0 +1,35 @@
+<aura:component description="FF_BasketPreview">
+    <aura:attribute name="basket" type="Object"/>
+
+    <aura:if isTrue="{!v.basket.totalQuantity>0}">
+        <lightning:layout class="slds-p-horizontal_large" multipleRows="true">
+            <aura:iteration items="{!v.basket.productWrappers}" var="product">
+                <lightning:layoutItem class="slds-border_bottom slds-p-left_xx-large" size="12">
+                    <lightning:layout>
+                        <lightning:layoutItem class="slds-p-vertical_small" size="2">
+                            <c:FF_Tile productId="{!product.productId}" showPrice="false"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="3">
+                            <p>{!$Label.c.FF_Quantity}: <lightning:formattedNumber value="{!product.quantity}"/></p>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="4">
+                            <p>{!$Label.c.FF_Unit_price}: <lightning:formattedNumber style="currency" value="{!product.unitPrice}"/></p>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="slds-text-align_right slds-align-middle" size="3">
+                            <p>{!$Label.c.FF_Price}: <lightning:formattedNumber style="currency" value="{!product.price}"/></p>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </lightning:layoutItem>
+            </aura:iteration>
+        </lightning:layout>
+        <lightning:layout class="slds-p-top_small slds-p-horizontal_large" horizontalAlign="end">
+            <lightning:layoutItem class="slds-text-align_right slds-text-title_bold" size="3">
+                <span>{!$Label.c.FF_Total_price}: <lightning:formattedNumber style="currency" value="{!v.basket.totalPrice}"/></span>
+            </lightning:layoutItem>
+        </lightning:layout>
+        <aura:set attribute="else">
+        <lightning:formattedText class="slds-align_absolute-center" value="{!$Label.c.FF_No_products}"/>
+        </aura:set>
+    </aura:if>
+
+</aura:component>
