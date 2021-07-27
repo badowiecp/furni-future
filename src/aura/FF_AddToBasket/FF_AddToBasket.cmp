@@ -1,11 +1,13 @@
 <aura:component controller="FF_CacheController" description="FF_AddToBasket" implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
     <aura:attribute name="price" type="List"/>
-    <aura:attribute name="quantity" type="Decimal"/>
+    <aura:attribute name="quantity" type="Decimal" default="1"/>
     <aura:attribute name="availableNumber" type="Integer"/>
     <aura:attribute name="validQuantity" type="Boolean" default="true"/>
+    <aura:attribute name="isGuest" type="Boolean" default="true"/>
     <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
     <aura:registerEvent name="productAddedToBasketEvent" type="c:FF_ProductAddedToBasket"/>
     <lightning:overlayLibrary aura:id="overlayLib"/>
+    <lightning:navigation aura:id="navService"/>
 
     <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread slds-p-horizontal_medium">
         <div  class="slds-p-horizontal_small slds-grid_vertical-align-center">
@@ -28,9 +30,13 @@
 
         <div class="slds-p-horizontal_small">
             <aura:if isTrue="{!v.availableNumber>0}">
-                <lightning:input onchange="{!c.checkIfStockAvailable}" variant="label-hidden" placeholder="{!$Label.c.FF_Quantity}" class="slds-show_inline-block" label="{!$Label.c.FF_Quantity}" type="number" value="{!v.quantity}"/>
+                <lightning:buttonGroup>
+                    <lightning:buttonIcon disabled="{!lessthanorequal(v.quantity,0)}" onclick="{!c.handleSubtract}" class="slds-m-right_x-small" iconName="utility:dash" variant="bare" alternativeText="Subtract"/>
+                    <lightning:input onchange="{!c.checkIfStockAvailable}" variant="label-hidden" class="slds-show_inline-block quantity" label="{!$Label.c.FF_Quantity}" type="number" value="{!v.quantity}"/>
+                    <lightning:buttonIcon disabled="{!lessthanorequal(v.availableNumber,v.quantity)}" onclick="{!c.handleAdd}" class="slds-m-left_x-small" iconName="utility:add" variant="bare" alternativeText="Add"/>
+                </lightning:buttonGroup>
                 <aura:set attribute="else">
-                    <lightning:input variant="label-hidden" disabled="true" placeholder="{!$Label.c.FF_No_products_available}" class="slds-show_inline-block" label="{!$Label.c.FF_Quantity}" type="number" value="{!v.quantity}"/>
+                    <p>{!$Label.c.FF_No_products_available}</p>
                 </aura:set>
             </aura:if>
 

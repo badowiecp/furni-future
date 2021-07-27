@@ -39,6 +39,8 @@ global without sharing class FF_OpportunityToOrderService {
             newOrder.FF_Billing_company__c = selectedOpportunity.FF_Company__c;
             newOrder.FF_Tax_number__c = selectedOpportunity.FF_Tax_number__c;
         }
+        selectedOpportunity.StageName = 'Closed Won';
+        upsert selectedOpportunity;
         return newOrder;
     }
 

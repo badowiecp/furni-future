@@ -11,17 +11,20 @@
             if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
                 let resultsToast = $A.get("e.force:showToast");
                 resultsToast.setParams({
-                    "title": $A.get("$Label.c.FF_Saved"),
-                    "message": $A.get("$Label.c.FF_The_record_was_saved")
+                    "title": $A.get("$Label.c.FF_Success"),
+                    "message": $A.get("$Label.c.FF_The_record_was_saved"),
+                    "type": "success"
                 });
                 let productId = saveResult.recordId;
                 helper.saveImages(component,productId,component.get("v.fileWrappers"));
+                helper.saveProductPrice(component,event,productId);
                 resultsToast.fire();
             } else {
                 let resultsToast = $A.get("e.force:showToast");
                 resultsToast.setParams({
                     "title": $A.get("$Label.c.FF_Error"),
-                    "message": $A.get("$Label.c.FF_Could_not_save_product")
+                    "message": $A.get("$Label.c.FF_Could_not_save_product"),
+                    "type": "error"
                 });
                 resultsToast.fire();
             }

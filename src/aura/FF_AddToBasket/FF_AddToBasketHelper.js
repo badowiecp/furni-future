@@ -11,6 +11,22 @@
         $A.enqueueAction(action);
     },
 
+    checkIfGuest : function(component,event){
+        let action = component.get("c.getIsGuest");
+        action.setCallback(this, function(response) {
+            component.set("v.isGuest",response.getReturnValue());
+        });
+        $A.enqueueAction(action);
+    },
+
+    navigateToLogin : function(component,event){
+        let urlEvent = $A.get("e.force:navigateToURL");
+        urlEvent.setParams({
+          "url": "/s/login"
+        });
+        urlEvent.fire();
+    },
+
     getAvailableNumber : function(component,event){
         let action = component.get("c.getWarehouseItemCount");
         action.setParams({
@@ -58,6 +74,24 @@
             this.addToBasket(component,event);
         }else{
             this.fireToast("Warning",$A.get("$Label.c.FF_Specify_quantity_of_products_before_adding_to_cart"),"warning");
+        }
+    },
+
+    subtract : function(component,event){
+        component.set("v.quantity",parseInt(component.get("v.quantity"))-1);
+        if(component.get("v.quantity") > component.get("v.availableNumber")){
+            component.set("v.validQuantity",false);
+        }else{
+            component.set("v.validQuantity",true);
+        }
+    },
+
+    add : function(component,event){
+        component.set("v.quantity",parseInt(component.get("v.quantity"))+1);
+        if(component.get("v.quantity") > component.get("v.availableNumber")){
+            component.set("v.validQuantity",false);
+        }else{
+            component.set("v.validQuantity",true);
         }
     },
 

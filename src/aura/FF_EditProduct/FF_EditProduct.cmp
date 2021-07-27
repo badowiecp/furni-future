@@ -5,13 +5,15 @@
     <aura:attribute name="currentFileWrappers" type="Object[]"/>
     <aura:attribute name="fileWrappers" type="Object[]"/>
     <aura:attribute name="productFamilyPicklist" type="Object"/>
+    <aura:attribute name="productPrice" type="PricebookEntry"/>
+    <aura:attribute name="currentPrice" type="Decimal"/>
     <aura:attribute name="imagesToDelete" type="String[]"/>
     <aura:attribute name="imageLinkSuffix" type="String"/>
     <aura:attribute name="isLocked" type="Boolean"/>
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <force:recordData aura:id="productEdit"
-                      fields="Id,Name,IsActive,ProductCode,Description,Dimensions__c,Materials__c,Color__c,Family,RecordTypeId"
+                      fields="Id,Name,IsActive,ProductCode,Description,Dimensions__c,Materials__c,Color__c,Family,RecordTypeId,FF_Storage_size__c"
                       recordId="{!v.recordId}"
                       targetFields="{!v.productFields}"
                       targetError="{!v.productError}"
@@ -34,7 +36,9 @@
                     </div>
                     <div class="slds-p-around--small slds-grid slds-wrap ">
                         <lightning:input value="{!v.productFields.Name}" label="{!$Label.c.FF_Product_Name}" required="true" class="slds-size--1-of-2 slds-p-horizontal_small" />
-                        <lightning:input value="{!v.productFields.IsActive}" checked="{!v.productFields.IsActive}" type="checkbox" variant="label-stacked" label="{!$Label.c.FF_Active}" class="slds-size--1-of-2 slds-p-horizontal_small" />
+                        <div class="slds-size--1-of-2 slds-p-horizontal_small">
+                            <lightning:input value="{!v.productFields.IsActive}" checked="{!v.productFields.IsActive}" type="checkbox" variant="label-stacked" label="{!$Label.c.FF_Active}"  />
+                        </div>
                         <lightning:input value="{!v.productFields.ProductCode}" label="{!$Label.c.FF_Product_Code}" class="slds-size--1-of-2 slds-p-horizontal_small" />
                         <lightning:select value="{!v.productFields.Family}" label="{!$Label.c.FF_Product_Family}" class="slds-size--1-of-2 slds-p-horizontal_small">
                             <option value="">{!$Label.c.FF_Select}</option>
@@ -51,6 +55,12 @@
                         <lightning:input value="{!v.productFields.Color__c}" label="{!$Label.c.FF_Color}" class="slds-size--1-of-2 slds-p-horizontal_small"/>
                         <lightning:input value="{!v.productFields.Dimensions__c}" label="{!$Label.c.FF_Dimensions}" class="slds-size--1-of-2 slds-p-horizontal_small"/>
                         <lightning:input value="{!v.productFields.Materials__c}" label="{!$Label.c.FF_Materials}" class="slds-size--1-of-2 slds-p-horizontal_small"/>
+                        <lightning:input value="{!v.productFields.FF_Storage_size__c}" label="Storage size"
+                                         class="slds-size--1-of-2 slds-p-horizontal_small"/>
+                        <lightning:input value="{!v.productPrice.UnitPrice}" label="Standard price"
+                                         class="slds-size--1-of-2 slds-p-horizontal_small" formatter="currency" type="number"/>
+                        <lightning:input value="{!v.productFields.Description}" label="{!$Label.c.FF_Product_Description}"
+                                         class="slds-size--2-of-2 slds-p-horizontal_small slds-p-bottom_small"/>
 
                         <div class="slds-size--1-of-1 slds-align_absolute-center slds-p-horizontal_small">
                             <lightning:input type="file" name="file" label="{!$Label.c.FF_Add_photos}"

@@ -8,7 +8,14 @@ public with sharing class FF_ProductController {
         try{
             AggregateResult[] groupedResults  = [SELECT count(Id)cnt FROM Product2];
             productWrapper.totalRecords = Integer.valueof(groupedResults[0].get('cnt'));
-            productWrapper.ProductListToDisplay = [SELECT Id,Name,ProductCode,Description,Family,Product_Name_Link__c,RecordType.Name FROM Product2 ORDER BY Name LIMIT :recordToDisplay OFFSET :(pageNumber - 1) * recordToDisplay];
+            Map<Id,PricebookEntry> productPrices = new Map<Id, PricebookEntry>();
+            for(PricebookEntry entry : [SELECT Id,UnitPrice,Product2Id FROM PricebookEntry WHERE Pricebook2.IsStandard = true]){
+                productPrices.put(entry.Product2Id,entry);
+            }
+            for(Product2 product : [SELECT Id,Name,ProductCode,Description,Family,Product_Name_Link__c,RecordType.Name,FF_Storage_size__c FROM Product2 ORDER BY Name LIMIT :recordToDisplay OFFSET :(pageNumber - 1) * recordToDisplay]){
+                productWrapper.ProductListToDisplay.add(new ProductWithPrice(product,productPrices.get(product.Id).UnitPrice));
+            }
+            System.debug(productWrapper);
             return productWrapper;
         }catch (Exception exc){
             throw new AuraHandledException(System.Label.FF_Cannot_retrieve_product_list + ' ' + System.Label.FF_Error + ' ' + exc.getMessage());
@@ -39,6 +46,41 @@ public with sharing class FF_ProductController {
             }
         }
         return recordtypemap.values();
+    }
+
+    @AuraEnabled
+    public static PricebookEntry getStandardPriceBookEntry(String productId){
+        return [SELECT Id,UnitPrice,Product2Id FROM PricebookEntry WHERE Pricebook2.IsStandard = true AND Product2Id = :productId];
+    }
+
+    @AuraEnabled
+    public static void saveStandardPricebookEntry(PricebookEntry pricebookEntry){
+        List<PricebookEntry> entriesToUpdate = new List<PricebookEntry>();
+        for(PricebookEntry currentEntry : [SELECT Id,Name,Pricebook2.Name,UnitPrice,Discount__c FROM PricebookEntry WHERE Pricebook2.IsStandard = false AND Product2Id = :pricebookEntry.Product2Id]){
+            System.debug(currentEntry);
+            currentEntry.UnitPrice = pricebookEntry.UnitPrice * (100-currentEntry.Discount__c) / 100;
+            entriesToUpdate.add(currentEntry);
+        }
+        upsert pricebookEntry;
+        upsert entriesToUpdate;
+    }
+
+    @AuraEnabled
+    public static void createStandardPricebookEntry(String productId, Decimal productPrice){
+        PricebookEntry entry = new PricebookEntry();
+        entry.Product2Id = productId;
+        entry.UnitPrice = productPrice;
+        entry.Pricebook2Id = [SELECT Id FROM Pricebook2 WHERE IsStandard = true].Id;
+        insert entry;
+    }
+
+    @AuraEnabled
+    public static List<OrderItemWrapper> getOrderProducts(String orderId){
+        List<OrderItemWrapper> orderItems = new List<OrderItemWrapper>();
+        for(OrderItem orderItem : [SELECT Id,Product2.Name,Quantity,UnitPrice,TotalPrice FROM OrderItem WHERE OrderId = :orderId]){
+            orderItems.add(new OrderItemWrapper(orderItem.Product2.Name,Integer.valueOf(orderItem.Quantity),orderItem.UnitPrice,orderItem.TotalPrice));
+        }
+        return orderItems;
     }
 
     @AuraEnabled
@@ -239,11 +281,49 @@ public with sharing class FF_ProductController {
         return [SELECT DeveloperName,ContentVersion_preview_url__c FROM Product_Setting__mdt].ContentVersion_preview_url__c;
     }
 
+    public class OrderItemWrapper {
+        @AuraEnabled public String productName {get;set;}
+        @AuraEnabled public Integer quantity {get;set;}
+        @AuraEnabled public Decimal unitPrice {get;set;}
+        @AuraEnabled public Decimal totalPrice {get;set;}
+
+        public OrderItemWrapper(String productName,Integer quantity,Decimal unitPrice,Decimal totalPrice){
+            this.productName = productName;
+            this.quantity = quantity;
+            this.unitPrice = unitPrice;
+            this.totalPrice = totalPrice;
+        }
+    }
+
     public class ProductWrapper {
         @AuraEnabled public Integer recordToDisplay {get;set;}
         @AuraEnabled public Integer pageNumber {get;set;}
         @AuraEnabled public Integer totalRecords {get;set;}
-        @AuraEnabled public List<Product2> ProductListToDisplay {get;set;}
+        @AuraEnabled public List<ProductWithPrice> ProductListToDisplay {get;set;}
+
+        public ProductWrapper(){
+            ProductListToDisplay = new List<ProductWithPrice>();
+        }
+    }
+
+    public class ProductWithPrice {
+        @AuraEnabled public Product2 product {get;set;}
+        @AuraEnabled public Decimal price {get;set;}
+        @AuraEnabled public String productName {get;set;}
+        @AuraEnabled public String productNameLink {get;set;}
+        @AuraEnabled public String recordTypeName {get;set;}
+        @AuraEnabled public String productFamily {get;set;}
+        @AuraEnabled public Integer storageSize {get;set;}
+
+        public ProductWithPrice(Product2 product, Decimal price){
+            this.product = product;
+            this.price = price;
+            productName = product.Name;
+            productNameLink = product.Product_Name_Link__c;
+            recordTypeName = product.RecordType.Name;
+            productFamily = product.Family;
+            storageSize = Integer.valueOf(product.FF_Storage_size__c);
+        }
     }
 
     public class FileWrapper {

@@ -2268,4 +2268,11 @@
         <shortDescription>Wrong file format, please upload a csv file</shortDescription>
         <value>Wrong file format, please upload a csv file</value>
     </labels>
+    <labels>
+        <fullName>FF_Your_current_discount_is</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Your current discount is</shortDescription>
+        <value>Your current discount is</value>
+    </labels>
 </CustomLabels>
